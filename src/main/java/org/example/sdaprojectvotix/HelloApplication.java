@@ -17,7 +17,14 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
+
+        PersistenceHandler handler = new mysql("jdbc:mysql://100.91.228.86/votix", "username", "password");
+
+        //PersistenceHandler handler = new mysql("jdbc:mysql://localhost:3306/LMS", "root", "16033004");
+        //handler.ShowPollingStation();
         launch();
+
+
     }
 }
