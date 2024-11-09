@@ -1,6 +1,7 @@
 package org.example.sdaprojectvotix;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class mysql extends PersistenceHandler{
 
@@ -19,8 +20,6 @@ public class mysql extends PersistenceHandler{
         try {
             // Optional: Load the SQL Server JDBC driver
             // Class.forName("org.mariadb.jdbc.Driver");
-
-           // handler = new SQL_Handler("jdbc:mysql://localhost:3306/LMS", "root", "16033004");
 
             // Establish the connection
             conn = DriverManager.getConnection(dbUrl, username, password);
@@ -72,6 +71,116 @@ public class mysql extends PersistenceHandler{
             } catch (SQLException e) {
                 System.out.println("Error retrieving polling stations: " + e.getMessage());
             }
+    }
+
+    @Override
+    public boolean connect() {
+        return false;
+    }
+
+    @Override
+    public boolean disconnect() {
+        return false;
+    }
+
+    @Override
+    public void executeQuery(String query) {
+
+    }
+
+    @Override
+    public int executeUpdate(String query) {
+        return 0;
+    }
+
+    @Override
+    public void beginTransaction() {
+
+    }
+
+    @Override
+    public void commit() {
+
+    }
+
+    @Override
+    public void rollback() {
+
+    }
+
+    @Override
+    public void biometricVerification() {
+
+    }
+
+    @Override
+    public void retrieveVotes() {
+
+    }
+
+    @Override
+    public void updateCount() {
+
+    }
+
+    @Override
+    public void saveReport() {
+
+    }
+
+    @Override
+    public ArrayList<String> reportData() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> getElectionForm() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<String> electionReportData() {
+        return null;
+    }
+
+    @Override
+    public void log() {
+
+    }
+
+    @Override
+    public void updatePollingStaffAccount(PollingStaff staff) {
+
+    }
+
+    @Override
+    public void addPollingStaffAccount(PollingStaff staff) {
+
+    }
+
+    @Override
+    public void deactivatePollingStaffAccount(PollingStaff staff) {
+
+    }
+
+    @Override
+    public void addCandidate(Candidate candidate) {
+
+    }
+
+    @Override
+    public ArrayList<Candidate> loadCandidateData() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<PollingStaff> loadPollingStaffAssignments() {
+        return null;
+    }
+
+    @Override
+    public boolean verifyStaff(String login, String password, int areaID, int stationID) {
+        return false;
     }
 
 //    @Override
