@@ -1,4 +1,4 @@
-package votix;
+package votix.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

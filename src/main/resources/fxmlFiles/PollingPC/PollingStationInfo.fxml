@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="votix.controllers.PollingPC.PollingStationInfoController"
+            stylesheets="@../../style/style.css"
+            prefWidth="1920.0"
+            styleClass="root">
+
+    <!-- Title Bar -->
+    <AnchorPane styleClass="title-bar" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" prefHeight="100.0">
+        <!-- Title text inside the title bar -->
+        <Label text="Polling Station Information" styleClass="title-bar-text" layoutX="500.0" layoutY="20.0" style=" -fx-text-fill: white; -fx-font-size: 60px;"/>
+    </AnchorPane>
+
+
+</AnchorPane>

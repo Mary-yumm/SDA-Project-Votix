@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.PollingPC.InitiateSystemController">
+   <children>
+      <!-- Title Bar -->
+      <AnchorPane style="-fx-background-color: #385B4F;" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="864.0">
+         <!-- Title text inside the title bar -->
+         <Label text="E-Voting System" alignment="CENTER" style="-fx-font-family: 'System'; -fx-font-size: 80; -fx-text-fill: #ffffff;" layoutX="700.0" layoutY="25.0"/>
+
+      </AnchorPane>
+      <!-- Logo Image (Bigger Size) -->
+      <ImageView fx:id="logoImageView" fitWidth="500.0" fitHeight="500.0" layoutX="710.0" layoutY="100.0">
+         <image>
+            <Image url="@../../assets/logo.png" />
+         </image>
+      </ImageView>
+
+
+
+      <!-- Timer Label -->
+      <Label id="timerLabel" fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" text="Timer" textFill="#385B4F" AnchorPane.topAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font name="SansSerif Regular" size="40.0" />
+         </font>
+      </Label>
+
+      <!-- Message Label -->
+      <Label id="messageLabel" fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" prefWidth="600.0" text="message" textFill="#385B4F" AnchorPane.topAnchor="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+
+      <!-- Loading icon -->
+      <ProgressIndicator fx:id="loadingIndicator" progress="-1.0" visible="false" AnchorPane.topAnchor="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+
+   </children>
+</AnchorPane>
