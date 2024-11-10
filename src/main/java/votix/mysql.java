@@ -1,4 +1,4 @@
-package org.example.sdaprojectvotix;
+package votix;
 
 import java.sql.*;
 import java.util.ArrayList;

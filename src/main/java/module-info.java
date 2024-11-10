@@ -6,6 +6,6 @@ module org.example.sdaprojectvotix {
     requires java.desktop;
     requires java.sql;
 
-    opens org.example.sdaprojectvotix to javafx.fxml;
-    exports org.example.sdaprojectvotix;
+    opens votix to javafx.fxml;
+    exports votix;
 }

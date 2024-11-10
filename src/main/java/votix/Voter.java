@@ -1,4 +1,4 @@
-package org.example.sdaprojectvotix;
+package votix;
 
 public class Voter {
     private int id;

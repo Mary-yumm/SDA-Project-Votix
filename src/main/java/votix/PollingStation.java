@@ -1,6 +1,4 @@
-package org.example.sdaprojectvotix;
-
-import java.util.ArrayList;
+package votix;
 
 import java.util.ArrayList;
 

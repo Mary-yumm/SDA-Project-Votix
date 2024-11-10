@@ -1,4 +1,4 @@
-package org.example.sdaprojectvotix;
+package votix;
 
 public class Administrator {
     // Attributes

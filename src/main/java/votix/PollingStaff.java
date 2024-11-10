@@ -1,4 +1,4 @@
-package org.example.sdaprojectvotix;
+package votix;
 
 // PollingStaff class
 public class PollingStaff {
