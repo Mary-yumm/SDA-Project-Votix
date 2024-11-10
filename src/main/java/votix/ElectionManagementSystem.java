@@ -7,9 +7,19 @@ public class ElectionManagementSystem {
     private String electionType;
     private ElectionResult results;
     //private List<LogEntry> auditLog = new ArrayList<>();
-    private ArrayList<Area> area = new ArrayList<>();
+    private ArrayList<Area> area;
+    private PersistenceHandler ph;
 
     // Methods
+    ElectionManagementSystem(String electionType){
+        this.electionType = electionType;
+        results = new ElectionResult();
+        area = new ArrayList<>();
+    }
+    public void setPersistenceHandler(PersistenceHandler handler){
+        this.ph = handler;
+    }
+
     public Candidate addCandidate() {
         // Implementation for adding a candidate
         return new Candidate();
@@ -112,6 +122,9 @@ public class ElectionManagementSystem {
 
     public ArrayList<Candidate> getCands() {
         // Implementation to get candidates
+        if(ph!=null){
+            return ph.fetchCandidates();
+        }
         return new ArrayList<>();
     }
 

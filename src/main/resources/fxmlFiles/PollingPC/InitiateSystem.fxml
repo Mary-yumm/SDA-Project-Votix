@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.InitiateSystemController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.PollingPC.InitiateSystemController">
    <children>
       <!-- Title Bar -->
       <AnchorPane style="-fx-background-color: #385B4F;" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="864.0">
@@ -18,7 +18,7 @@
       <!-- Logo Image (Bigger Size) -->
       <ImageView fx:id="logoImageView" fitWidth="500.0" fitHeight="500.0" layoutX="710.0" layoutY="100.0">
          <image>
-            <Image url="@assets/logo.png" />
+            <Image url="@../../assets/logo.png" />
          </image>
       </ImageView>
 

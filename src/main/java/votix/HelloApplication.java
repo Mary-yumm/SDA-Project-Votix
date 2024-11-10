@@ -4,37 +4,38 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import votix.controllers.PollingPC.PollingPcController;
 
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
     @Override
-    public void start(Stage stage) throws IOException {
-        // Update this line to point to your InitiateSystem FXML file
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/fxmlFiles/InitiateSystem.fxml"));
+    public void start(Stage stage) throws IOException, ClassNotFoundException {
+        // Initialize the ElectionManagementSystem in the start method (you already do this in main, but we'll use it here too)
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/fxmlFiles/PollingPC/PollingPc.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
+        stage.setTitle("E-Voting System");
 
-        Scene scene = new Scene(fxmlLoader.load(),1920,1080);
-        stage.setTitle("E-Voting System Initialization");
+        // After loading the FXML, get the controller and set the ElectionManagementSystem
+        PollingPcController controller = fxmlLoader.getController();
 
-        // Set the stage to full screen
-        //stage.setFullScreen(true);
+        // Initialize the ElectionManagementSystem and PersistenceHandler
+        String etype = "General";
+        PersistenceHandler handler = new mysql("jdbc:mysql://100.91.228.86/votix", "username", "password");
+        ElectionManagementSystem EMS = new ElectionManagementSystem(etype);
+        EMS.setPersistenceHandler(handler);
 
-        // Optional: remove title bar if you want an undecorated stage
-        // stage.initStyle(StageStyle.UNDECORATED);
+        // Set the ElectionManagementSystem in the controller
+        controller.setElectionManagementSystem(EMS);
 
         stage.setScene(scene);
         stage.show();
     }
 
+
     public static void main(String[] args) throws ClassNotFoundException {
-        // Your database connection logic (optional for the application startup)
-        PersistenceHandler handler = new mysql("jdbc:mysql://100.91.228.86/votix", "username", "password");
-
-        // PersistenceHandler handler = new mysql("jdbc:mysql://localhost:3306/LMS", "root", "16033004");
-
-        // PersistenceHandler handler = new mysql("jdbc:sqlserver://localhost:1433;databaseName=LMS", "sa", "16033004");
-
-        // Launch the JavaFX application
+        // Launch the JavaFX application (already done in start)
         launch();
     }
 }

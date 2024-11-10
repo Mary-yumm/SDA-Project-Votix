@@ -1,0 +1,121 @@
+/* Default Button Styles */
+.button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 28px;
+    -fx-padding: 10px 20px;
+}
+
+/* Hover Effect */
+.button:hover {
+    -fx-background-color: #4d7d6c;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 20px;
+}
+
+/* Active (selected) Button Styles */
+.button.selected {
+    -fx-background-color: #8fbaab;
+    -fx-text-fill: #385B4F;
+    -fx-background-radius: 20px;
+}
+
+/* Title Bar */
+.title-bar {
+    -fx-background-color: #385B4F;
+    -fx-font-family: 'Arial';
+    -fx-font-size: 60px;
+    -fx-text-fill: #ffffff;
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+
+/* Title Text */
+.title-bar-text {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 100px;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* Form Section */
+.form-section {
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+    -fx-layout-x: 700px;
+    -fx-layout-y: 180px;
+}
+
+/* Label Styling */
+.label {
+    -fx-font-size: 28px;
+    -fx-text-fill: #333333;
+}
+
+/* TextField Styling */
+.text-field {
+    -fx-font-size: 28px;
+    -fx-padding: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #ccc;
+    -fx-pref-width: 300px;
+}
+
+/* Submit Button Styling */
+.submit-button {
+    -fx-background-color: #385B4F;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 20px;
+}
+
+/* Biometric Instruction Label */
+#biometricInstructionLabel {
+    -fx-font-size: 28px;
+    -fx-text-fill: #385B4F;
+}
+
+/* General Root Styles */
+.root {
+    -fx-font-family: 'Arial', sans-serif;
+    -fx-background-color: #F7F9F9;
+}
+
+/* Instructions Label */
+.instructions-label {
+    -fx-font-size: 24px;
+    -fx-text-fill: #333333;
+}
+
+/* Candidate Table Header */
+.table-header {
+    -fx-background-color: #d3d3d3;
+    -fx-padding: 10px;
+}
+
+.table-header-cell {
+    -fx-font-family: 'Arial';
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Candidate Table Row */
+.table-row {
+    -fx-background-color: #f5f5f5;
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+
+.table-row:hover {
+    -fx-background-color: #e0e0e0; /* Highlight row on hover */
+}
+
+.table-cell {
+    -fx-border-color: transparent; /* or #ccc or any color */
+    -fx-border-width: 0px;
+    -fx-font-size: 18px;
+    -fx-alignment: center;
+}
+

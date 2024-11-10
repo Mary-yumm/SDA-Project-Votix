@@ -37,6 +37,7 @@ abstract class PersistenceHandler {
     public abstract ArrayList<Candidate> loadCandidateData();
     public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
     public abstract boolean verifyStaff(String login, String password, int areaID, int stationID);
+    public abstract ArrayList<Candidate> fetchCandidates();
 }
 
 

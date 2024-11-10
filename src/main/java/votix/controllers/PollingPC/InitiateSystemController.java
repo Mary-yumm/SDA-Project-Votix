@@ -1,4 +1,4 @@
-package votix.controllers;
+package votix.controllers.PollingPC;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -10,4 +10,6 @@ module org.example.sdaprojectvotix {
     exports votix;
     exports votix.controllers;
     opens votix.controllers to javafx.fxml;
+    exports votix.controllers.PollingPC;
+    opens votix.controllers.PollingPC to javafx.fxml;
 }
