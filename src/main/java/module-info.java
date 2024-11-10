@@ -8,4 +8,6 @@ module org.example.sdaprojectvotix {
 
     opens votix to javafx.fxml;
     exports votix;
+    exports votix.controllers;
+    opens votix.controllers to javafx.fxml;
 }
