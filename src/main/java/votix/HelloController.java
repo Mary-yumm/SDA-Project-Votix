@@ -1,4 +1,4 @@
-package org.example.sdaprojectvotix;
+package votix;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

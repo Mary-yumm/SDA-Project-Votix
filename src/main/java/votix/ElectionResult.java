@@ -1,7 +1,6 @@
-package org.example.sdaprojectvotix;
+package votix;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // ElectionResult class
 class ElectionResult {

@@ -1,4 +1,4 @@
-package org.example.sdaprojectvotix;
+package votix;
 
 // CandidateVoteRecord class to hold the details of candidate votes
 class CandidateVoteRecord {

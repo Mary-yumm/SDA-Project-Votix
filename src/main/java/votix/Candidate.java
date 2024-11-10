@@ -1,4 +1,4 @@
-package org.example.sdaprojectvotix;
+package votix;
 
 
 import javafx.scene.image.Image;
