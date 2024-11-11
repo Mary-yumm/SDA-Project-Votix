@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
-<VBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="votix.controllers.LoginController"
-      alignment="CENTER" spacing="10" padding="20">
-    <Label text="Login" style="-fx-font-size: 20px;"/>
-    <TextField fx:id="usernameField" promptText="Username"/>
-    <PasswordField fx:id="passwordField" promptText="Password"/>
-    <Button text="Login" onAction="#handleLoginAction"/>
-</VBox>
+
+<Pane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.LoginController">
+   <children>
+      <Pane layoutY="-8.0">
+         <children>
+            <VBox alignment="CENTER" prefHeight="451.0" prefWidth="573.0" spacing="20" style="-fx-background-color: #385B4F;">
+               <Pane prefHeight="493.0" prefWidth="642.0">
+                  <children>
+                  
+                      <!-- Login Label -->
+                      <Label layoutX="258.0" layoutY="160.0" style="-fx-font-size: 24px;" text="Login" textFill="#eceaea" textOverrun="CENTER_ELLIPSIS" />
+                  
+                      <!-- Username TextField -->
+                      <TextField fx:id="usernameField" layoutX="162.0" layoutY="210.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="250.0" promptText="Username" />
+                  
+                      <!-- Password Field -->
+                      <PasswordField fx:id="passwordField" layoutX="162.0" layoutY="255.0" maxWidth="-Infinity" prefWidth="250.0" promptText="Password" />
+                  
+                      <!-- Login Button -->
+                      <Button layoutX="162.0" layoutY="301.0" maxWidth="250.0" onAction="#handleLogin" prefHeight="40.0" prefWidth="250.0" text="Login" />
+                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="94.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" width="573.0" />
+                     <Label layoutX="162.0" layoutY="36.0" prefHeight="35.0" prefWidth="354.0" style="-fx-font-size: 24px;" text="Election Management System" textFill="#3d4b3b" />
+                     <ImageView fitHeight="94.0" fitWidth="110.0" layoutX="13.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../../../../Desktop/VotixCompanyLogo2.png" />
+                        </image>
+                     </ImageView>
+                  </children>
+               </Pane>
+            </VBox>
+         </children>
+      </Pane>
+   </children>
+</Pane>
