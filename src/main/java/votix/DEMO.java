@@ -8,12 +8,12 @@ import votix.controllers.PollingPC.PollingPcController;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class DEMO extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         // Initialize the ElectionManagementSystem in the start method (you already do this in main, but we'll use it here too)
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/fxmlFiles/PollingPC/PollingPc.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PollingPC/PollingPc.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
         stage.setTitle("E-Voting System");
 
