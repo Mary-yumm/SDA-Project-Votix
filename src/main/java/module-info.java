@@ -12,4 +12,6 @@ module org.example.sdaprojectvotix {
     opens votix.controllers to javafx.fxml;
     exports votix.controllers.PollingPC;
     opens votix.controllers.PollingPC to javafx.fxml;
+    exports votix.controllers.AdminControllers;
+    opens votix.controllers.AdminControllers to javafx.fxml;
 }
