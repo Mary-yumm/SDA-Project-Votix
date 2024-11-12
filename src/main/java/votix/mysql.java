@@ -59,24 +59,25 @@ public class mysql extends PersistenceHandler{
     public ArrayList<Candidate> fetchCandidates() {
         ArrayList<Candidate> candidates = new ArrayList<>();
         try {
-            String query = "SELECT * FROM Candidate";
+            String query = "SELECT * FROM CANDIDATE";
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 Candidate candidate = new Candidate();
-                candidate.setCid(rs.getInt("CandidateID"));
-                candidate.setName(rs.getString("Name"));
-                // Get the image path from the database
-                String imagePath = rs.getString("PartySymbol");
+                candidate.setCid(rs.getInt("candidateId"));  // Correct column name
+                candidate.setName(rs.getString("name"));     // Correct column name
+                String imagePath = rs.getString("partySymbol");
 
                 // Print the image path to the console
                 System.out.println("Image Path: " + imagePath);
-                candidate.setPartyName(rs.getString("PartyName"));
-                //candidate.setPartySymbol(new Image(getClass().getResource("/" + rs.getString("PartySymbol")).toExternalForm()));
+                candidate.setPartyName(rs.getString("partyName"));  // Correct column name
+
+                // Maintain original handling for party symbol
                 candidate.setPartySymbol(new Image(getClass().getResource("/assets/pti.png").toExternalForm()));
-                candidate.setRegistrationDate(rs.getDate("RegistrationDate"));
-                candidate.setNAPA(rs.getString("NaPa"));
+                candidate.setRegistrationDate(rs.getDate("registrationDate"));  // Correct column name
+                candidate.setNAPA(rs.getString("naPa"));  // Correct column name
+
                 candidates.add(candidate);
             }
         } catch (SQLException e) {
@@ -84,6 +85,7 @@ public class mysql extends PersistenceHandler{
         }
         return candidates;
     }
+
 
 
     @Override

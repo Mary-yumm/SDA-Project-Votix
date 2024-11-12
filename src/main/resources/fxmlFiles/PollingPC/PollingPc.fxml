@@ -20,7 +20,6 @@
         <HBox prefHeight="100.0" spacing="20.0" alignment="CENTER" style="-fx-background-color: #385B4F; -fx-padding: 10;">
             <!-- Buttons now use the button style class and fx:id for control -->
             <Button fx:id="tab1Button" text="Capture Voter Info" styleClass="button" onAction="#selectTab1" />
-            <Button fx:id="tab2Button" text="Cast Vote" styleClass="button" onAction="#selectTab2" />
             <Button fx:id="tab3Button" text="Polling Station Info" styleClass="button" onAction="#selectTab3" />
         </HBox>
     </bottom>

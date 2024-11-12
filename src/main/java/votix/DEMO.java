@@ -13,6 +13,11 @@ public class DEMO extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         // Initialize the ElectionManagementSystem in the start method (you already do this in main, but we'll use it here too)
+        // Initialize the ElectionManagementSystem and PersistenceHandler
+        String etype = "General";
+        PersistenceHandler handler = new mysql("jdbc:mysql://100.91.228.86/votix", "username", "password");
+        ElectionManagementSystem EMS = new ElectionManagementSystem(etype);
+        EMS.setPersistenceHandler(handler);
         FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PollingPC/PollingPc.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1920, 1080);
         stage.setTitle("E-Voting System");
@@ -20,11 +25,7 @@ public class DEMO extends Application {
         // After loading the FXML, get the controller and set the ElectionManagementSystem
         PollingPcController controller = fxmlLoader.getController();
 
-        // Initialize the ElectionManagementSystem and PersistenceHandler
-        String etype = "General";
-        PersistenceHandler handler = new mysql("jdbc:mysql://100.91.228.86/votix", "username", "password");
-        ElectionManagementSystem EMS = new ElectionManagementSystem(etype);
-        EMS.setPersistenceHandler(handler);
+
 
         // Set the ElectionManagementSystem in the controller
         controller.setElectionManagementSystem(EMS);
