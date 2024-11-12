@@ -17,8 +17,6 @@ public class MainPageController {
     private Button staffButton;
 
     private Stage primaryStage;
-
-    // This method is used to set the primary stage (window)
     public void setStage(Stage stage) {
         this.primaryStage = stage;
     }

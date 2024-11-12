@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -9,7 +8,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-
 <Pane prefHeight="410.0" prefWidth="573.0" style="-fx-background-color: #385B4F;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="votix.controllers.MainPageController">
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="114.0" layoutX="-7.0" layoutY="-29.0" stroke="BLACK" strokeType="INSIDE" width="583.0" />
    <Button alignment="BOTTOM_CENTER" layoutX="126.0" layoutY="280.0" maxWidth="200.0" prefHeight="28.0" prefWidth="141.0" text="ADMIN" textAlignment="CENTER">
