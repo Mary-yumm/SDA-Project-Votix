@@ -36,18 +36,7 @@ public class LoginController {
         this.primaryStage = stage;
     }
 
-    /*
-     * @FXML
-    private ImageView sideImage;
-
-    @FXML
-    public void initialize() {
-        sideImage.setImage(new Image("file:path/to/your/image.png"));  // Replace with your image path
-    }
-     * 
-     * public void setPersistenceHandler(PersistenceHandler handler) {
-        this.handler = handler;
-    }*/
+    
 
     public void setElectionManagementSystem(ElectionManagementSystem EMS) {
         this.EMS = EMS;
