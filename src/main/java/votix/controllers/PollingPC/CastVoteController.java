@@ -4,11 +4,14 @@ package votix.controllers.PollingPC;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import votix.Candidate;
 import votix.ElectionManagementSystem;
 
@@ -19,20 +22,29 @@ public class CastVoteController {
     @FXML
     private VBox candidateTable;
 
+    @FXML
+    private Button submitButton;
+
     private ElectionManagementSystem ems; // This needs to be passed from wherever you call this controller
 
     private CheckBox lastSelectedCheckbox; // Track the last selected checkbox
 
+    // Method to set the Election Management System and populate candidates
     public void setElectionManagementSystem(ElectionManagementSystem system) {
         this.ems = system;
+        populateCandidates();
     }
 
-    public void initialize() {
+    // New method to populate candidates after ems is set
+    private void populateCandidates() {
         if (ems != null) {
+            System.out.println("EMS is not null, loading candidates...");
             List<Candidate> candidates = ems.getCands();
             for (Candidate candidate : candidates) {
                 addCandidateRow(candidate);
             }
+        } else {
+            System.out.println("EMS is null!");
         }
     }
 
@@ -52,19 +64,19 @@ public class CastVoteController {
         Label partyLabel = new Label(candidate.getPartyName());
         partyLabel.getStyleClass().add("table-cell");
         AnchorPane.setTopAnchor(partyLabel, 10.0); // Adjust top to center vertically
-        AnchorPane.setLeftAnchor(partyLabel, 490.0); // Set X position for the party name
+        AnchorPane.setLeftAnchor(partyLabel, 400.0); // Set X position for the party name
         row.getChildren().add(partyLabel);
 
         // Party Symbol
         ImageView partySymbolView = new ImageView(candidate.getPartySymbol());
         partySymbolView.setFitHeight(40);
         partySymbolView.setFitWidth(40);
-        AnchorPane.setLeftAnchor(partySymbolView, 975.0); // Set X position for the party symbol
+        AnchorPane.setLeftAnchor(partySymbolView, 850.0); // Set X position for the party symbol
         row.getChildren().add(partySymbolView);
 
         // Checkbox for voting
         CheckBox selectCheckbox = new CheckBox();
-        AnchorPane.setLeftAnchor(selectCheckbox, 1400.0); // Set X position for the checkbox
+        AnchorPane.setLeftAnchor(selectCheckbox, 1100.0); // Set X position for the checkbox
         AnchorPane.setTopAnchor(selectCheckbox, 10.0); // Adjust top to center vertically
         row.getChildren().add(selectCheckbox);
 
@@ -102,5 +114,9 @@ public class CastVoteController {
             Candidate selectedCandidate = ems.getCands().get(selectedIndex);
             castVote(selectedCandidate);
         }
+
+        // Close the window
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 }
