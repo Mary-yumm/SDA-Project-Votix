@@ -34,8 +34,9 @@ public class ElectionManagementSystem {
         // Implementation to initiate the system
     }
 
-    public void authorizePollingStaff() {
+    public boolean authorizePollingStaff(String username, String password) {
         // Implementation to authorize polling staff
+        return ph.verifyStaff(username,password);
     }
 
     public void viewAssignedStaff() {

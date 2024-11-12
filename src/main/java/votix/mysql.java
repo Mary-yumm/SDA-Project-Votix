@@ -2,8 +2,11 @@ package votix;
 
 import javafx.scene.image.Image;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 public class mysql extends PersistenceHandler{
 
@@ -33,26 +36,6 @@ public class mysql extends PersistenceHandler{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-
-    public void ShowPollingStation(){
-            String query = "SELECT * FROM PollingStation";
-            try (PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int stationID = rs.getInt("StationID");
-                    String name = rs.getString("Name");
-                    String location = rs.getString("Location");
-                    int capacity = rs.getInt("Capacity");
-
-                    System.out.println("Station ID: " + stationID +
-                            ", Name: " + name +
-                            ", Location: " + location +
-                            ", Capacity: " + capacity);
-                }
-            } catch (SQLException e) {
-                System.out.println("Error retrieving polling stations: " + e.getMessage());
-            }
     }
 
     @Override
@@ -87,6 +70,123 @@ public class mysql extends PersistenceHandler{
     }
 
 
+    @Override
+    public boolean verifyStaff(String username, String password) {
+        try {
+            // Step 1: Verify staff credentials in the POLLINGSTAFF table
+            String query = "SELECT stationId FROM POLLINGSTAFF WHERE username = ? AND password = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
+
+            // If no matching staff is found, return false
+            if (!rs.next()) {
+                System.out.println("Invalid credentials.");
+                return false;
+            }
+
+            // Get the stationId from the POLLINGSTAFF table
+            int stationId = rs.getInt("stationId");
+
+            // Step 2: Retrieve the MAC address of the current machine
+            String currentMac = getCurrentMacAddress();
+            System.out.println("Current PC MAC Address: " + currentMac);
+
+            if (currentMac == null) {
+                System.out.println("Unable to retrieve MAC address.");
+                return false;
+            }
+
+            // Convert MAC addresses to lowercase for case-insensitive comparison
+            currentMac = currentMac.toLowerCase();
+
+            // Step 3: Verify if the stationId's MAC address matches in the POLLINGSTATIONPC table
+            query = "SELECT config FROM POLLINGSTATIONPC WHERE stationId = ?";
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, stationId);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String configMac = rs.getString("config");
+
+                // Convert config MAC address from the database to lowercase
+                if (configMac != null && configMac.toLowerCase().equals(currentMac)) {
+                    // MAC address matches, verification is successful
+                    return true;
+                }
+            }
+
+            System.out.println("MAC address mismatch or station unauthorized.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // Return false if verification fails
+    }
+
+
+    private String getCurrentMacAddress() {
+        try {
+            // Get all network interfaces (returns Enumeration)
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+
+                // Skip non-physical interfaces (e.g., loopback, docker)
+                if (networkInterface.isLoopback() || !networkInterface.isUp()) {
+                    continue;
+                }
+
+                // Ensure networkInterface has a MAC address
+                byte[] mac = networkInterface.getHardwareAddress();
+                if (mac != null) {
+                    StringBuilder macAddress = new StringBuilder();
+                    for (byte macByte : mac) {
+                        macAddress.append(String.format("%02X:", macByte));
+                    }
+
+                    // Remove trailing colon
+                    if (macAddress.length() > 0) {
+                        macAddress.setLength(macAddress.length() - 1);
+                    }
+
+                    System.out.println("Detected MAC Address: " + macAddress);
+                    return macAddress.toString();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Unable to retrieve MAC address.");
+        return null;
+    }
+
+
+
+
+
+
+    @Override
+    public ArrayList<Candidate> loadCandidateData() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<PollingStaff> loadPollingStaffAssignments() {
+        return null;
+    }
+
+//    @Override
+//    public boolean connect() {
+//        return false;
+//    }
+
+
+    @Override
+    public void ShowPollingStation() {
+
+    }
 
     @Override
     public boolean connect() {
@@ -182,24 +282,4 @@ public class mysql extends PersistenceHandler{
     public void addCandidate(Candidate candidate) {
 
     }
-
-    @Override
-    public ArrayList<Candidate> loadCandidateData() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<PollingStaff> loadPollingStaffAssignments() {
-        return null;
-    }
-
-    @Override
-    public boolean verifyStaff(String login, String password, int areaID, int stationID) {
-        return false;
-    }
-
-//    @Override
-//    public boolean connect() {
-//        return false;
-//    }
 }
