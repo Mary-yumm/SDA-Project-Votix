@@ -27,6 +27,7 @@ public class candidateListController {
     // This method is called to inject the ElectionManagementSystem object
     public void setElectionManagementSystem(ElectionManagementSystem system) {
         this.ems = system;
+        populateCandidates();
     }
 
     @FXML
@@ -41,9 +42,21 @@ public class candidateListController {
         }
     }
 
+    // New method to populate candidates after ems is set
+    private void populateCandidates() {
+        if (ems != null) {
+            System.out.println("EMS is not null, loading candidates...");
+            List<Candidate> candidates = ems.getCands();
+            for (Candidate candidate : candidates) {
+                addCandidateRow(candidate);
+            }
+        } else {
+            System.out.println("EMS is null!");
+        }
+    }
     private void addCandidateRow(Candidate candidate) {
         // Create a new row for the candidate
-        HBox row = new HBox(10); // Spacing of 10px between elements
+        HBox row = new HBox(30); // Spacing of 30px between elements
         row.getStyleClass().add("table-row");
 
         // Candidate Name
