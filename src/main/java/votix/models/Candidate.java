@@ -1,4 +1,4 @@
-    package votix;
+    package votix.models;
 
 
     import javafx.scene.image.Image;

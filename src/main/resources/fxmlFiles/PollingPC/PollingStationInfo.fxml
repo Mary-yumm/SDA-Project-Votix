@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="votix.controllers.PollingPC.PollingStationInfoController"
-            stylesheets="@../../style/style.css"
-            prefWidth="1920.0"
-            styleClass="root">
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefWidth="1920.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.PollingPC.PollingStationInfoController">
 
     <!-- Title Bar -->
-    <AnchorPane styleClass="title-bar" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" prefHeight="100.0">
-        <!-- Title text inside the title bar -->
-        <Label text="Polling Station Information" styleClass="title-bar-text" layoutX="500.0" layoutY="20.0" style=" -fx-text-fill: white; -fx-font-size: 60px;"/>
+    <AnchorPane prefHeight="100.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label layoutX="550.0" layoutY="20.0" style="-fx-text-fill: white; -fx-font-size: 60px;" styleClass="title-bar-text" text="Polling Station Information" />
     </AnchorPane>
 
+    <!-- Centered Voter Table -->
+    <VBox alignment="CENTER" prefWidth="500.0" spacing="20.0" AnchorPane.leftAnchor="760.0" AnchorPane.rightAnchor="760.0" AnchorPane.topAnchor="150.0">
+        <!-- ScrollPane for Voter Table -->
+        <ScrollPane fitToWidth="true" minWidth="-Infinity" prefHeight="700.0" prefWidth="476.0">
+            <VBox fx:id="voterTable" spacing="10.0">
+                <!-- Table Headers -->
+                <HBox spacing="250.0" styleClass="table-header">
+                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="CNIC" />
+                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Vote Status" />
+                </HBox>
+                <!-- Voter rows will be dynamically added here by the controller -->
+            </VBox>
+        </ScrollPane>
+    </VBox>
 
 </AnchorPane>

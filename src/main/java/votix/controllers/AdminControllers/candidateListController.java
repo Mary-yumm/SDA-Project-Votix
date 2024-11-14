@@ -8,8 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import votix.Candidate;
-import votix.ElectionManagementSystem;
+import votix.models.Candidate;
+import votix.services.ElectionManagementSystem;
 
 public class candidateListController {
 

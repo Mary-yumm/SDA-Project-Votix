@@ -3,11 +3,10 @@ package votix.controllers.AdminControllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import votix.Candidate;
-import votix.ElectionManagementSystem;
+import votix.models.Candidate;
+import votix.services.ElectionManagementSystem;
 
 import java.util.List;
 

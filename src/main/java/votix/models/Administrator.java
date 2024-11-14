@@ -1,4 +1,4 @@
-package votix;
+package votix.models;
 
 public class Administrator {
     // Attributes
