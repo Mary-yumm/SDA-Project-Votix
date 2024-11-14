@@ -1,4 +1,4 @@
-package votix;
+package votix.models;
 
 // PollingStaff class
 public class PollingStaff {

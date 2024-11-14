@@ -1,15 +1,14 @@
-package votix;
+package votix.models;
 
 import java.util.ArrayList;
 
 // PollingStation class
 public class PollingStation {
     private int stationID;
-    private String location;
     private ArrayList<PollingStaff> assignedPollingStaff = new ArrayList<>();
     private ArrayList<PollingStationPC> pollingPCs = new ArrayList<>();
-    private int totalVotesCast;
-    private boolean status;
+    private ArrayList<Voter> voters = new ArrayList<>();
+
 
     // Getters and Setters
     public int getStationID() {
@@ -20,13 +19,6 @@ public class PollingStation {
         this.stationID = stationID;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
     public ArrayList<PollingStaff> getAssignedPollingStaff() {
         return assignedPollingStaff;
@@ -36,30 +28,20 @@ public class PollingStation {
         this.assignedPollingStaff = assignedPollingStaff;
     }
 
-    public int getTotalVotesCast() {
-        return totalVotesCast;
+    public ArrayList<PollingStationPC> getPollingPCs() {
+        return this.pollingPCs;
     }
 
-    public void setTotalVotesCast(int totalVotesCast) {
-        this.totalVotesCast = totalVotesCast;
+    public void setPollingPCs(ArrayList<PollingStationPC> pollingPCs) {
+        this.pollingPCs = pollingPCs;
     }
 
-    public boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    // Other Methods
     public ArrayList<Voter> getVoters() {
-        // Return list of voters
-        return new ArrayList<>();
+        return voters;
     }
 
     public void setVoters(ArrayList<Voter> voters) {
-        // Set list of voters
+        this.voters = voters;
     }
 
     public void monitorSystemStatus() {

@@ -1,9 +1,13 @@
-package votix;
+package votix.services;
 
+
+import votix.models.Candidate;
+import votix.models.PollingStaff;
+import votix.models.PollingStation;
 
 import java.util.ArrayList;
 
-abstract class PersistenceHandler {
+public abstract class PersistenceHandler {
     protected String connectionString;
     protected String username;
     protected String password;
@@ -36,8 +40,13 @@ abstract class PersistenceHandler {
     public abstract void addCandidate(Candidate candidate);
     public abstract ArrayList<Candidate> loadCandidateData();
     public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
-    public abstract boolean verifyStaff(String login, String password, int areaID, int stationID);
-    public abstract ArrayList<Candidate> fetchCandidates();
+    public abstract int verifyStaff(String login, String password,String mac_address);
+    public abstract ArrayList<Candidate> fetchCandidates(int areaid);
+    public abstract boolean isVoterRegistered(String name,String cnic,int areaid);
+    public abstract int fetchArea(int stationid);
+    public abstract void updateVoteCount(int candid,int areaid);
+    public abstract ArrayList<PollingStation> fetchStations(int areaID);
+    public abstract void changeVoterStatus(String cnic);
 }
 
 
