@@ -2,14 +2,9 @@ package votix.controllers.PollingPC;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Screen;
-import javafx.stage.Stage;
-import votix.ElectionManagementSystem;
+import votix.services.PollingPCElectionManagementSystem;
 
 import java.io.IOException;
 
@@ -24,10 +19,10 @@ public class PollingPcController {
     @FXML
     private Button tab3Button; // Polling Station Info Button
 
-    private ElectionManagementSystem ems; // Your Election Management System instance
+    private PollingPCElectionManagementSystem ems; // Your Election Management System instance
 
     // Setter to receive ElectionManagementSystem from the MainApp
-    public void setElectionManagementSystem(ElectionManagementSystem electionManagementSystem) {
+    public void setElectionManagementSystem(PollingPCElectionManagementSystem electionManagementSystem) {
         this.ems = electionManagementSystem;
         if(ems!=null) {
             System.out.println("ems set in PollingPcController: " + (ems != null));  // Debugging line
@@ -37,12 +32,13 @@ public class PollingPcController {
         }
 
     }
-    @FXML
-    private void initialize() {
-       // loadCaptureVoterInfo();
-        setActiveButton(tab3Button); // Set the initial active tab
-
-    }
+//    @FXML
+//    private void initialize() {
+//       // loadCaptureVoterInfo();
+//        setActiveButton(tab1Button); // Set the initial active tab
+//        loadCaptureVoterInfo();
+//
+//    }
 
     // Change content based on button clicked
     public void selectTab1() {
@@ -72,7 +68,7 @@ public class PollingPcController {
             // Check if controller is not null and set EMS
             if (controller != null) {
                 System.out.println("setting");
-                controller.setElectionManagementSystem(this.ems);  // Pass the ems instance
+                controller.setElectionManagementSystem(this.ems,ems.getStationId());  // Pass the ems instance
                 controller.initialize();
             } else {
                 System.out.println("CaptureVoterInfoController is null!");  // Debugging line
@@ -84,51 +80,18 @@ public class PollingPcController {
         }
     }
 
-
-    /*
-    private void loadCastVote() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/PollingPC/CastVote.fxml"));
-
-            // Load the Cast Vote pane
-            AnchorPane castVotePane = loader.load();
-            CastVoteController controller = loader.getController();
-
-            // Set the ElectionManagementSystem instance in the controller
-            if (controller != null) {
-                controller.setElectionManagementSystem(this.ems);
-                controller.initialize();
-            }
-
-            // Create a new stage for the Cast Vote tab
-            Stage secondaryStage = new Stage();
-            secondaryStage.setTitle("Cast Vote");
-
-            // Set up the scene for the new stage
-            Scene castVoteScene = new Scene(castVotePane);
-            secondaryStage.setScene(castVoteScene);
-
-            // Place the window on the second screen with a slight padding
-            Screen secondScreen = Screen.getScreens().size() > 1 ? Screen.getScreens().get(1) : Screen.getPrimary();
-            Rectangle2D bounds = secondScreen.getVisualBounds();
-            secondaryStage.setX(bounds.getMinX());
-            secondaryStage.setY(bounds.getMinY());
-            secondaryStage.setWidth(bounds.getWidth() - 20); // Slightly reduce width
-            secondaryStage.setHeight(bounds.getHeight() - 20); // Slightly reduce height
-
-            // Show the Cast Vote stage
-            secondaryStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-
     private void loadPollingStationInfo() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/PollingPC/PollingStationInfo.fxml"));
             AnchorPane pollingStationInfo = loader.load();
+            PollingStationInfoController controller = loader.getController();
+            if (controller != null) {
+                System.out.println("setting");
+                controller.setPollingStation(ems.getStation(ems.getStationId()));
+            }
+            else {
+                System.out.println("PollingStationInfoController is null!");  // Debugging line
+            }
             contentPane.getChildren().setAll(pollingStationInfo); // Replace current content with Polling Station Info
         } catch (IOException e) {
             e.printStackTrace();

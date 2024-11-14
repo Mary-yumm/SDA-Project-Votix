@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.LoginController" stylesheets="@../style/style.css">
+    <!-- Background container for the login screen -->
+    <VBox alignment="CENTER" spacing="20" style="-fx-background-color: #385B4F; -fx-padding: 40;" prefWidth="573.0" prefHeight="451.0">
+        <!-- Header section with logo and title -->
+        <HBox alignment="CENTER" style="-fx-background-color: #ffffff; -fx-padding: 10;" prefHeight="100">
+            <Label text="Election Management System" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3d4b3b;" />
+        </HBox>
+
+        <!-- Login label centered -->
+        <Label text="Login" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #eceaea;" />
+
+        <!-- Username input field -->
+        <TextField fx:id="usernameField" promptText="Username" prefWidth="250.0" maxWidth="250.0" style="-fx-padding: 5px 10px; -fx-font-size: 14px; -fx-height: 30px;" />
+
+        <!-- Password input field -->
+        <PasswordField fx:id="passwordField" promptText="Password" prefWidth="250.0" maxWidth="250.0" style="-fx-padding: 5px 10px; -fx-font-size: 14px; -fx-height: 30px;" />
+
+        <!-- Login Button -->
+        <Button fx:id="submitButton" onAction="#handleLogin" text="Login" prefWidth="250.0" prefHeight="40.0" styleClass="login-button"/>
+
+        <!-- Footer or decorative section -->
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="5.0" />
+    </VBox>
+</AnchorPane>

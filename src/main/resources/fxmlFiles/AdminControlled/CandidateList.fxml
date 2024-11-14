@@ -13,7 +13,7 @@
         <VBox fx:id="candidateTable" spacing="10.0">
             <!-- Table Headers -->
             <HBox spacing="300.0" styleClass="table-header">
-                <Label prefHeight="23.0" prefWidth="250.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Candidate Name              " />
+                <Label ellipsisString="" prefHeight="25.0" prefWidth="232.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Candidate Name              " textOverrun="CLIP" />
                 <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Name      " />
                 <Label prefHeight="23.0" prefWidth="158.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Symbol " />
                 <Label prefHeight="23.0" prefWidth="144.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Vote Count " />

@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import votix.ElectionManagementSystem;
+import votix.services.ElectionManagementSystem;
 
 public class registerCandidateController {
 

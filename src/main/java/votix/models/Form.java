@@ -1,34 +1,25 @@
-package votix;
+package votix.models;
 
 import java.util.ArrayList;
 
-class Area {
+class Form {
     // Attributes
     private ArrayList<Candidate> cands;
     private ArrayList<PollingStation> stations;
+    private String type;
     private int areaID;
+    private boolean status;
 
     // Constructor
-    public Area(ArrayList<Candidate> cands, ArrayList<PollingStation> stations, int areaID) {
+    public Form(ArrayList<Candidate> cands, ArrayList<PollingStation> stations, String type, int areaID, boolean status) {
         this.cands = cands;
         this.stations = stations;
+        this.type = type;
         this.areaID = areaID;
+        this.status = status;
     }
 
     // Methods
-    public void monitorSystemStatus() {
-        // Logic to monitor system status
-    }
-
-    public void addCandidate(Candidate candidate) {
-        this.cands.add(candidate);
-    }
-
-    public PollingStaff manageStaffByStation() {
-        // Logic to manage staff by station
-        return new PollingStaff(); // Placeholder return
-    }
-
     public void setCandidateData(ArrayList<Candidate> candidates) {
         this.cands = candidates;
     }
@@ -39,5 +30,17 @@ class Area {
 
     public void viewStaff(int stationID) {
         // Logic to view staff at a specific station
+    }
+
+    public void recordVote(int candidateID, int stationID) {
+        // Logic to record a vote
+    }
+
+    public void viewResults(int stationID) {
+        // Logic to view results for a station
+    }
+
+    public void finalizeResults() {
+        // Logic to finalize results
     }
 }

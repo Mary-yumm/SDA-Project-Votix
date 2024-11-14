@@ -1,5 +1,3 @@
-// Import necessary packages
-
 package votix.controllers.PollingPC;
 
 import javafx.event.ActionEvent;
@@ -12,10 +10,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import votix.Candidate;
-import votix.ElectionManagementSystem;
+import votix.models.Candidate;
+import votix.services.PollingPCElectionManagementSystem;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CastVoteController {
 
@@ -25,13 +25,17 @@ public class CastVoteController {
     @FXML
     private Button submitButton;
 
-    private ElectionManagementSystem ems; // This needs to be passed from wherever you call this controller
-
+    private PollingPCElectionManagementSystem ems; // This needs to be passed from wherever you call this controller
     private CheckBox lastSelectedCheckbox; // Track the last selected checkbox
 
+    // Map to store each checkbox with its associated candidate ID
+    private Map<CheckBox, Integer> checkboxCandidateMap = new HashMap<>();
+    String cnic;
+
     // Method to set the Election Management System and populate candidates
-    public void setElectionManagementSystem(ElectionManagementSystem system) {
+    public void setElectionManagementSystem(PollingPCElectionManagementSystem system,String cnic) {
         this.ems = system;
+        this.cnic = cnic;
         populateCandidates();
     }
 
@@ -56,29 +60,32 @@ public class CastVoteController {
         // Candidate Name
         Label nameLabel = new Label(candidate.getName());
         nameLabel.getStyleClass().add("table-cell");
-        AnchorPane.setTopAnchor(nameLabel, 10.0); // Adjust top to center vertically
-        AnchorPane.setLeftAnchor(nameLabel, 10.0); // Set X position for the candidate name
+        AnchorPane.setTopAnchor(nameLabel, 10.0);
+        AnchorPane.setLeftAnchor(nameLabel, 10.0);
         row.getChildren().add(nameLabel);
 
         // Party Name
         Label partyLabel = new Label(candidate.getPartyName());
         partyLabel.getStyleClass().add("table-cell");
-        AnchorPane.setTopAnchor(partyLabel, 10.0); // Adjust top to center vertically
-        AnchorPane.setLeftAnchor(partyLabel, 400.0); // Set X position for the party name
+        AnchorPane.setTopAnchor(partyLabel, 10.0);
+        AnchorPane.setLeftAnchor(partyLabel, 400.0);
         row.getChildren().add(partyLabel);
 
         // Party Symbol
         ImageView partySymbolView = new ImageView(candidate.getPartySymbol());
         partySymbolView.setFitHeight(40);
         partySymbolView.setFitWidth(40);
-        AnchorPane.setLeftAnchor(partySymbolView, 850.0); // Set X position for the party symbol
+        AnchorPane.setLeftAnchor(partySymbolView, 850.0);
         row.getChildren().add(partySymbolView);
 
         // Checkbox for voting
         CheckBox selectCheckbox = new CheckBox();
-        AnchorPane.setLeftAnchor(selectCheckbox, 1100.0); // Set X position for the checkbox
-        AnchorPane.setTopAnchor(selectCheckbox, 10.0); // Adjust top to center vertically
+        AnchorPane.setLeftAnchor(selectCheckbox, 1100.0);
+        AnchorPane.setTopAnchor(selectCheckbox, 10.0);
         row.getChildren().add(selectCheckbox);
+
+        // Add the checkbox and candidate ID to the map
+        checkboxCandidateMap.put(selectCheckbox, candidate.getCid());
 
         // Add listener to each checkbox
         selectCheckbox.setOnAction(event -> handleCheckboxSelection(selectCheckbox));
@@ -98,25 +105,21 @@ public class CastVoteController {
         lastSelectedCheckbox = currentCheckbox;
     }
 
-    // Method to cast vote
-    private void castVote(Candidate selectedCandidate) {
-        // Cast the vote and update results using the ElectionManagementSystem
-        if (ems != null) {
-            // Use electionManagementSystem methods here to handle vote
-        }
-    }
-
     public void handleSubmit(ActionEvent actionEvent) {
-        // Assuming the selected candidate is the one with the checked checkbox
+        // Check if there is a selected checkbox
         if (lastSelectedCheckbox != null && lastSelectedCheckbox.isSelected()) {
-            // Get the candidate associated with the selected checkbox
-            int selectedIndex = candidateTable.getChildren().indexOf(lastSelectedCheckbox.getParent());
-            Candidate selectedCandidate = ems.getCands().get(selectedIndex);
-            castVote(selectedCandidate);
-        }
+            // Retrieve the candidate ID from the map using the selected checkbox
+            Integer candidateId = checkboxCandidateMap.get(lastSelectedCheckbox);
+            if (candidateId != null) {
 
-        // Close the window
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.close();
+                ems.castVote(candidateId);
+                ems.updateVoterStatus(cnic);
+
+            }
+
+            // Close the window
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        }
     }
 }

@@ -1,4 +1,4 @@
-package votix;
+package votix.models;
 
 // PollingStationPC class
 public class PollingStationPC {
