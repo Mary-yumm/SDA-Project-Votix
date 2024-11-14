@@ -51,7 +51,7 @@ public class candidateListController {
                 addCandidateRow(candidate);
             }
         } else {
-            System.out.println("EMS is null!");
+            System.out.println("EMS  is null!");
         }
     }
     private void addCandidateRow(Candidate candidate) {
