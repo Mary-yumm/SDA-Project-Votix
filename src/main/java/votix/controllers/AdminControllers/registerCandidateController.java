@@ -77,7 +77,6 @@ public class registerCandidateController {
         assert politicalparty != null : "fx:id=\"politicalparty\" was not injected: check your FXML file 'registerCandidate.fxml'.";
         assert registerbutton != null : "fx:id=\"registerbutton\" was not injected: check your FXML file 'registerCandidate.fxml'.";
         assert titlebar != null : "fx:id=\"titlebar\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-
         // Populate political parties ComboBox
         loaddata();
     }

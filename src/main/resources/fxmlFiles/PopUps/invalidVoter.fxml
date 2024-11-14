@@ -13,6 +13,7 @@
       <Label layoutX="120.0" layoutY="231.0" prefHeight="36.0" prefWidth="302.0" text="Invalid Voter Credentials!">
          <font>
             <Font size="25.0" />
+
          </font>
       </Label>
       <ImageView fitHeight="74.0" fitWidth="83.0" layoutX="229.0" layoutY="121.0" pickOnBounds="true" preserveRatio="true">

@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 
 public class updateCandidateController {
 
+
     @FXML
     private ResourceBundle resources;
 

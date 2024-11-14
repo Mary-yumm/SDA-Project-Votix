@@ -11,6 +11,7 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.candidateListController">
    <children>
+
       <ScrollPane fitToWidth="true" layoutX="104.0" layoutY="235.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="586.0" prefWidth="1680.0" AnchorPane.bottomAnchor="259.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="235.0">
          <content>
             <VBox fx:id="candidateTable" spacing="10.0">

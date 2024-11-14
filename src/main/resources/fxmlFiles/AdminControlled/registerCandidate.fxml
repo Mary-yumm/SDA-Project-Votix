@@ -12,6 +12,7 @@
    <children>
       <AnchorPane layoutX="250.0" layoutY="169.0" prefHeight="510.0" prefWidth="1419.0" style="-fx-background-color: #BDBDBD;" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="251.60000000000014">
          <children>
+
             <TextField fx:id="name" layoutX="161.0" layoutY="57.0" />
             <TextField fx:id="age" layoutX="161.0" layoutY="128.0" />
             <TextField fx:id="cnic" layoutX="163.0" layoutY="199.0" />
