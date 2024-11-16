@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<fx:root prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@../../style/style.css" type="AnchorPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.updateCandidateController">
+
+
+    <!-- Title Bar -->
+    <AnchorPane prefHeight="100.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Text fill="#e4e4e4" layoutX="770.0" layoutY="60.0" style="-fx-font-size: 48px;" text="Update Candidate Information" />
+    </AnchorPane>
+
+    <!-- Form Section -->
+    <VBox layoutX="543.0" layoutY="198.0" prefHeight="610.0" prefWidth="906.0" spacing="20.0" styleClass="form-section" AnchorPane.leftAnchor="543.0" AnchorPane.topAnchor="198.0">
+        <HBox spacing="10.0">
+            <children>
+                <Label styleClass="label" text="         Candidate Id:        " />
+                <TextField prefHeight="46.0" prefWidth="200.0" />
+            </children>
+        </HBox>
+        <HBox spacing="10.0">
+            <Label styleClass="label" text="         Candidate Name: " />
+            <TextField prefHeight="46.0" prefWidth="301.0" />
+        </HBox>
+
+        <HBox prefHeight="45.0" prefWidth="422.0" spacing="10.0">
+            <Label styleClass="label" text="         Age:                      " />
+            <TextField fx:id="age" styleClass="text-field" />
+        </HBox>
+
+        <HBox spacing="10.0">
+            <Label styleClass="label" text="         CNIC:                    " />
+            <TextField fx:id="cnic" styleClass="text-field" />
+        </HBox>
+
+        <HBox spacing="10.0">
+            <Label prefHeight="32.0" prefWidth="305.0" styleClass="label" text="         NA/PA:             " />
+            <ComboBox fx:id="politicalparty" prefHeight="34.0" prefWidth="300.0" styleClass="combo-box" />
+        </HBox>
+
+        <HBox spacing="10.0">
+            <Label prefHeight="32.0" prefWidth="307.0" styleClass="label" text="         Nationality:           " />
+            <ComboBox fx:id="nationality" prefHeight="32.0" prefWidth="301.0" styleClass="combo-box" />
+        </HBox>
+      <HBox spacing="10.0">
+         <children>
+            <Label prefHeight="32.0" prefWidth="306.0" styleClass="label" text="         Political Party:" />
+            <ComboBox fx:id="politicalparty1" prefHeight="34.0" prefWidth="302.0" styleClass="combo-box" />
+         </children>
+      </HBox>
+        <HBox spacing="10.0">
+            <children>
+                <Label prefHeight="32.0" prefWidth="310.0" styleClass="label" text="         Eligibility Status:" />
+                <ComboBox fx:id="nationality1" prefHeight="32.0" prefWidth="301.0" styleClass="combo-box" />
+            </children>
+        </HBox>
+
+        <!-- Submit Button -->
+        <Button fx:id="registerButton" prefWidth="200.0" styleClass="submit-button" text="Update" />
+    </VBox>
+</fx:root>

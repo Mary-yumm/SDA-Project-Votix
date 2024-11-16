@@ -4,34 +4,34 @@ import votix.models.Area;
 import votix.models.Candidate;
 import votix.models.PollingStaff;
 import votix.models.PollingStation;
-
 import java.util.ArrayList;
 
-public class AdminElectionManagementSystem implements ElectionManagementSystem {
+public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     private PersistenceHandler ph;
     private ArrayList<Area> area;
     private String electionType;
 
-    AdminElectionManagementSystem() {
+    public AdminElectionManagementSystem(PersistenceHandler ph) {
 
         area = new ArrayList<>();
+        this.ph = ph;
     }
 
     public void displayAllResults() {
-
     }
 
-    public Candidate addCandidate() {
-        // Implementation for adding a candidate
-        return new Candidate();
+    public boolean addCandidate(Candidate cand, String area) {
+        return ph.addCandidate(cand, area);
     }
 
     public PollingStaff managePollingStaff() {
         // Implementation for managing polling staff
         return new PollingStaff();
     }
-
+    public ArrayList<String> getPartyNames(){
+        return ph.getPartyNames();
+    }
     public void initiateSystem() {
         // Implementation to initiate the system
     }
@@ -89,11 +89,19 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem {
 
     }
 
-    //
+    public PersistenceHandler getPersistenceHandler(){
+        return this.ph;
+    }
     public void setPersistenceHandler(PersistenceHandler handler){
-
+    this.ph =  handler;
     }
 
+    public boolean checkEligibility(int age, String cnic, String nationality){
+        return ph.checkEligibility( age, cnic, nationality);
+    }
+    public ArrayList<String> getAreaID(){
+    return ph.getAreaID();
+    }
 //    public void setElectionResult(ElectionResult result) {
 //        this.electionResult = result;
 //    }
@@ -115,9 +123,12 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem {
 
     public ArrayList<Candidate> getCands() {
         // Implementation to get candidates
-//        if(ph!=null){
-//            return ph.fetchCandidates();
-//        }
+        System.out.println("Getting candidates:.......");
+        if(ph!=null){
+
+            return ph.fetchCandidates(1);
+      }
+        System.out.println("Errorr...............");
         return new ArrayList<>();
     }
 

@@ -18,4 +18,7 @@ module org.example.sdaprojectvotix {
     opens votix.models to javafx.fxml;
     exports votix.services;
     opens votix.services to javafx.fxml;
+    exports votix.controllers.PopUps;
+    opens votix.controllers.PopUps to javafx.fxml;
+
 }

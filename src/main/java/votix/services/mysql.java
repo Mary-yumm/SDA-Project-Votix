@@ -471,7 +471,135 @@ public class mysql extends PersistenceHandler {
     }
 
     @Override
-    public void addCandidate(Candidate candidate) {
+    public boolean addCandidate(Candidate candidate, String area) {
 
+        String sql = "INSERT INTO CANDIDATE (candidateId, name, partyName, registrationDate, partySymbol, naPa) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            // Set the values in the prepared statement
+            preparedStatement.setInt(1, candidate.getCid());
+            preparedStatement.setString(2, candidate.getName());
+            preparedStatement.setString(3, candidate.getPartyName());
+            preparedStatement.setDate(4, candidate.getRegistrationDate());
+            preparedStatement.setString(5, candidate.getPartySymbolPath());  // Store the file path or a reference to the image
+
+            if(candidate.getNapa().equals("National Assembly")){
+                preparedStatement.setString(6, "NA");
+            }
+            else{
+                preparedStatement.setString(6, "PA");
+            }
+
+            // Execute the update (INSERT)
+            preparedStatement.executeUpdate();
+
+            System.out.println("Candidate added successfully.");
+
+
+
+            //adding value to candidate area table
+
+            String sql1 = "INSERT INTO CANDIDATE_AREA (candidateId, areaId) " + "VALUES (?,?)";
+
+            try (PreparedStatement preparedStatement1 = conn.prepareStatement(sql1)) {
+
+                // Set the values in the prepared statement
+                preparedStatement1.setInt(1, candidate.getCid());
+                preparedStatement1.setString(2, area);
+
+                // Execute the update (INSERT)
+                preparedStatement1.executeUpdate();
+
+                System.out.println("Candidate area added successfully.");
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                System.out.println("Error while adding candidate area: " + e.getMessage());
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error while adding candidate: " + e.getMessage());
+            return false;
+        }
+
+
+    }
+
+    @Override
+    public ArrayList<String> getPartyNames(){
+
+        ArrayList<String> partyNames = new ArrayList<>();
+        String partyQuery = "SELECT distinct partyName FROM CANDIDATE";
+
+        try (PreparedStatement voterPs = conn.prepareStatement(partyQuery)) {
+            ResultSet partyRs = voterPs.executeQuery();
+
+            while (partyRs.next()) {
+                String pname = partyRs.getString("partyName");
+                partyNames.add(pname);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return partyNames;
+    }
+
+    @Override
+    public boolean checkEligibility(int age, String cnic, String nationality) {
+        return false;
+    }
+
+    public boolean checkEligibility(String cnic, int age, String nationality) {
+        String sql = "SELECT age, nationality FROM candidate_verification WHERE cnic = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, cnic);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                int dbAge = rs.getInt("age");
+                String dbNationality = rs.getString("nationality");
+
+                if (dbAge >= 25 && dbNationality.equalsIgnoreCase("Pakistani")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                System.out.println("No candidate found with CNIC: " + cnic);
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error checking eligibility: " + e.getMessage());
+            return false;
+        }
+    }
+    public ArrayList<String> getAreaID() {
+        ArrayList<String> areaIDs = new ArrayList<>();
+        String areaQuery = "SELECT DISTINCT areaID FROM AREA"; // Assuming "AREA" is the table name and "areaID" is the column.
+
+        try (PreparedStatement areaPs = conn.prepareStatement(areaQuery)) {
+            ResultSet areaRs = areaPs.executeQuery();
+
+            while (areaRs.next()) {
+                // Fetch the areaID as an integer, then convert it to String.
+                int areaID = areaRs.getInt("areaID");
+                areaIDs.add(String.valueOf(areaID)); // Convert the integer to a String and add to the list.
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return areaIDs;
     }
 }

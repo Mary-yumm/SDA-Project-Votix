@@ -21,5 +21,6 @@ public interface ElectionManagementSystem {
 
     public void createLogEntry(String entry);
 
+    boolean checkEligibility(int i, String text, String value);
 }
 

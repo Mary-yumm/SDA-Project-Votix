@@ -103,4 +103,12 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     public void createLogEntry(String entry) {
 
     }
+
+
+    //no use
+    @Override
+    public boolean checkEligibility(int i, String text, String value) {
+        return false;
+    }
+
 }

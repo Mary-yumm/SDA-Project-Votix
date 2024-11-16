@@ -9,22 +9,23 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.candidateListController">
 
-    <ScrollPane fitToWidth="true" layoutX="104.0" layoutY="235.0" prefHeight="586.0" prefWidth="1680.0" AnchorPane.bottomAnchor="259.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="235.0">
-        <VBox fx:id="candidateTable" spacing="10.0">
+
+    <ScrollPane fitToWidth="true" layoutX="104.0" layoutY="235.0" prefHeight="586.0" prefWidth="1680.0" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="235.0">
+        <VBox fx:id="candidateTable" spacing="10">
             <!-- Table Headers -->
-            <HBox spacing="300.0" styleClass="table-header">
-                <Label ellipsisString="" prefHeight="25.0" prefWidth="232.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Candidate Name              " textOverrun="CLIP" />
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Name      " />
-                <Label prefHeight="23.0" prefWidth="158.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Symbol " />
-                <Label prefHeight="23.0" prefWidth="144.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Vote Count " />
+            <HBox spacing="200.0" styleClass="table-header">
+                <Label  style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Candidate Name"/>
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Name" />
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Symbol" />
+                <Label  style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Vote Count" />
             </HBox>
             <!-- Candidate rows will be dynamically added here by the controller -->
         </VBox>
     </ScrollPane>
-   <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1906.0" styleClass="title-bar">
-      <children>
-         <Text fill="#e4e4e4" layoutX="770.0" layoutY="59.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Candidate List" />
-      </children>
-   </AnchorPane>
+    <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1906.0" styleClass="title-bar">
+        <children>
+            <Text fill="#e4e4e4" layoutX="770.0" layoutY="59.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Candidate List" />
+        </children>
+    </AnchorPane>
 
 </AnchorPane>
