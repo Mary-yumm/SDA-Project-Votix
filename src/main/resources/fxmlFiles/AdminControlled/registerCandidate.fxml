@@ -22,7 +22,7 @@
             <Label fx:id="label4" layoutX="962.0" layoutY="63.0" text="Political Party" />
             <ComboBox fx:id="politicalparty" layoutX="1159.2" layoutY="56.8" prefHeight="54.0" prefWidth="211.0" AnchorPane.bottomAnchor="400.0" AnchorPane.leftAnchor="1159.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="57.0" />
             <Label fx:id="label5" layoutX="962.0" layoutY="148.0" text="Nationality" />
-            <Button fx:id="checkeligibilitybutton" layoutX="1067.0" layoutY="235.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="251.0" style="-fx-background-color: #00695C; -fx-background-radius: 30px; -fx-border-color: #212121; -fx-border-radius: 30px;" text="Check Eligibility" textAlignment="CENTER" />
+            <Button fx:id="checkeligibilitybutton" layoutX="1067.0" layoutY="235.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="251.0" style="-fx-background-color: #00695C; -fx-background-radius: 30px; -fx-border-color: #212121; -fx-border-radius: 30px;" text="Check Eligibility" textAlignment="CENTER" onAction="#checkForEligibility" />
             <Button fx:id="registerbutton" layoutX="607.0" layoutY="425.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="204.0" style="-fx-background-color: #00695C; -fx-border-color: #212121; -fx-border-radius: 30px; -fx-background-radius: 30px;" text="Register" textFill="WHITE" />
             <ComboBox fx:id="nationality" layoutX="1159.0" layoutY="138.0" prefHeight="46.0" prefWidth="213.0" />
          </children>
