@@ -128,5 +128,6 @@ public class registerCandidateController {
     }
 
     public void addToCandidates(ActionEvent actionEvent) {
+
     }
 }

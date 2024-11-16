@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -83,6 +84,8 @@ public class candidateListController {
 
         candidateTable.getChildren().add(row); // Add row to the table
     }
+
+
 }
 
 

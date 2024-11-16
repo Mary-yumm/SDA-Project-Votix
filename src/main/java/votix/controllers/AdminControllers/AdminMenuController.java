@@ -147,7 +147,24 @@ public class AdminMenuController {
 
     @FXML
     void viewStaffAssignments() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/staffAssignments.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            staffAssignmentsController controller = loader.getController();
 
+            // Check if controller is not null and set EMS
+            if (controller != null) {
+                System.out.println("setting");
+                this.primaryStage.getScene();
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
+            } else {
+                System.out.println("addCandidateController is null!");  // Debugging line
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Method to set the active button
