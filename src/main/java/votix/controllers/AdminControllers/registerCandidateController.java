@@ -1,7 +1,10 @@
 package votix.controllers.AdminControllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -46,6 +49,8 @@ public class registerCandidateController {
 
     private boolean eli;
     @FXML
+    private ComboBox<String> area;
+    @FXML
     private ComboBox<String> nationality;
 
     @FXML
@@ -57,15 +62,10 @@ public class registerCandidateController {
     @FXML
     private AnchorPane titlebar;
 
-    private ElectionManagementSystem ems; // Your Election Management System instance
+    private AdminElectionManagementSystem ems; // Your Election Management System instance
     private Stage primaryStage;
     private PersistenceHandler ph; // Database connection handler
-
-    @FXML
-    void initialize() {
- // Populate political parties ComboBox
-        loaddata();
-    }
+    private Stage stage;
 
     private void loaddata() {
         // Sample list of political parties, replace this with data from your system/database
@@ -75,6 +75,21 @@ public class registerCandidateController {
         politicalparty.setItems(politicalParties);
         nationality.setItems(politicalParties);
     }
+
+    void loadParty_AreaName(){
+        System.out.println("Loadinggggg");
+        ArrayList<String> party = ems.getPartyNames();
+        ObservableList<String> np = FXCollections.observableArrayList(party);
+        politicalparty.setItems(np);
+
+        ArrayList<String> ar = ems.getAreaID();
+        ObservableList<String> array = FXCollections.observableArrayList(ar);
+        area.setItems(array);
+
+        System.out.println("Loading completedd");
+
+    }
+
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -84,8 +99,11 @@ public class registerCandidateController {
         this.ph = ph;
     }
     // Setter to receive ElectionManagementSystem from the MainApp
-    public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem) {
+    public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem, Stage st) {
         this.ems = electionManagementSystem;
+        this.stage = st;
+
+        loaddata();
     }
 
     //controller ftns
@@ -107,5 +125,8 @@ public class registerCandidateController {
         }
 
         return this.eli;
+    }
+
+    public void addToCandidates(ActionEvent actionEvent) {
     }
 }

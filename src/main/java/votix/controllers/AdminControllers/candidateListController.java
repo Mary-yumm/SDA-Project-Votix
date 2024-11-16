@@ -29,25 +29,11 @@ public class candidateListController {
     private AdminElectionManagementSystem ems; // Election Management System instance
     private PersistenceHandler ph; // Database connection handler
 
-    // Method to set the primary stage
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-    // Method to set the database connection
-    public void setConnection(PersistenceHandler ph) {
-        this.ph = ph;
-    }
-
     // Method to inject the ElectionManagementSystem and populate candidates
-    public void setElectionManagementSystem(AdminElectionManagementSystem system) {
+    public void setElectionManagementSystem(AdminElectionManagementSystem system, Stage st) {
         this.ems = system;
+        this.primaryStage = st;
         populateCandidates(); // Call to populate candidates after setting EMS
-    }
-
-    @FXML
-    void initialize() {
-        assert candidateTable != null : "fx:id=\"candidateTable\" was not injected: check your FXML file 'CandidateList.fxml'.";
     }
 
     // Method to populate candidates in the UI

@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="contentPane" prefHeight="593.0" prefWidth="601.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.AdminMenuController">
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="858.0" prefWidth="1500.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.AdminMenuController">
    <children>
-      <Label layoutX="145.0" layoutY="35.0" text="Select an action to perform:" />
-      <Button fx:id="submitButton1" layoutX="208.0" layoutY="186.0" onAction="#addCandidate" prefHeight="42.0" prefWidth="220.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Add a Candidate" />
-      <Button fx:id="submitButton2" layoutX="208.0" layoutY="250.0" onAction="#updateCandidate" prefHeight="42.0" prefWidth="220.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Update Candidate Info" />
-      <Button fx:id="submitButton3" layoutX="208.0" layoutY="386.0" onAction="#viewElectionForm" prefHeight="42.0" prefWidth="220.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Election Forms" />
-      <Button fx:id="submitButton4" layoutX="208.0" layoutY="451.0" onAction="#viewStaffAssignments" prefHeight="42.0" prefWidth="220.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Staff Assignments" />
-      <Button fx:id="submitButton41" layoutX="208.0" layoutY="318.0" onAction="#registerCandidate" prefHeight="42.0" prefWidth="220.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Register a Candidate" />
-      <Button fx:id="submitButton11" layoutX="208.0" layoutY="118.0" onAction="#viewCandidateList" prefHeight="42.0" prefWidth="220.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Candidate List" />
+      <Label layoutX="375.0" layoutY="62.0" text="Select an action to perform:" />
+      <Button fx:id="submitButton1" layoutX="607.0" layoutY="298.0" onAction="#addCandidate" prefHeight="51.0" prefWidth="250.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Add a Candidate" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="submitButton3" layoutX="607.0" layoutY="472.0" onAction="#viewElectionForm" prefHeight="51.0" prefWidth="250.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Election Forms" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="submitButton4" alignment="CENTER" contentDisplay="CENTER" layoutX="607.0" layoutY="554.0" onAction="#viewStaffAssignments" prefHeight="51.0" prefWidth="250.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Staff Assignments" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="submitButton41" layoutX="607.0" layoutY="386.0" onAction="#registerCandidate" prefHeight="51.0" prefWidth="250.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Register a Candidate" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="submitButton11" layoutX="607.0" layoutY="209.0" onAction="#viewCandidateList" prefHeight="51.0" prefWidth="250.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Candidate List" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
 
-      <Separator layoutX="40.0" layoutY="19.0" prefHeight="7.0" prefWidth="526.0" style="-fx-background-color: #385B4F;" />
-      <Separator layoutX="40.0" layoutY="560.0" prefHeight="7.0" prefWidth="526.0" style="-fx-background-color: #385B4F;" />
+      <Separator layoutX="40.0" layoutY="19.0" prefHeight="18.0" prefWidth="1441.0" style="-fx-background-color: #385B4F;" />
+      <Separator layoutX="40.0" layoutY="824.0" prefHeight="18.0" prefWidth="1434.0" style="-fx-background-color: #385B4F;" />
    </children>
 </AnchorPane>
