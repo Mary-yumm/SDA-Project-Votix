@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import votix.controllers.PollingPC.CaptureVoterInfoController;
 import votix.models.Candidate;
@@ -24,9 +25,6 @@ public class AdminMenuController {
 
     @FXML   //add cand
     private Button submitButton1;
-
-    @FXML   //update cand
-    private Button submitButton2;
 
     @FXML   //register cand
     private Button submitButton3;
@@ -58,13 +56,7 @@ public class AdminMenuController {
         setActiveButton(submitButton11);
     }
 
-    public void selectbtn1() {
-        setActiveButton(submitButton1);
-    }
-
-    public void selectbtn2() {
-        setActiveButton(submitButton2);
-    }
+    public void selectbtn1() { setActiveButton(submitButton1); }
 
     public void selectbtn3() {
         setActiveButton(submitButton3);
@@ -89,8 +81,6 @@ public class AdminMenuController {
             // Check if controller is not null and set EMS
             if (controller != null) {
                 System.out.println("setting");
-                this.primaryStage.setMaxHeight(850);
-                this.primaryStage.setMaxWidth(1000);
                 this.primaryStage.getScene();
                 controller.setElectionManagementSystem(this.ems, this.primaryStage, this.primaryStage.getScene());  // Pass the ems instance
             } else {
@@ -105,16 +95,49 @@ public class AdminMenuController {
 
     @FXML
     void registerCandidate() {
+        selectbtn3();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/registerCandidate.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            registerCandidateController controller = loader.getController();
 
-    }
-
-    @FXML
-    void updateCandidate() {
+            // Check if controller is not null and set EMS
+            if (controller != null) {
+                System.out.println("setting");
+                this.primaryStage.getScene();
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
+            } else {
+                System.out.println("addCandidateController is null!");  // Debugging line
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @FXML
     void viewCandidateList() {
+        selectbtn11();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/CandidateList.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            candidateListController controller = loader.getController();
+
+            // Check if controller is not null and set EMS
+            if (controller != null) {
+                System.out.println("setting");
+                this.primaryStage.getScene();
+               controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
+            } else {
+                System.out.println("addCandidateController is null!");  // Debugging line
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -133,7 +156,6 @@ public class AdminMenuController {
         submitButton41.getStyleClass().remove("selected");
         submitButton4.getStyleClass().remove("selected");
         submitButton3.getStyleClass().remove("selected");
-        submitButton2.getStyleClass().remove("selected");
         submitButton1.getStyleClass().remove("selected");
         submitButton11.getStyleClass().remove("selected");
         // Add the 'selected' class to the clicked button
