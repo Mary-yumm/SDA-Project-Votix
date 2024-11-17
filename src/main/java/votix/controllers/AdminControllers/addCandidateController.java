@@ -72,7 +72,6 @@ public class addCandidateController {
         else{
             System.out.println("ems set in addcandidate: null");
         }
-
         initializingMethod(); //after connection to ems, load data onto comboboxes
         this.stage =st;
         this.scene = sc;

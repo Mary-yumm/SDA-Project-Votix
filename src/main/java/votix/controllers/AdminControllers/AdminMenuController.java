@@ -21,28 +21,36 @@ import votix.services.PollingPCElectionManagementSystem;
 public class AdminMenuController {
 
     @FXML   //view candidate
-    private Button submitButton11;
+    private Button viewCandidate;
 
     @FXML   //add cand
-    private Button submitButton1;
+    private Button addCand;
 
-    @FXML   //register cand
-    private Button submitButton3;
+    @FXML   //view election form
+    private Button viewForm;
 
     @FXML   //view form
-    private Button submitButton4;
+    private Button viewreport;
 
     @FXML   //view staff
-    private Button submitButton41;
+    private Button viewStaff;
+
+    @FXML
+    private Button pollingStaff;
+
+    @FXML
+    private Button staffUpdation;
+
+    @FXML
+    private Button viewresult;
 
     @FXML
     private AnchorPane contentPane;
-    private AdminElectionManagementSystem ems; // Your Election Management System instance
+    private AdminElectionManagementSystem ems;
     private Stage primaryStage;
-    private PersistenceHandler ph; // Database connection handler
+    private PersistenceHandler ph;
 
 
-    // Setter to receive ElectionManagementSystem from the MainApp
     public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem) {
         this.ems = electionManagementSystem;
         if (ems != null) {
@@ -51,28 +59,47 @@ public class AdminMenuController {
             System.out.println("ems set in admin menu: null");
         }
     }
-
-    public void selectbtn11() {
-        setActiveButton(submitButton11);
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
-    public void selectbtn1() { setActiveButton(submitButton1); }
-
-    public void selectbtn3() {
-        setActiveButton(submitButton3);
+    // Method to set the database connection
+    public void setConnection(PersistenceHandler ph) {
+        this.ph = ph;
     }
 
-    public void selectbtn4() {
-        setActiveButton(submitButton4);
+    public void viewCandidateBtn() {
+        setActiveButton(viewCandidate);
     }
 
-    public void selectbtn41() {
-        setActiveButton(submitButton41);
+    public void addCandBtn() { setActiveButton(addCand); }
+
+    public void viewFormBtn() {
+        setActiveButton(viewForm);
     }
+
+    public void viewReportBtn() {
+        setActiveButton(viewreport);
+    }
+
+    public void viewStaffBtn() { setActiveButton(viewStaff);}
+
+    public void viewresultBtn() {
+        setActiveButton(viewresult);
+    }
+
+    public void pollingStaffBtn() {
+        setActiveButton(pollingStaff);
+    }
+
+    public void staffUpdationBtn() {
+        setActiveButton(staffUpdation);
+    }
+
 
     @FXML
     void addCandidate() {
-        selectbtn1();
+        addCandBtn();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/addCandidate.fxml"));
             AnchorPane addCandidatePane = loader.load();
@@ -81,7 +108,7 @@ public class AdminMenuController {
             // Check if controller is not null and set EMS
             if (controller != null) {
                 System.out.println("setting");
-                this.primaryStage.getScene();
+                //this.primaryStage.getScene();
                 controller.setElectionManagementSystem(this.ems, this.primaryStage, this.primaryStage.getScene());  // Pass the ems instance
             } else {
                 System.out.println("addCandidateController is null!");  // Debugging line
@@ -93,45 +120,21 @@ public class AdminMenuController {
         }
     }
 
-    @FXML
-    void registerCandidate() {
-        selectbtn3();
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/registerCandidate.fxml"));
-            AnchorPane addCandidatePane = loader.load();
-            registerCandidateController controller = loader.getController();
-
-            // Check if controller is not null and set EMS
-            if (controller != null) {
-                System.out.println("setting");
-                this.primaryStage.getScene();
-                controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
-            } else {
-                System.out.println("addCandidateController is null!");  // Debugging line
-            }
-            contentPane.getChildren().setAll(addCandidatePane);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @FXML
     void viewCandidateList() {
-        selectbtn11();
+        viewCandidateBtn();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/CandidateList.fxml"));
             AnchorPane addCandidatePane = loader.load();
             candidateListController controller = loader.getController();
 
-            // Check if controller is not null and set EMS
             if (controller != null) {
                 System.out.println("setting");
                 this.primaryStage.getScene();
-               controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
+               controller.setElectionManagementSystem(this.ems, this.primaryStage);
             } else {
-                System.out.println("addCandidateController is null!");  // Debugging line
+                System.out.println("addCandidateController is null!");
             }
             contentPane.getChildren().setAll(addCandidatePane);
         }
@@ -142,11 +145,12 @@ public class AdminMenuController {
 
     @FXML
     void viewElectionForm() {
-
+        viewFormBtn();
     }
 
     @FXML
     void viewStaffAssignments() {
+        viewStaffBtn();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/staffAssignments.fxml"));
             AnchorPane addCandidatePane = loader.load();
@@ -167,24 +171,36 @@ public class AdminMenuController {
         }
     }
 
+    public void viewElectionResult(ActionEvent actionEvent) {
+        viewresultBtn();
+    }
+
+    public void update_DeactivaeStaff(ActionEvent actionEvent) {
+        staffUpdationBtn();
+    }
+
+    public void addPollingStaff(ActionEvent actionEvent) {
+        pollingStaffBtn();
+    }
+
+    public void viewElectionReport(ActionEvent actionEvent) {
+        viewReportBtn();
+    }
+
     // Method to set the active button
     private void setActiveButton(Button activeButton) {
         // Remove the 'selected' class from all buttons
-        submitButton41.getStyleClass().remove("selected");
-        submitButton4.getStyleClass().remove("selected");
-        submitButton3.getStyleClass().remove("selected");
-        submitButton1.getStyleClass().remove("selected");
-        submitButton11.getStyleClass().remove("selected");
+        viewStaff.getStyleClass().remove("selected");
+        viewForm.getStyleClass().remove("selected");
+        addCand.getStyleClass().remove("selected");
+        viewCandidate.getStyleClass().remove("selected");
+        viewreport.getStyleClass().remove("selected");
+        pollingStaff.getStyleClass().remove("selected");
+        staffUpdation.getStyleClass().remove("selected");
+        viewresult.getStyleClass().remove("selected");
+
         // Add the 'selected' class to the clicked button
         activeButton.getStyleClass().add("selected");
     }
 
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-    // Method to set the database connection
-    public void setConnection(PersistenceHandler ph) {
-        this.ph = ph;
-    }
 }
