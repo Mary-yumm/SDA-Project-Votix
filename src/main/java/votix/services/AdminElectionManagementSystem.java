@@ -5,6 +5,7 @@ import votix.models.Candidate;
 import votix.models.PollingStaff;
 import votix.models.PollingStation;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
@@ -42,10 +43,6 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     public void recountVotes() {
         // Implementation to recount votes
-    }
-
-    public void viewAssignedStaff() {
-        // Implementation to view assigned staff
     }
 
     public void monitorPollingStation() {
@@ -131,12 +128,24 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         System.out.println("Errorr...............");
         return new ArrayList<>();
     }
-    public ArrayList<Integer> getCandID(){
+    public ArrayList<Candidate> getAllCand(){
         return ph.fetchAllCandidates();
     }
 
     public void createLogEntry(String entry) {
         // Implementation to create a log entry
     }
+
+    public void searchStaffByStaffName() {
+      //  return ph.getStaffByName();
+    }
+
+    public void searchStaffByAreaID() {
+    }
+
+    public ArrayList<Object> getStaffAssignments() {
+       return ph.getStaffAssignments();
+    }
+
 
 }

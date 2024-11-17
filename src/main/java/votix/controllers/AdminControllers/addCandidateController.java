@@ -252,11 +252,11 @@ public class addCandidateController {
     }
 
     boolean isIdInUse() {
-        List<Integer> candidates = ems.getCandID();
+        List<Candidate> candidates = ems.getAllCand();
 
-        for (int candidateId : candidates) {
-            if (candidateId== Integer.parseInt(cid.getText())) {
-                System.out.println("Duplicate ID found: " + candidateId);
+        for (Candidate cand : candidates) {
+            if (cand.getCid()== Integer.parseInt(cid.getText())) {
+                System.out.println("Duplicate ID found: " + cand.getCid());
                 return true;
             }
         }

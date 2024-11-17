@@ -10,14 +10,14 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.candidateListController">
 
 
-    <ScrollPane fitToWidth="true" layoutX="104.0" layoutY="235.0" prefHeight="466.0" prefWidth="1260.0" AnchorPane.bottomAnchor="134.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="235.0">
+    <ScrollPane fitToWidth="true" layoutX="275.0" layoutY="227.0" prefHeight="465.0" prefWidth="958.0" AnchorPane.bottomAnchor="145.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="269.0" AnchorPane.topAnchor="227.0">
         <VBox fx:id="candidateTable" spacing="10">
             <!-- Table Headers -->
-            <HBox spacing="200.0" styleClass="table-header">
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Candidate Name" />
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Name" />
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Symbol" />
-                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Vote Count" />
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="955.0" spacing="100.0" styleClass="table-header">
+                <Label minWidth="-Infinity" prefHeight="23.0" prefWidth="187.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="    Candidate Name" />
+                <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="114.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Name" />
+                <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Symbol" />
+                <Label minWidth="-Infinity" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text=" Vote Count" />
             </HBox>
             <!-- Candidate rows will be dynamically added here by the controller -->
         </VBox>
