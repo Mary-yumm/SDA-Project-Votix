@@ -76,6 +76,26 @@ public class mysql extends PersistenceHandler {
     }
 
 
+    public ArrayList<Integer> fetchAllCandidates() {
+        ArrayList<Integer> candidateId = new ArrayList<>();
+        try {
+            // SQL query to fetch candidates that belong to the specified areaId
+            String query = "SELECT CANDIDATE.candidateId FROM CANDIDATE ";
+
+            // Prepare the statement
+            PreparedStatement ps = conn.prepareStatement(query);
+            // Execute the query and retrieve results
+            ResultSet rs = ps.executeQuery();
+
+            // Loop through the result set to create Candidate objects
+            while (rs.next()) {
+                candidateId.add(rs.getInt("candidateId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return candidateId;
+    }
 
     @Override
     public int verifyStaff(String username, String password,String currentMac) {
