@@ -1,51 +1,41 @@
 package votix.controllers.AdminControllers;
 
 import java.io.IOException;
-import java.net.URL;
-import java.security.cert.PolicyNode;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import votix.controllers.PollingPC.CaptureVoterInfoController;
-import votix.models.Candidate;
 import votix.services.AdminElectionManagementSystem;
 import votix.services.PersistenceHandler;
-import votix.services.PollingPCElectionManagementSystem;
 
 public class AdminMenuController {
 
-    @FXML   //view candidate
+    @FXML
+    public Button viewLogs;
+    @FXML
+    public Button monitorSystems;
+    @FXML
     private Button viewCandidate;
-
-    @FXML   //add cand
+    @FXML
     private Button addCand;
-
-    @FXML   //view election form
+    @FXML
     private Button viewForm;
-
-    @FXML   //view form
+    @FXML
     private Button viewreport;
-
-    @FXML   //view staff
+    @FXML
     private Button viewStaff;
-
     @FXML
     private Button pollingStaff;
-
     @FXML
     private Button staffUpdation;
-
     @FXML
     private Button viewresult;
-
     @FXML
     private AnchorPane contentPane;
+
     private AdminElectionManagementSystem ems;
     private Stage primaryStage;
     private PersistenceHandler ph;
@@ -96,6 +86,14 @@ public class AdminMenuController {
         setActiveButton(staffUpdation);
     }
 
+    public void viewLogsBtn() {
+        setActiveButton(viewLogs);
+    }
+
+    public void monitorSystemsBtn() {
+        setActiveButton(monitorSystems);
+    }
+
 
     @FXML
     void addCandidate() {
@@ -120,7 +118,6 @@ public class AdminMenuController {
         }
     }
 
-
     @FXML
     void viewCandidateList() {
         viewCandidateBtn();
@@ -141,11 +138,6 @@ public class AdminMenuController {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    void viewElectionForm() {
-        viewFormBtn();
     }
 
     @FXML
@@ -171,20 +163,35 @@ public class AdminMenuController {
         }
     }
 
-    public void viewElectionResult(ActionEvent actionEvent) {
+    @FXML
+    public void viewElectionResult() {
         viewresultBtn();
     }
 
-    public void update_DeactivaeStaff(ActionEvent actionEvent) {
+    @FXML
+    public void update_DeactivaeStaff() {
         staffUpdationBtn();
     }
 
-    public void addPollingStaff(ActionEvent actionEvent) {
+    @FXML
+    public void addPollingStaff() {
         pollingStaffBtn();
     }
 
-    public void viewElectionReport(ActionEvent actionEvent) {
+    @FXML
+    public void viewElectionReport() {
         viewReportBtn();
+    }
+
+    @FXML
+    public void monitorActiveSystems() {monitorSystemsBtn();}
+
+    @FXML
+    public void viewLogs() {viewLogsBtn();}
+
+    @FXML
+    public void viewElectionForm() {
+        viewFormBtn();
     }
 
     // Method to set the active button
@@ -198,9 +205,12 @@ public class AdminMenuController {
         pollingStaff.getStyleClass().remove("selected");
         staffUpdation.getStyleClass().remove("selected");
         viewresult.getStyleClass().remove("selected");
+        viewLogs.getStyleClass().remove("selected");
+        monitorSystems.getStyleClass().remove("selected");
 
         // Add the 'selected' class to the clicked button
         activeButton.getStyleClass().add("selected");
     }
+
 
 }

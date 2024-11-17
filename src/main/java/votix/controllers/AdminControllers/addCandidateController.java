@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.DEMO;
-import votix.controllers.PopUps.NewCandidateController;
+import votix.controllers.PopUps.*;
 import votix.models.Candidate;
 import votix.services.AdminElectionManagementSystem;
 import votix.services.PersistenceHandler;
@@ -20,6 +20,7 @@ import votix.services.mysql;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class addCandidateController {
 
@@ -80,28 +81,38 @@ public class addCandidateController {
     public void AddNewCandidate() throws IOException {
 
         boolean check = checkForEmptyFields();
+        boolean datatypeCheck = checkForIncorrectDataType();
         if(check) {
-            System.out.println("out1");
-            boolean st = (Integer.parseInt(age.getText()) >= 25) && nationality.getValue().equals("Pakistani");
-            if (st) {
-                System.out.println("out2");
+            if(datatypeCheck) {
+                if(!isIdInUse()) {
+                    System.out.println("out1");
+                    boolean st = (Integer.parseInt(age.getText()) >= 25) && nationality.getValue().equals("Pakistani");
+                    if (st) {
+                        System.out.println("out2");
 
-                Candidate cand = new Candidate(Integer.parseInt(cid.getText()), cname.getText(), politicalparty.getValue(), st, napa.getValue());
-                //this ftn is to take values from the interface and pass them to the ph
-                System.out.println("out3");
+                        Candidate cand = new Candidate(Integer.parseInt(cid.getText()), cname.getText(), politicalparty.getValue(), st, napa.getValue());
+                        //this ftn is to take values from the interface and pass them to the ph
+                        System.out.println("out3");
 
-                boolean addstatus = ems.addCandidate(cand, area.getValue());
-                if (addstatus) {
-                    //added successfully
-                    showPopUP(this.stage);
+                        boolean addstatus = ems.addCandidate(cand, area.getValue());
+                        if (addstatus) {
+                            //added successfully
+                            showPopUPAddedCand(this.stage);
+                        }
+                    } else {
+                        System.out.println("Candidate is not eligible");
+                        showPopUPNotEligible(this.stage);
+                    }
+                }else{
+                    showPopUPDuplicateID(this.stage);
                 }
-            }
-            else{
-                System.out.println("Candidate is not eligible");
-            }
+            }else{
+                //incorrect data types
+                showPopUPIncorrectDataType(this.stage);            }
         }
         else{
             System.out.println("Empty data fields");
+            showPopUPEmptyFields(this.stage);
         }
     }
 
@@ -143,7 +154,30 @@ public class addCandidateController {
 
         return true;
     }
-    void showPopUP(Stage st) throws IOException {
+    boolean checkForIncorrectDataType(){
+        if (!cname.getText().matches("[a-zA-Z ]+")) {
+            System.out.println("Invalid name. Only letters and spaces are allowed.");
+            return false;
+        }
+
+        if (!cid.getText().matches("\\d+")) {
+            System.out.println("Invalid ID. It should be an integer.");
+            return false;
+        }
+
+        if (!age.getText().matches("\\d+")) {
+            System.out.println("Invalid age. It should be an integer.");
+            return false;
+        }
+
+        if (!cnic.getText().matches("\\d{5}-\\d{7}-\\d")) {
+            System.out.println("Invalid CNIC. It should follow the format xxxxx-xxxxxxx-x.");
+            return false;
+        }
+        return true;
+    }
+
+    void showPopUPAddedCand(Stage st) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/NewCandidateAdded.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 520, 380);
         Stage stage = new Stage();
@@ -160,6 +194,76 @@ public class addCandidateController {
             this.stage.show();
         });
     }
+
+    void showPopUPNotEligible(Stage st) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/CandNotEligibleMessage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
+        Stage stage = new Stage();
+        stage.setTitle("PopUp");
+
+        // After loading the FXML, get the controller and set the ElectionManagementSystem
+        CandNotEligibleController controller = fxmlLoader.getController();
+        // Set the primary stage in the controller
+        controller.setPrimaryStage(stage);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    void showPopUPEmptyFields(Stage st) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/EmptyFieldsMessage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
+        Stage stage = new Stage();
+        stage.setTitle("PopUp");
+
+        // After loading the FXML, get the controller and set the ElectionManagementSystem
+        EmptyFieldsController controller = fxmlLoader.getController();
+        // Set the primary stage in the controller
+        controller.setPrimaryStage(stage);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    void showPopUPIncorrectDataType(Stage st) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/incorrectDataTypeMessage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
+        Stage stage = new Stage();
+        stage.setTitle("PopUp");
+
+        // After loading the FXML, get the controller and set the ElectionManagementSystem
+        incorrectDataTypeController controller = fxmlLoader.getController();
+        // Set the primary stage in the controller
+        controller.setPrimaryStage(stage);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    void showPopUPDuplicateID(Stage st) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/duplicateIDMessage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
+        Stage stage = new Stage();
+        stage.setTitle("PopUp");
+
+        // After loading the FXML, get the controller and set the ElectionManagementSystem
+        duplicateIDController controller = fxmlLoader.getController();
+        // Set the primary stage in the controller
+        controller.setPrimaryStage(stage);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    boolean isIdInUse() {
+        List<Integer> candidates = ems.getCandID();
+
+        for (int candidateId : candidates) {
+            if (candidateId== Integer.parseInt(cid.getText())) {
+                System.out.println("Duplicate ID found: " + candidateId);
+                return true;
+            }
+        }
+        System.out.println("Duplicate ID not found ");
+        return false;
+    }
+
 
 
 }

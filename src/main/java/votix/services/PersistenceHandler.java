@@ -50,6 +50,7 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> getPartyNames();
     public abstract boolean checkEligibility(int age,String cnic,  String nationality);
     public abstract ArrayList<String> getAreaID();
+    public abstract ArrayList<Integer> fetchAllCandidates();
 }
 
 

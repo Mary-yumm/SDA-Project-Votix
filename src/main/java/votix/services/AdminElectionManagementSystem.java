@@ -131,6 +131,9 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         System.out.println("Errorr...............");
         return new ArrayList<>();
     }
+    public ArrayList<Integer> getCandID(){
+        return ph.fetchAllCandidates();
+    }
 
     public void createLogEntry(String entry) {
         // Implementation to create a log entry
