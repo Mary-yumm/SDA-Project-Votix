@@ -41,7 +41,7 @@ public class candidateListController {
     private void populateCandidates() {
         if (ems != null) {
             System.out.println("EMS is not null, loading candidates...");
-            List<Candidate> candidates = ems.getCands();
+            List<Candidate> candidates = ems.getAllCand();
 
             if (candidates == null || candidates.isEmpty()) {
                 System.out.println("No candidates found!");
@@ -58,18 +58,22 @@ public class candidateListController {
 
     // Method to add a row to the candidate table for each candidate
     private void addCandidateRow(Candidate candidate) {
-        HBox row = new HBox(30); // Create a row with spacing
+        HBox row = new HBox(200); // Create a row with spacing
+        row.setPrefWidth(1300);
+        row.setPrefHeight(44);
         row.getStyleClass().add("table-row");
 
         // Candidate Name
         Label nameLabel = new Label(candidate.getName());
         nameLabel.getStyleClass().add("table-cell");
         row.getChildren().add(nameLabel);
+        nameLabel.setMinWidth(210);
 
         // Party Name
         Label partyLabel = new Label(candidate.getPartyName());
         partyLabel.getStyleClass().add("table-cell");
         row.getChildren().add(partyLabel);
+        partyLabel.setMinWidth(350);
 
         // Party Symbol
         ImageView partySymbolView = new ImageView(candidate.getPartySymbol());
@@ -81,6 +85,7 @@ public class candidateListController {
         Label voteCountLabel = new Label("0"); // Example placeholder, can be replaced with actual data
         voteCountLabel.getStyleClass().add("table-cell");
         row.getChildren().add(voteCountLabel);
+        voteCountLabel.setMinWidth(330);
 
         candidateTable.getChildren().add(row); // Add row to the table
     }
