@@ -4,8 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -14,20 +12,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root prefHeight="440.0" prefWidth="573.0" type="Pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.VeiwLogController">
+<fx:root prefHeight="1080.0" prefWidth="1920.0" type="Pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ViewLogsController">
    <children>
       <Pane layoutY="-8.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="451.0" prefWidth="573.0" spacing="20" style="-fx-background-color: #385B4F;">
+            <VBox alignment="CENTER" prefHeight="1080.0" prefWidth="1920.0" spacing="20" style="-fx-background-color: #385B4F;">
                <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #faf7f7;">
                   <children>
-                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="94.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" width="900.0" />
-                     <ImageView fitHeight="94.0" fitWidth="110.0" layoutX="13.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../../../../../../Desktop/VotixCompanyLogo2.png" />
-                        </image>
-                     </ImageView>
-                     <Text fill="#e4e4e4" layoutX="303.0" layoutY="69.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Election Logs" />
+                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="94.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" width="1920.0" />
+
+                     <Text fill="#e4e4e4" layoutX="735.0" layoutY="69.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Election Logs" />
                      <ChoiceBox layoutX="538.0" layoutY="175.0" prefHeight="25.0" prefWidth="303.0" />
                      <Label layoutX="57.0" layoutY="120.0" prefHeight="27.0" prefWidth="310.0" text="Election Date:" textAlignment="CENTER">
                         <font>
@@ -44,11 +38,11 @@
                         <children>
                            <AnchorPane layoutX="25.0" prefHeight="154.0" prefWidth="786.0">
                               <children>
-                                 <TableView layoutX="-15.0" layoutY="14.0" prefHeight="365.0" prefWidth="786.0">
+                                 <TableView layoutX="61.0" layoutY="14.0" prefHeight="365.0" prefWidth="1225.0">
                                    <columns>
-                                     <TableColumn prefWidth="200.0" text="Candidate Name" />
-                                     <TableColumn prefWidth="200.0" text="Party Name" />
-                                       <TableColumn prefWidth="200.0" text="Votes Received" />
+                                     <TableColumn prefWidth="320.0" text="Log ID" />
+                                     <TableColumn prefWidth="478.0" text="Action" />
+                                       <TableColumn prefWidth="441.0" text="Time Stamp" />
                                    </columns>
                                  </TableView>
                               </children>
