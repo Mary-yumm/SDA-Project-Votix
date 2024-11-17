@@ -451,9 +451,19 @@ public class mysql extends PersistenceHandler {
     }
 
     @Override
-    public void log() {
+    public void log(String message) {
+        String sql = "INSERT INTO AUDITLOG (action, timeStamp) VALUES (?, NOW())";
 
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, message);
+            pstmt.executeUpdate();
+            System.out.println("Log entry successfully added: " + message);
+        } catch (SQLException e) {
+            System.err.println("Failed to log message: " + message);
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public void updatePollingStaffAccount(PollingStaff staff) {

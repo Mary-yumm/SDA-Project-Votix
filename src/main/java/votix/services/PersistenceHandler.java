@@ -33,7 +33,7 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> reportData();
     public abstract ArrayList<String> getElectionForm();
     public abstract ArrayList<String> electionReportData();
-    public abstract void log();
+    public abstract void log(String message);
     public abstract void updatePollingStaffAccount(PollingStaff staff);
     public abstract void addPollingStaffAccount(PollingStaff staff);
     public abstract void deactivatePollingStaffAccount(PollingStaff staff);
@@ -47,6 +47,7 @@ public abstract class PersistenceHandler {
     public abstract void updateVoteCount(int candid,int areaid);
     public abstract ArrayList<PollingStation> fetchStations(int areaID);
     public abstract void changeVoterStatus(String cnic);
+
 }
 
 
