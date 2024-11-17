@@ -33,6 +33,7 @@ public class ElectionFormController {
         }
     }
 
+
     private void addCandidateRow(Candidate candidate) {
         // Create a new row for the candidate
         HBox row = new HBox(10); // Spacing of 10px between elements

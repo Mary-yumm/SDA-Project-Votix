@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="VotixRunConfig" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="votix.DEMO" />
+    <module name="SDA-Project-Votix" />
+    <option name="VM_PARAMETERS" value="-Dprism.allowhidpi=false " />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

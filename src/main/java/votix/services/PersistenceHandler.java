@@ -33,11 +33,11 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> reportData();
     public abstract ArrayList<String> getElectionForm();
     public abstract ArrayList<String> electionReportData();
-    public abstract void log(String message);
+    public abstract void log();
     public abstract void updatePollingStaffAccount(PollingStaff staff);
     public abstract void addPollingStaffAccount(PollingStaff staff);
     public abstract void deactivatePollingStaffAccount(PollingStaff staff);
-    public abstract void addCandidate(Candidate candidate);
+    public abstract boolean addCandidate(Candidate candidate, String area);
     public abstract ArrayList<Candidate> loadCandidateData();
     public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
     public abstract int verifyStaff(String login, String password,String mac_address);
@@ -47,7 +47,10 @@ public abstract class PersistenceHandler {
     public abstract void updateVoteCount(int candid,int areaid);
     public abstract ArrayList<PollingStation> fetchStations(int areaID);
     public abstract void changeVoterStatus(String cnic);
-
+    public abstract ArrayList<String> getPartyNames();
+    public abstract boolean checkEligibility(int age,String cnic,  String nationality);
+    public abstract ArrayList<String> getAreaID();
+    public abstract ArrayList<Integer> fetchAllCandidates();
 }
 
 

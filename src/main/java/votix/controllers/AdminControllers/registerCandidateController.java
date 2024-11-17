@@ -1,7 +1,10 @@
 package votix.controllers.AdminControllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -10,15 +13,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
+import votix.services.AdminElectionManagementSystem;
 import votix.services.ElectionManagementSystem;
+import votix.services.PersistenceHandler;
 
 public class registerCandidateController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField age;
@@ -47,6 +47,9 @@ public class registerCandidateController {
     @FXML
     private TextField name;
 
+    private boolean eli;
+    @FXML
+    private ComboBox<String> area;
     @FXML
     private ComboBox<String> nationality;
 
@@ -59,28 +62,10 @@ public class registerCandidateController {
     @FXML
     private AnchorPane titlebar;
 
-    private ElectionManagementSystem ems; // Your Election Management System instance
-
-    @FXML
-    void initialize() {
-        // Assert injections for other fields (keeping it as is)
-        assert age != null : "fx:id=\"age\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert checkeligibilitybutton != null : "fx:id=\"checkeligibilitybutton\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert cnic != null : "fx:id=\"cnic\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert label1 != null : "fx:id=\"label1\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert label2 != null : "fx:id=\"label2\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert label3 != null : "fx:id=\"label3\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert label4 != null : "fx:id=\"label4\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert label5 != null : "fx:id=\"label5\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert nationality != null : "fx:id=\"nationality\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert politicalparty != null : "fx:id=\"politicalparty\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert registerbutton != null : "fx:id=\"registerbutton\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-        assert titlebar != null : "fx:id=\"titlebar\" was not injected: check your FXML file 'registerCandidate.fxml'.";
-
-        // Populate political parties ComboBox
-        loaddata();
-    }
+    private AdminElectionManagementSystem ems; // Your Election Management System instance
+    private Stage primaryStage;
+    private PersistenceHandler ph; // Database connection handler
+    private Stage stage;
 
     private void loaddata() {
         // Sample list of political parties, replace this with data from your system/database
@@ -91,8 +76,58 @@ public class registerCandidateController {
         nationality.setItems(politicalParties);
     }
 
+    void loadParty_AreaName(){
+        System.out.println("Loadinggggg");
+        ArrayList<String> party = ems.getPartyNames();
+        ObservableList<String> np = FXCollections.observableArrayList(party);
+        politicalparty.setItems(np);
+
+        ArrayList<String> ar = ems.getAreaID();
+        ObservableList<String> array = FXCollections.observableArrayList(ar);
+        area.setItems(array);
+
+        System.out.println("Loading completedd");
+
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    // Method to set the database connection
+    public void setConnection(PersistenceHandler ph) {
+        this.ph = ph;
+    }
     // Setter to receive ElectionManagementSystem from the MainApp
-    public void setElectionManagementSystem(ElectionManagementSystem electionManagementSystem) {
+    public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem, Stage st) {
         this.ems = electionManagementSystem;
+        this.stage = st;
+
+        loaddata();
+    }
+
+    //controller ftns
+
+    public boolean checkForEligibility() {
+
+        if (nationality.getValue().equals("Pakistani") && Integer.parseInt(age.getText()) >= 25) {
+            this.eli = true;
+        }
+        else{ this.eli = false;}
+
+        boolean status = this.ems.checkEligibility(Integer.parseInt(age.getText()),cnic.getText(), nationality.getValue());
+
+        if(status == true){
+            //cand is eligible
+        }
+        else {
+            //not eligible
+        }
+
+        return this.eli;
+    }
+
+    public void addToCandidates(ActionEvent actionEvent) {
+
     }
 }
