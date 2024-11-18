@@ -1,13 +1,17 @@
 package votix.controllers.AdminControllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -17,6 +21,7 @@ import votix.services.PersistenceHandler;
 
 public class candidateListController {
 
+    public AnchorPane contentPane;
     @FXML
     private ResourceBundle resources;
 
@@ -90,109 +95,36 @@ public class candidateListController {
         candidateTable.getChildren().add(row); // Add row to the table
     }
 
+    public void returnToMenu(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            AdminMenuController controller = loader.getController();
 
-}
-
-
-
-/*package votix.controllers.AdminControllers;
-
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import votix.models.Candidate;
-import votix.services.AdminElectionManagementSystem;
-import votix.services.ElectionManagementSystem;
-import votix.services.PersistenceHandler;
-import votix.services.PollingPCElectionManagementSystem;
-
-public class candidateListController {
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private VBox candidateTable;
-
-    private Stage primaryStage;  // To hold the primary stage
-    private AdminElectionManagementSystem ems;
-    private PersistenceHandler ph;
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-    public void setConnection(PersistenceHandler ph){
-        this.ph = ph;
-    }
-    // This method is called to inject the ElectionManagementSystem object
-    public void setElectionManagementSystem(AdminElectionManagementSystem system) {
-        this.ems = system;
-        populateCandidates();
-    }
-
-    @FXML
-    void initialize() {
-        assert candidateTable != null : "fx:id=\"candidateTable\" was not injected: check your FXML file 'CandidateList.fxml'.";
-
-        if (ems != null) {
-            List<Candidate> candidates = ems.getCands(); // Fetch the list of candidates
-            for (Candidate candidate : candidates) {
-                addCandidateRow(candidate); // Add each candidate as a row
+            // Check if controller is not null and set EMS and primaryStage
+            if (controller != null) {
+                System.out.println("setting admin");
+                controller.setElectionManagementSystem(this.ems);  // Pass the ems instance
+                controller.setPrimaryStage(this.primaryStage);      // Pass the primaryStage instance
             }
+
+            // Update contentPane
+            contentPane.getChildren().setAll(addCandidatePane);
+            contentPane.requestLayout();  // Request a layout refresh
+
+            // Optionally reset the scene if necessary
+            Scene currentScene = this.primaryStage.getScene();
+            if (currentScene != null) {
+                currentScene.setRoot(contentPane);  // Ensure contentPane is the root
+            }
+
+            System.out.println(contentPane);
+            System.out.println("contentPane visible: " + contentPane.isVisible());
+            System.out.println("contentPane parent: " + contentPane.getParent());
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
-
-    // New method to populate candidates after ems is set
-    private void populateCandidates() {
-        if (ems != null) {
-            System.out.println("EMS is not null, loading candidates...");
-            List<Candidate> candidates = ems.getCands();
-            for (Candidate candidate : candidates) {
-                addCandidateRow(candidate);
-            }
-        } else {
-            System.out.println("EMS is null!");
-        }
-    }
-    private void addCandidateRow(Candidate candidate) {
-        // Create a new row for the candidate
-        HBox row = new HBox(30); // Spacing of 30px between elements
-        row.getStyleClass().add("table-row");
-
-        // Candidate Name
-        Label nameLabel = new Label(candidate.getName());
-        nameLabel.getStyleClass().add("table-cell");
-        row.getChildren().add(nameLabel);
-
-        // Party Name
-        Label partyLabel = new Label(candidate.getPartyName());
-        partyLabel.getStyleClass().add("table-cell");
-        row.getChildren().add(partyLabel);
-
-        // Party Symbol
-        ImageView partySymbolView = new ImageView(candidate.getPartySymbol());
-        partySymbolView.setFitHeight(40);
-        partySymbolView.setFitWidth(40);
-        row.getChildren().add(partySymbolView);
-
-        // Vote Count (Placeholder for now, you can replace this with actual data)
-        Label voteCountLabel = new Label("0"); // Set the vote count here
-        voteCountLabel.getStyleClass().add("table-cell");
-        row.getChildren().add(voteCountLabel);
-
-        // Add this row to the candidate table
-        candidateTable.getChildren().add(row);
-    }
 }
-*/
+

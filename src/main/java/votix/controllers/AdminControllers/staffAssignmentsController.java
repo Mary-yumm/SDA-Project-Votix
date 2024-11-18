@@ -4,19 +4,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import votix.services.AdminElectionManagementSystem;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class staffAssignmentsController {
 
+    public AnchorPane contentPane;
     @FXML
     private Button searchbtn;
     @FXML
@@ -245,6 +250,37 @@ public class staffAssignmentsController {
        name.setText(null);
         // Add row to the table
         loadStaffAssignments();
+    }
+    public void returnToMenu(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            AdminMenuController controller = loader.getController();
+
+            // Check if controller is not null and set EMS and primaryStage
+            if (controller != null) {
+                System.out.println("setting admin");
+                controller.setElectionManagementSystem(this.ems);  // Pass the ems instance
+                controller.setPrimaryStage(this.stage);      // Pass the primaryStage instance
+            }
+
+            // Update contentPane
+            contentPane.getChildren().setAll(addCandidatePane);
+            contentPane.requestLayout();  // Request a layout refresh
+
+            // Optionally reset the scene if necessary
+            Scene currentScene = this.stage.getScene();
+            if (currentScene != null) {
+                currentScene.setRoot(contentPane);  // Ensure contentPane is the root
+            }
+
+            System.out.println(contentPane);
+            System.out.println("contentPane visible: " + contentPane.isVisible());
+            System.out.println("contentPane parent: " + contentPane.getParent());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
