@@ -1,10 +1,9 @@
 package votix.services;
 
-import votix.models.Area;
-import votix.models.Candidate;
-import votix.models.PollingStaff;
-import votix.models.PollingStation;
+import votix.models.*;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
@@ -84,10 +83,14 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to filter logs
     }
 
-    public void viewLog(String logId) {
-        // Implementation to view a specific log entry
+    public List<Log> viewLogs() {
+        // Call the PersistenceHandler to fetch logs
+        List<Log> logs = ph.ViewLogs(); // Assuming ViewLogs() returns a List<Log>
 
+        // Return the list of logs
+        return logs;
     }
+
 
     public PersistenceHandler getPersistenceHandler(){
         return this.ph;

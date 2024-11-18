@@ -187,7 +187,31 @@ public class AdminMenuController {
     public void monitorActiveSystems() {monitorSystemsBtn();}
 
     @FXML
-    public void viewLogs() {viewLogsBtn();}
+    public void viewLogs() {
+        viewLogsBtn();
+        try {
+            // Load the ViewLogs.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ViewLog.fxml"));
+            AnchorPane viewLogsPane = loader.load();
+
+            // Get the controller of the ViewLogs.fxml
+            ViewLogsController controller = loader.getController();
+
+            // Set EMS and PersistenceHandler in the controller
+            if (controller != null) {
+                System.out.println("Setting EMS and PersistenceHandler in ViewLogsController");
+                controller.setEMS(this.ems);
+            } else {
+                System.out.println("ViewLogsController is null!");  // Debugging line
+            }
+
+            // Add the loaded FXML content to the content pane
+            contentPane.getChildren().setAll(viewLogsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     public void viewElectionForm() {

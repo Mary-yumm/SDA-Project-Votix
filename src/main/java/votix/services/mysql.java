@@ -5,6 +5,7 @@ import votix.models.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class mysql extends PersistenceHandler {
 
@@ -471,7 +472,7 @@ public class mysql extends PersistenceHandler {
     }
 
     @Override
-    public void log(String message) {
+    public void createLog(String message) {
         String sql = "INSERT INTO AUDITLOG (action, timeStamp) VALUES (?, NOW())";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -483,6 +484,31 @@ public class mysql extends PersistenceHandler {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<Log> ViewLogs() {
+        List<Log> logs = new ArrayList<>();
+        String query = "SELECT logId, action, timeStamp FROM AUDITLOG";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int logId = rs.getInt("logId");
+                String action = rs.getString("action");
+                String timeStamp = rs.getString("timeStamp");
+
+                // Create a Log object and add it to the list
+                logs.add(new Log(logId, action, timeStamp));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching logs: " + e.getMessage());
+        }
+
+        return logs;
+    }
+
 
 
     @Override

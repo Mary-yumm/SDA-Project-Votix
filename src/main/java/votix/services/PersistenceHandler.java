@@ -2,10 +2,12 @@ package votix.services;
 
 
 import votix.models.Candidate;
+import votix.models.Log;
 import votix.models.PollingStaff;
 import votix.models.PollingStation;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class PersistenceHandler {
     protected String connectionString;
@@ -33,7 +35,8 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> reportData();
     public abstract ArrayList<String> getElectionForm();
     public abstract ArrayList<String> electionReportData();
-    public abstract void log();
+    public abstract void createLog(String message);
+    public abstract List<Log> ViewLogs();
     public abstract void updatePollingStaffAccount(PollingStaff staff);
     public abstract void addPollingStaffAccount(PollingStaff staff);
     public abstract void deactivatePollingStaffAccount(PollingStaff staff);
