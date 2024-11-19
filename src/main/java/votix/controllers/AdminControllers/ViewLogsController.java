@@ -22,7 +22,7 @@ public class ViewLogsController {
     @FXML
     private VBox logTable; // Reference to the VBox in the FXML file
     @FXML
-    private TextField filterTextField; // Filter by action
+    private TextField filterTextField;
     @FXML
     private TextField areaFilterTextField; // Filter by area ID
     @FXML
