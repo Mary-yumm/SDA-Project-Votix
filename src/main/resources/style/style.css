@@ -127,3 +127,8 @@
     -fx-alignment: center;
 }
 
+.custom-text-field {
+    -fx-prompt-text-fill: gray;
+    -fx-font-size: 14px;
+}
+

@@ -19,7 +19,7 @@
    <HBox layoutX="104.0" layoutY="195.0" spacing="10.0" />
 
    <!-- Scrollable Content for Logs -->
-   <ScrollPane fitToWidth="true" layoutX="104.0" layoutY="235.0" prefHeight="466.0" prefWidth="1260.0" AnchorPane.bottomAnchor="134.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="235.0">
+   <ScrollPane fitToWidth="true" layoutX="120.0" layoutY="286.0" prefHeight="466.0" prefWidth="1260.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="286.0">
       <VBox fx:id="logTable" spacing="10">
          <!-- Table Headers -->
          <HBox spacing="400.0" styleClass="table-header">
@@ -38,18 +38,23 @@
       </children>
    </AnchorPane>
    <!-- Filter by log action -->
-   <TextField fx:id="filterTextField" layoutX="123.0" layoutY="121.0" prefWidth="400.0" promptText="Enter log filter">
+   <TextField fx:id="filterTextField" layoutX="123.0" layoutY="121.0" prefHeight="47.0" prefWidth="400.0" promptText="Enter log filter" styleClass="custom-text-field">
       <font>
-         <Font size="12.0" />
+         <Font size="5.0" />
       </font>
    </TextField>
    <Button layoutX="449.0" layoutY="125.0" onAction="#filterLogs" styleClass="submit-button" text="Filter by Action" />
-   <Button layoutX="1346.0" layoutY="126.0" onAction="#applyFilters" styleClass="submit-button" text="Apply Filters" />
-   <TextField fx:id="pollingStationFilterTextField" layoutX="1002.0" layoutY="121.0" prefWidth="200.0" promptText="Filter by Polling Station ID">
+   <Button fx:id="pollingStation" layoutX="1234.0" layoutY="221.0" onAction="#applyFiltersPollingStation" styleClass="submit-button" text="Apply Filter" />
+   <TextField fx:id="pollingStationFilterTextField" layoutX="905.0" layoutY="218.0" prefHeight="47.0" prefWidth="400.0" promptText="Filter by Polling Station ID" styleClass="custom-text-field">
       <font>
-         <Font size="9.0" />
+         <Font size="5.0" />
       </font>
    </TextField>
-   <TextField fx:id="areaFilterTextField" layoutX="666.0" layoutY="122.0" prefWidth="200.0" promptText="Filter by Area ID" />
+   <TextField fx:id="areaFilterTextField" layoutX="120.0" layoutY="217.0" prefHeight="47.0" prefWidth="400.0" promptText="Filter by Area ID" styleClass="custom-text-field">
+      <font>
+         <Font size="5.0" />
+      </font>
+   </TextField>
+   <Button fx:id="Area" layoutX="464.0" layoutY="221.0" onAction="#applyFiltersArea" styleClass="submit-button" text="Apply Filter" />
 
 </AnchorPane>
