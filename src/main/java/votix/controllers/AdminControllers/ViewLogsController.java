@@ -20,7 +20,7 @@ public class ViewLogsController {
     public Button pollingStation;
     public Button Area;
     @FXML
-    private VBox logTable; // Reference to the VBox in the FXML file
+    private VBox logTable; // Reference to the VBox in the FXML
     @FXML
     private TextField filterTextField;
     @FXML
