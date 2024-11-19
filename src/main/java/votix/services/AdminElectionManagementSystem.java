@@ -1,9 +1,11 @@
 package votix.services;
 
-import votix.models.*;
-
+import votix.models.Area;
+import votix.models.Candidate;
+import votix.models.PollingStaff;
+import votix.models.PollingStation;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
@@ -43,10 +45,6 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to recount votes
     }
 
-    public void viewAssignedStaff() {
-        // Implementation to view assigned staff
-    }
-
     public void monitorPollingStation() {
         // Implementation to monitor polling station
     }
@@ -83,14 +81,10 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to filter logs
     }
 
-    public List<Log> viewLogs() {
-        // Call the PersistenceHandler to fetch logs
-        List<Log> logs = ph.ViewLogs(); // Assuming ViewLogs() returns a List<Log>
+    public void viewLog(String logId) {
+        // Implementation to view a specific log entry
 
-        // Return the list of logs
-        return logs;
     }
-
 
     public PersistenceHandler getPersistenceHandler(){
         return this.ph;
@@ -134,12 +128,24 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         System.out.println("Errorr...............");
         return new ArrayList<>();
     }
-    public ArrayList<Integer> getCandID(){
+    public ArrayList<Candidate> getAllCand(){
         return ph.fetchAllCandidates();
     }
 
     public void createLogEntry(String entry) {
         // Implementation to create a log entry
     }
+
+    public void searchStaffByStaffName() {
+      //  return ph.getStaffByName();
+    }
+
+    public void searchStaffByAreaID() {
+    }
+
+    public ArrayList<Object> getStaffAssignments() {
+       return ph.getStaffAssignments();
+    }
+
 
 }
