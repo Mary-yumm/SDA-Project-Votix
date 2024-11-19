@@ -1,6 +1,6 @@
 package votix.controllers.AdminControllers;
 
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,7 +14,6 @@ import votix.models.Log;
 import votix.services.AdminElectionManagementSystem;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ViewLogsController {
 
@@ -28,8 +27,7 @@ public class ViewLogsController {
     private TextField areaFilterTextField; // Filter by area ID
     @FXML
     private TextField pollingStationFilterTextField; // Filter by polling station ID
-    @FXML
-    private Button filterButton; // Button to apply filters
+
 
     private AdminElectionManagementSystem ems; // Reference to the EMS object
 
@@ -53,6 +51,7 @@ public class ViewLogsController {
             if (newValue) { // If areaFilterTextField gains focus
                 filterTextField.clear();
                 pollingStationFilterTextField.clear();
+
             }
         });
 
@@ -183,7 +182,7 @@ public class ViewLogsController {
 
 
 
-    public void applyFiltersPollingStation(ActionEvent actionEvent) {
+    public void applyFiltersPollingStation() {
         String pollingStationFilterText = pollingStationFilterTextField.getText().toLowerCase(); // Polling station filter text
 
         // Clear other text fields
@@ -203,7 +202,7 @@ public class ViewLogsController {
     }
 
 
-    public void applyFiltersArea(ActionEvent actionEvent) {
+    public void applyFiltersArea() {
         String areaFilterText = areaFilterTextField.getText().toLowerCase(); // Area ID filter text
 
         // Clear other text fields
