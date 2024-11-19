@@ -76,11 +76,11 @@ public class mysql extends PersistenceHandler {
     }
 
 
-    public ArrayList<Integer> fetchAllCandidates() {
-        ArrayList<Integer> candidateId = new ArrayList<>();
+    public ArrayList<Candidate> fetchAllCandidates() {
+        ArrayList<Candidate> candidates = new ArrayList<>();
         try {
             // SQL query to fetch candidates that belong to the specified areaId
-            String query = "SELECT CANDIDATE.candidateId FROM CANDIDATE ";
+            String query = "SELECT * FROM CANDIDATE ";
 
             // Prepare the statement
             PreparedStatement ps = conn.prepareStatement(query);
@@ -89,13 +89,67 @@ public class mysql extends PersistenceHandler {
 
             // Loop through the result set to create Candidate objects
             while (rs.next()) {
-                candidateId.add(rs.getInt("candidateId"));
+                Candidate candidate = new Candidate();
+                candidate.setCid(rs.getInt("candidateId"));
+                candidate.setName(rs.getString("name"));
+                String imagePath = rs.getString("partySymbol");
+
+                // Print the image path to the console
+                System.out.println("Image Path: " + imagePath);
+                candidate.setPartyName(rs.getString("partyName"));
+                candidate.setPartySymbol(new Image(getClass().getResource("/assets/pti.png").toExternalForm()));  // Adjust path as needed
+                candidate.setRegistrationDate(rs.getDate("registrationDate"));
+                candidate.setNAPA(rs.getString("naPa"));
+
+                candidates.add(candidate);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return candidateId;
+        return candidates;
     }
+
+    @Override
+        public ArrayList<Object> getStaffAssignments() {
+
+            String query = """
+                SELECT 
+                    PS.staffId,
+                    PS.name AS StaffName,
+                    PS.stationId,
+                    P.areaId,
+                    A.areaName
+                FROM 
+                    POLLINGSTAFF PS
+                JOIN 
+                    POLLINGSTATION P ON PS.stationId = P.stationId
+                JOIN 
+                    AREA A ON P.areaId = A.areaId;
+                """;
+
+            ArrayList<Object> staffList = new ArrayList<>();
+
+            try (PreparedStatement stmt = conn.prepareStatement(query);
+                 ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+                    int staffId = rs.getInt("staffId");
+                    String staffName = rs.getString("StaffName");
+                    int stationId = rs.getInt("stationId");
+                    int areaId = rs.getInt("areaId");
+                    String areaName = rs.getString("areaName");
+
+                    // Create an Object array and add it to the staffList
+                    Object[] staffDetails = new Object[] { staffId, staffName, stationId, areaId, areaName };
+                    staffList.add(staffDetails);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return staffList; // Return the list of staff details
+        }
 
     @Override
     public int verifyStaff(String username, String password,String currentMac) {
@@ -511,16 +565,10 @@ public class mysql extends PersistenceHandler {
             else{
                 preparedStatement.setString(6, "PA");
             }
-
             // Execute the update (INSERT)
             preparedStatement.executeUpdate();
 
             System.out.println("Candidate added successfully.");
-
-
-
-            //adding value to candidate area table
-
             String sql1 = "INSERT INTO CANDIDATE_AREA (candidateId, areaId) " + "VALUES (?,?)";
 
             try (PreparedStatement preparedStatement1 = conn.prepareStatement(sql1)) {
