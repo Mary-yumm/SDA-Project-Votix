@@ -16,7 +16,7 @@ public class MonitorActiveSystemsController {
     private AdminElectionManagementSystem ems;
 
     public void initialize() {
-        // Initialization logic
+        // Initialization
     }
 
     public void setElectionManagementSystem(AdminElectionManagementSystem system) {
