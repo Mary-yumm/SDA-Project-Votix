@@ -1,10 +1,7 @@
 package votix.services;
 
 
-import votix.models.Candidate;
-import votix.models.Log;
-import votix.models.PollingStaff;
-import votix.models.PollingStation;
+import votix.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +52,7 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> getAreaID();
     public abstract ArrayList<Candidate> fetchAllCandidates();
     public abstract ArrayList<Object> getStaffAssignments();
+    public abstract List<PollingStationPC> getPollingPCs();
 }
 
 

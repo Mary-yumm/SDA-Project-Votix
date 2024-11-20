@@ -153,6 +153,37 @@ public class mysql extends PersistenceHandler {
         }
 
     @Override
+    public List<PollingStationPC> getPollingPCs() {
+        List<PollingStationPC> pollingPCs = new ArrayList<>();
+        String query = """
+        SELECT pc.systemId, pc.stationId, pc.systemStatus, pc.config, a.areaName
+        FROM POLLINGSTATIONPC pc
+        JOIN POLLINGSTATION ps ON pc.stationId = ps.stationId
+        JOIN AREA a ON ps.areaId = a.areaId
+    """;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                PollingStationPC pc = new PollingStationPC();
+                pc.setSystemID(rs.getString("systemId"));
+                pc.setStationID(rs.getInt("stationId"));
+                pc.setSystemStatus("Active".equals(rs.getString("systemStatus")));
+                pc.setConfigurationSettings(rs.getString("config"));
+                pc.setAreaName(rs.getString("areaName"));
+
+                pollingPCs.add(pc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle exception
+        }
+
+        return pollingPCs;
+    }
+
+
+    @Override
     public int verifyStaff(String username, String password,String currentMac) {
         try {
             // Step 1: Verify staff credentials in the POLLINGSTAFF table

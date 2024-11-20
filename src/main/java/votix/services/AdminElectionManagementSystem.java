@@ -85,6 +85,10 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         return ph.ViewLogs();
     }
 
+    public List<PollingStationPC> getPollingPCs(){
+        return ph.getPollingPCs();
+    }
+
     public PersistenceHandler getPersistenceHandler(){
         return this.ph;
     }
