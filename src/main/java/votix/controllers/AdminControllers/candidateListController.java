@@ -112,11 +112,6 @@ public class candidateListController {
             contentPane.getChildren().setAll(addCandidatePane);
             contentPane.requestLayout();  // Request a layout refresh
 
-            // Optionally reset the scene if necessary
-            Scene currentScene = this.primaryStage.getScene();
-            if (currentScene != null) {
-                currentScene.setRoot(contentPane);  // Ensure contentPane is the root
-            }
 
             System.out.println(contentPane);
             System.out.println("contentPane visible: " + contentPane.isVisible());

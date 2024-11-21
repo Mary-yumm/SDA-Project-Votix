@@ -270,9 +270,6 @@ public class staffAssignmentsController {
 
             // Optionally reset the scene if necessary
             Scene currentScene = this.stage.getScene();
-            if (currentScene != null) {
-                currentScene.setRoot(contentPane);  // Ensure contentPane is the root
-            }
 
             System.out.println(contentPane);
             System.out.println("contentPane visible: " + contentPane.isVisible());
