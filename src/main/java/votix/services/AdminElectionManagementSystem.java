@@ -3,9 +3,8 @@ package votix.services;
 import votix.models.Area;
 import votix.models.Candidate;
 import votix.models.PollingStaff;
-import votix.models.PollingStation;
+
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
@@ -26,6 +25,8 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         return ph.addCandidate(cand, area);
     }
 
+    public boolean addPollingStaff(PollingStaff p){return ph.addPollingStaffAccount(p);}
+
     public PollingStaff managePollingStaff() {
         // Implementation for managing polling staff
         return new PollingStaff();
@@ -33,6 +34,7 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     public ArrayList<String> getPartyNames(){
         return ph.getPartyNames();
     }
+
     public void initiateSystem() {
         // Implementation to initiate the system
     }
@@ -93,9 +95,7 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     this.ph =  handler;
     }
 
-    public boolean checkEligibility(int age, String cnic, String nationality){
-        return ph.checkEligibility( age, cnic, nationality);
-    }
+
     public ArrayList<String> getAreaID(){
     return ph.getAreaID();
     }
@@ -113,9 +113,9 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     // not decided yet
 
-    public ArrayList<PollingStation> getStations() {
+    public ArrayList<Integer> getStations() {
         // Implementation to get stations
-        return new ArrayList<>();
+        return ph.getStations();
     }
 
     public ArrayList<Candidate> getCands() {
@@ -136,11 +136,8 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to create a log entry
     }
 
-    public void searchStaffByStaffName() {
-      //  return ph.getStaffByName();
-    }
-
-    public void searchStaffByAreaID() {
+    public ArrayList<PollingStaff> getPollingStaff() {
+        return ph.getStaffList();
     }
 
     public ArrayList<Object> getStaffAssignments() {

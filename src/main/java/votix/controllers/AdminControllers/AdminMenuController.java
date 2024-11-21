@@ -176,6 +176,22 @@ public class AdminMenuController {
     @FXML
     public void addPollingStaff() {
         pollingStaffBtn();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/addPollingStaff.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            addPollingStaffController controller = loader.getController();
+
+            // Check if controller is not null and set EMS
+            if (controller != null) {
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
+            } else {
+                System.out.println("add polling staff is null!");  // Debugging line
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
