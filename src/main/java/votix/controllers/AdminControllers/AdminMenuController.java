@@ -205,10 +205,58 @@ public class AdminMenuController {
     }
 
     @FXML
-    public void monitorActiveSystems() {monitorSystemsBtn();}
+    public void monitorActiveSystems() {
+        monitorSystemsBtn(); // Highlight the button
+        try {
+            // Load the MonitorActiveSystems.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/MonitorActiveSystems.fxml"));
+            AnchorPane monitorSystemsPane = loader.load();
+
+            // Get the controller of the MonitorActiveSystems.fxml
+            MonitorActiveSystemsController controller = loader.getController();
+
+            // Set EMS in the controller
+            if (controller != null) {
+                System.out.println("Setting EMS in MonitorActiveSystemsController");
+                controller.setElectionManagementSystem(this.ems); // Pass the EMS instance
+            } else {
+                System.out.println("MonitorActiveSystemsController is null!");
+            }
+
+            // Add the loaded FXML content to the content pane
+            contentPane.getChildren().setAll(monitorSystemsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
-    public void viewLogs() {viewLogsBtn();}
+    public void viewLogs() {
+        viewLogsBtn();
+        try {
+            // Load the ViewLogs.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ViewLog.fxml"));
+            AnchorPane viewLogsPane = loader.load();
+
+            // Get the controller of the ViewLogs.fxml
+            ViewLogsController controller = loader.getController();
+
+            // Set EMS and PersistenceHandler in the controller
+            if (controller != null) {
+                System.out.println("Setting EMS and PersistenceHandler in ViewLogsController");
+                controller.setEMS(this.ems);
+            } else {
+                System.out.println("ViewLogsController is null!");  // Debugging line
+            }
+
+            // Add the loaded FXML content to the content pane
+            contentPane.getChildren().setAll(viewLogsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     public void viewElectionForm() {

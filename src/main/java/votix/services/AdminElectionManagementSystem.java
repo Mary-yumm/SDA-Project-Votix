@@ -1,10 +1,10 @@
 package votix.services;
 
-import votix.models.Area;
-import votix.models.Candidate;
-import votix.models.PollingStaff;
+import votix.models.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
@@ -25,8 +25,6 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         return ph.addCandidate(cand, area);
     }
 
-    public boolean addPollingStaff(PollingStaff p){return ph.addPollingStaffAccount(p);}
-
     public PollingStaff managePollingStaff() {
         // Implementation for managing polling staff
         return new PollingStaff();
@@ -34,7 +32,6 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     public ArrayList<String> getPartyNames(){
         return ph.getPartyNames();
     }
-
     public void initiateSystem() {
         // Implementation to initiate the system
     }
@@ -83,9 +80,13 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to filter logs
     }
 
-    public void viewLog(String logId) {
+    public List<Log> viewLogs() {
         // Implementation to view a specific log entry
+        return ph.ViewLogs();
+    }
 
+    public List<PollingStationPC> getPollingPCs(){
+        return ph.getPollingPCs();
     }
 
     public PersistenceHandler getPersistenceHandler(){
@@ -95,7 +96,9 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     this.ph =  handler;
     }
 
-
+    public boolean checkEligibility(int age, String cnic, String nationality){
+        return ph.checkEligibility( age, cnic, nationality);
+    }
     public ArrayList<String> getAreaID(){
     return ph.getAreaID();
     }
@@ -113,9 +116,9 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     // not decided yet
 
-    public ArrayList<Integer> getStations() {
+    public ArrayList<PollingStation> getStations() {
         // Implementation to get stations
-        return ph.getStations();
+        return new ArrayList<>();
     }
 
     public ArrayList<Candidate> getCands() {
@@ -136,8 +139,11 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to create a log entry
     }
 
-    public ArrayList<PollingStaff> getPollingStaff() {
-        return ph.getStaffList();
+    public void searchStaffByStaffName() {
+      //  return ph.getStaffByName();
+    }
+
+    public void searchStaffByAreaID() {
     }
 
     public ArrayList<Object> getStaffAssignments() {

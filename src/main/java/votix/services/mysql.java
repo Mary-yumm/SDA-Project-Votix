@@ -5,6 +5,7 @@ import votix.models.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class mysql extends PersistenceHandler {
 
@@ -177,6 +178,37 @@ public class mysql extends PersistenceHandler {
                 return staffList;
 
         }
+    @Override
+    public List<PollingStationPC> getPollingPCs() {
+        List<PollingStationPC> pollingPCs = new ArrayList<>();
+        String query = """
+        SELECT pc.systemId, pc.stationId, pc.systemStatus, pc.config, a.areaName
+        FROM POLLINGSTATIONPC pc
+        JOIN POLLINGSTATION ps ON pc.stationId = ps.stationId
+        JOIN AREA a ON ps.areaId = a.areaId
+    """;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                PollingStationPC pc = new PollingStationPC();
+                pc.setSystemID(rs.getString("systemId"));
+                pc.setStationID(rs.getInt("stationId"));
+                pc.setSystemStatus("Active".equals(rs.getString("systemStatus")));
+                pc.setConfigurationSettings(rs.getString("config"));
+                pc.setAreaName(rs.getString("areaName"));
+
+                pollingPCs.add(pc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle exception
+        }
+
+        return pollingPCs;
+    }
+
+
     @Override
     public int verifyStaff(String username, String password,String currentMac) {
         try {
@@ -554,9 +586,44 @@ public ArrayList<Integer> getStations(){
     }
 
     @Override
-    public void log() {
+    public void createLog(String message) {
+        String sql = "INSERT INTO AUDITLOG (action, timeStamp) VALUES (?, NOW())";
 
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, message);
+            pstmt.executeUpdate();
+            System.out.println("Log entry successfully added: " + message);
+        } catch (SQLException e) {
+            System.err.println("Failed to log message: " + message);
+            e.printStackTrace();
+        }
     }
+
+    @Override
+    public List<Log> ViewLogs() {
+        List<Log> logs = new ArrayList<>();
+        String query = "SELECT logId, action, timeStamp FROM AUDITLOG";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int logId = rs.getInt("logId");
+                String action = rs.getString("action");
+                String timeStamp = rs.getString("timeStamp");
+
+                // Create a Log object and add it to the list
+                logs.add(new Log(logId, action, timeStamp));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching logs: " + e.getMessage());
+        }
+
+        return logs;
+    }
+
+
 
     @Override
     public void updatePollingStaffAccount(PollingStaff staff) {

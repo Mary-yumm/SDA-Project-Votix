@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.MonitorActiveSystemsController">
+
+    <!-- Title Bar -->
+    <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1486.0" styleClass="title-bar">
+        <Label layoutX="591.0" layoutY="66.0" style="-fx-text-fill: white; -fx-font-size: 48px;" styleClass="title-bar-text" text="Active Polling Systems" />
+    </AnchorPane>
+
+    <ScrollPane fitToWidth="true" layoutX="120.0" layoutY="286.0" prefHeight="466.0" prefWidth="1260.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="286.0">
+        <VBox fx:id="systemTable" spacing="10.0">
+            <!-- Table Headers -->
+            <HBox spacing="150.0" styleClass="table-header">
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="System ID" />
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Station ID" />
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Status" />
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Config" />
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Area Name" />
+            </HBox>
+            <!-- System rows will be dynamically added here by the controller -->
+        </VBox>
+    </ScrollPane>
+
+</AnchorPane>
