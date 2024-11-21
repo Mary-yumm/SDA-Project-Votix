@@ -218,7 +218,7 @@ public class AdminMenuController {
             // Set EMS in the controller
             if (controller != null) {
                 System.out.println("Setting EMS in MonitorActiveSystemsController");
-                controller.setElectionManagementSystem(this.ems); // Pass the EMS instance
+                controller.setElectionManagementSystem(this.ems, this.primaryStage); // Pass the EMS instance
             } else {
                 System.out.println("MonitorActiveSystemsController is null!");
             }
@@ -245,7 +245,7 @@ public class AdminMenuController {
             // Set EMS and PersistenceHandler in the controller
             if (controller != null) {
                 System.out.println("Setting EMS and PersistenceHandler in ViewLogsController");
-                controller.setEMS(this.ems);
+                controller.setEMS(this.ems, this.primaryStage);
             } else {
                 System.out.println("ViewLogsController is null!");  // Debugging line
             }

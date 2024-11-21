@@ -1,7 +1,10 @@
 package votix.controllers.AdminControllers;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -9,13 +12,18 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import votix.models.Log;
 import votix.services.AdminElectionManagementSystem;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ViewLogsController {
+
+    public AnchorPane contentPane;
+    private Stage stage;
 
     public Button pollingStation;
     public Button Area;
@@ -78,8 +86,9 @@ public class ViewLogsController {
 
 
     // Set the EMS and populate logs
-    public void setEMS(AdminElectionManagementSystem ems) {
+    public void setEMS(AdminElectionManagementSystem ems, Stage st) {
         this.ems = ems;
+        this.stage = st;
         if (ems != null) {
             System.out.println("EMS set in ViewLogsController");
             populateLogTable(); // Populate logs immediately after EMS is set
@@ -242,5 +251,34 @@ public class ViewLogsController {
         }
     }
 
+
+    public void returnToMenu(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            AdminMenuController controller = loader.getController();
+
+            // Check if controller is not null and set EMS and primaryStage
+            if (controller != null) {
+                System.out.println("setting admin");
+                controller.setElectionManagementSystem(this.ems);  // Pass the ems instance
+                controller.setPrimaryStage(this.stage);      // Pass the primaryStage instance
+            }
+
+            // Update contentPane
+            contentPane.getChildren().setAll(addCandidatePane);
+            contentPane.requestLayout();  // Request a layout refresh
+
+            // Optionally reset the scene if necessary
+            Scene currentScene = this.stage.getScene();
+
+            System.out.println(contentPane);
+            System.out.println("contentPane visible: " + contentPane.isVisible());
+            System.out.println("contentPane parent: " + contentPane.getParent());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
