@@ -100,7 +100,6 @@ public class CastVoteController {
         if (lastSelectedCheckbox != null && lastSelectedCheckbox != currentCheckbox) {
             lastSelectedCheckbox.setSelected(false);
         }
-
         // Update the last selected checkbox to the current one
         lastSelectedCheckbox = currentCheckbox;
     }
