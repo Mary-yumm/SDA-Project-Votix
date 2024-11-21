@@ -179,7 +179,7 @@ public class addCandidateController {
 
     void showPopUPAddedCand(Stage st) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/NewCandidateAdded.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
+        Scene scene = new Scene(fxmlLoader.load(), 460, 230);
         Stage stage = new Stage();
         stage.setTitle("PopUp");
 

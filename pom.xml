@@ -20,6 +20,7 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>9.0.0</version> <!-- Ensure this is the latest version -->
         </dependency>
+        
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>

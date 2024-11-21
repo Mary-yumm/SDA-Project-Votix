@@ -160,10 +160,9 @@ public class addPollingStaffController {
     }
     void showPopUPAddedStaff() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/NewStaffAdded.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
+        Scene scene = new Scene(fxmlLoader.load(), 460, 230);
         Stage stage = new Stage();
         stage.setTitle("PopUp");
-
         // After loading the FXML, get the controller and set the ElectionManagementSystem
         NewStaffController controller = fxmlLoader.getController();
         // Set the primary stage in the controller
