@@ -9,15 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.DEMO;
 import votix.controllers.PopUps.*;
 import votix.models.Candidate;
 import votix.services.AdminElectionManagementSystem;
-import votix.services.PersistenceHandler;
-import votix.services.mysql;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,18 +100,19 @@ public class addCandidateController {
                         }
                     } else {
                         System.out.println("Candidate is not eligible");
-                        showPopUPNotEligible(this.stage);
+                        showErrorMessage(this.stage, "Candidate is not eligible");
                     }
                 }else{
-                    showPopUPDuplicateID(this.stage);
+                    showErrorMessage(this.stage, "Duplicate ID");
                 }
             }else{
                 //incorrect data types
-                showPopUPIncorrectDataType(this.stage);            }
+                showErrorMessage(this.stage, "Incorrect Datatype");
+            }
         }
         else{
             System.out.println("Empty data fields");
-            showPopUPEmptyFields(this.stage);
+            showErrorMessage(this.stage, "Empty Fields!");
         }
     }
 
@@ -191,63 +189,20 @@ public class addCandidateController {
         controller.setPrimaryStage(stage);
         stage.setScene(scene);
         stage.show();
-        stage.setOnCloseRequest(event -> {
-            this.stage.setScene(this.scene);
-            this.stage.show();
-        });
     }
 
-    void showPopUPNotEligible(Stage st) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/CandNotEligibleMessage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
+
+
+    void showErrorMessage(Stage st, String msg) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/ErrorMessage.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 404, 180);
         Stage stage = new Stage();
         stage.setTitle("PopUp");
 
         // After loading the FXML, get the controller and set the ElectionManagementSystem
-        CandNotEligibleController controller = fxmlLoader.getController();
+        ErrorMessageController controller = fxmlLoader.getController();
         // Set the primary stage in the controller
-        controller.setPrimaryStage(stage);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    void showPopUPEmptyFields(Stage st) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/EmptyFieldsMessage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
-        Stage stage = new Stage();
-        stage.setTitle("PopUp");
-
-        // After loading the FXML, get the controller and set the ElectionManagementSystem
-        EmptyFieldsController controller = fxmlLoader.getController();
-        // Set the primary stage in the controller
-        controller.setPrimaryStage(stage);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    void showPopUPIncorrectDataType(Stage st) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/incorrectDataTypeMessage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
-        Stage stage = new Stage();
-        stage.setTitle("PopUp");
-
-        // After loading the FXML, get the controller and set the ElectionManagementSystem
-        incorrectDataTypeController controller = fxmlLoader.getController();
-        // Set the primary stage in the controller
-        controller.setPrimaryStage(stage);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    void showPopUPDuplicateID(Stage st) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/duplicateIDMessage.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 520, 380);
-        Stage stage = new Stage();
-        stage.setTitle("PopUp");
-
-        // After loading the FXML, get the controller and set the ElectionManagementSystem
-        duplicateIDController controller = fxmlLoader.getController();
-        // Set the primary stage in the controller
+        controller.setMessageLabel(msg);
         controller.setPrimaryStage(stage);
         stage.setScene(scene);
         stage.show();
