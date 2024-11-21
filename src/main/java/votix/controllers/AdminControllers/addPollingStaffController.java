@@ -95,7 +95,7 @@ public class addPollingStaffController {
 
                     boolean status = ems.addPollingStaff(staff);
                     if (status) {
-                        //added successfully
+
                         System.out.println("staff added successfully");
                         showPopUPAddedStaff();
                     }
