@@ -586,6 +586,11 @@ public ArrayList<Integer> getStations(){
     }
 
     @Override
+    public void log() {
+
+    }
+
+    @Override
     public void createLog(String message) {
         String sql = "INSERT INTO AUDITLOG (action, timeStamp) VALUES (?, NOW())";
 

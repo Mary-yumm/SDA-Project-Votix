@@ -1,11 +1,10 @@
 package votix.services;
 
 
-import votix.models.Candidate;
-import votix.models.PollingStaff;
-import votix.models.PollingStation;
+import votix.models.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class PersistenceHandler {
     protected String connectionString;
@@ -18,7 +17,6 @@ public abstract class PersistenceHandler {
 
     // Abstract methods to be implemented by subclasses
     public abstract void ShowPollingStation();
-
     public abstract boolean connect();
     public abstract boolean disconnect();
     public abstract void executeQuery(String query);
@@ -34,11 +32,14 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> getElectionForm();
     public abstract ArrayList<String> electionReportData();
     public abstract void log();
+    public abstract void createLog(String message);
+    public abstract List<Log> ViewLogs();
     public abstract void updatePollingStaffAccount(PollingStaff staff);
     public abstract boolean addPollingStaffAccount(PollingStaff staff);
     public abstract void deactivatePollingStaffAccount(PollingStaff staff);
     public abstract boolean addCandidate(Candidate candidate, String area);
-    public abstract int verifyStaff(String login, String password,String mac_address);
+    public abstract List<PollingStationPC> getPollingPCs();
+    public abstract int verifyStaff(String login, String password, String mac_address);
     public abstract ArrayList<Candidate> fetchCandidates(int areaid);
     public abstract boolean isVoterRegistered(String name,String cnic,int areaid);
     public abstract int fetchArea(int stationid);

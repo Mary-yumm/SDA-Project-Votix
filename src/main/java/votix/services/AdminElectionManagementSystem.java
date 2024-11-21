@@ -96,9 +96,7 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     this.ph =  handler;
     }
 
-    public boolean checkEligibility(int age, String cnic, String nationality){
-        return ph.checkEligibility( age, cnic, nationality);
-    }
+
     public ArrayList<String> getAreaID(){
     return ph.getAreaID();
     }
@@ -116,9 +114,9 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     // not decided yet
 
-    public ArrayList<PollingStation> getStations() {
+    public ArrayList<Integer> getStations() {
         // Implementation to get stations
-        return new ArrayList<>();
+        return ph.getStations();
     }
 
     public ArrayList<Candidate> getCands() {
@@ -142,8 +140,12 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     public void searchStaffByStaffName() {
       //  return ph.getStaffByName();
     }
+    public boolean addPollingStaff(PollingStaff p){return ph.addPollingStaffAccount(p);}
 
     public void searchStaffByAreaID() {
+    }
+    public ArrayList<PollingStaff> getPollingStaff() {
+        return ph.getStaffList();
     }
 
     public ArrayList<Object> getStaffAssignments() {
