@@ -11,27 +11,45 @@
             styleClass="root">
 
     <!-- Title Bar -->
-    <AnchorPane styleClass="title-bar" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" prefHeight="100.0">
-        <Label text="Cast Your Vote" styleClass="title-bar-text" layoutX="400.0" layoutY="20.0" style="-fx-text-fill: white; -fx-font-size: 60px;"/>
+    <AnchorPane prefHeight="100.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label styleClass="title-bar-text"
+               text="Cast Vote"
+               AnchorPane.leftAnchor="50.0"
+               AnchorPane.rightAnchor="50.0"
+               AnchorPane.topAnchor="0.0"
+               AnchorPane.bottomAnchor="0.0" />
     </AnchorPane>
+    <!-- Voter Information Section (Right-Aligned) -->
+    <VBox spacing="10.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="140.0">
+        <Label fx:id="voterNameLabel" text="Voter Name: [Name]" styleClass="info-label" AnchorPane.rightAnchor="10.0" style="-fx-font-size: 18px;" />
+        <Label fx:id="voterCnicLabel" text="CNIC: [CNIC]" styleClass="info-label" AnchorPane.rightAnchor="10.0" style="-fx-font-size: 18px;"/>
+    </VBox>
 
     <!-- Instructions for Voting -->
     <Label text="Instructions: Select the checkbox next to the candidate you wish to vote for."
-           styleClass="instructions-label" layoutX="100.0" layoutY="150.0" style="-fx-font-size: 24px; -fx-text-fill: #333333;"/>
+           styleClass="instructions-label"
+           AnchorPane.topAnchor="220.0" AnchorPane.leftAnchor="50.0"
+           style="-fx-font-size: 14px; -fx-text-fill: #333333;"/>
+
 
     <!-- Candidate Table within a ScrollPane to prevent overlap -->
-    <ScrollPane layoutX="100.0" layoutY="200.0" prefWidth="1720.0" prefHeight="700.0" fitToWidth="true">
-        <VBox fx:id="candidateTable" spacing="10.0">
-            <!-- Table Headers -->
-            <HBox spacing="200.0" styleClass="table-header">
-                <Label text="Candidate Name" styleClass="table-header-cell" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-                <Label text="Party Name" styleClass="table-header-cell" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-                <Label text="Party Symbol" styleClass="table-header-cell" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-                <Label text="Select" styleClass="table-header-cell" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-            </HBox>
-            <!-- Candidate rows will be dynamically added here by the controller -->
-        </VBox>
-    </ScrollPane>
+    <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="250.0" AnchorPane.rightAnchor="50.0">
+        <ScrollPane fitToWidth="true" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="custom-scroll-pane">
+            <VBox fx:id="candidateTable" spacing="10.0">
+                <!-- Table Headers -->
+                <HBox spacing="80.0" styleClass="table-header">
+                    <Label
+                            text="Candidate Name"
+                            styleClass="table-header-cell"
+                    />
+                    <Label text="Party Name" styleClass="table-header-cell"  style="-fx-padding: 0 0 0 80;"/>
+                    <Label text="Party Symbol" styleClass="table-header-cell"  style="-fx-padding: 0 0 0 80;"/>
+                    <Label text="Select" styleClass="table-header-cell"  style="-fx-padding: 0 0 0 10;"/>
+                </HBox>
+                <!-- Candidate rows will be dynamically added here by the controller -->
+            </VBox>
+        </ScrollPane>
+    </VBox>
 
     <!-- Submit Button, positioned at the bottom of the screen near the table -->
     <Button text="Submit" fx:id="submitButton" onAction="#handleSubmit" styleClass="submit-button"

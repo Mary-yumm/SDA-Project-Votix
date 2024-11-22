@@ -10,13 +10,17 @@
             styleClass="root">
 
     <!-- Title Bar -->
-    <AnchorPane styleClass="title-bar" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" prefHeight="100.0">
-        <!-- Title text inside the title bar -->
-        <Label text="Capture Voter Information" styleClass="title-bar-text" layoutX="550.0" layoutY="20.0" style=" -fx-text-fill: white; -fx-font-size: 60px;"/>
+    <AnchorPane prefHeight="100.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Label styleClass="title-bar-text"
+               text="Capture Voter Information"
+               AnchorPane.leftAnchor="50.0"
+               AnchorPane.rightAnchor="50.0"
+               AnchorPane.topAnchor="0.0"
+               AnchorPane.bottomAnchor="0.0" />
     </AnchorPane>
 
     <!-- Form Section -->
-    <VBox styleClass="form-section" spacing="20.0" AnchorPane.topAnchor="400.0" AnchorPane.leftAnchor="700.0" >
+    <VBox styleClass="form-section" spacing="20.0" AnchorPane.topAnchor="400.0" AnchorPane.leftAnchor="605.0" >
         <!-- Voter's Name Input -->
         <HBox spacing="10.0">
             <Label text="Enter voter's name: " styleClass="label"/>

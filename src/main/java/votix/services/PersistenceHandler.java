@@ -52,6 +52,8 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<Object> getStaffAssignments();
     public abstract ArrayList<PollingStaff> getStaffList();
     public abstract ArrayList<Integer> getStations();
+
+    public abstract Voter getVoterByCnic(String cnic);
 }
 
 

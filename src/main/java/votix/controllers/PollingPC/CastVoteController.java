@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import votix.models.Candidate;
+import votix.models.Voter;
 import votix.services.PollingPCElectionManagementSystem;
 
 import java.util.HashMap;
@@ -28,6 +29,12 @@ public class CastVoteController {
     private PollingPCElectionManagementSystem ems; // This needs to be passed from wherever you call this controller
     private CheckBox lastSelectedCheckbox; // Track the last selected checkbox
 
+    @FXML
+    private Label voterNameLabel;
+
+    @FXML
+    private Label voterCnicLabel;
+
     // Map to store each checkbox with its associated candidate ID
     private Map<CheckBox, Integer> checkboxCandidateMap = new HashMap<>();
     String cnic;
@@ -36,6 +43,14 @@ public class CastVoteController {
     public void setElectionManagementSystem(PollingPCElectionManagementSystem system,String cnic) {
         this.ems = system;
         this.cnic = cnic;
+        // Assuming the voter information is available from the EMS
+        Voter voter = ems.getVoterByCnic(cnic); // You will need to implement this method to retrieve the voter by CNIC
+
+        if (voter != null) {
+            voterNameLabel.setText("Voter Name: " + voter.getName());
+            voterCnicLabel.setText("CNIC: " + voter.getId());
+        }
+
         populateCandidates();
     }
 
@@ -57,6 +72,13 @@ public class CastVoteController {
         AnchorPane row = new AnchorPane();
         row.getStyleClass().add("table-row");
 
+        // Apply zebra striping
+        if (candidateTable.getChildren().size() % 2 == 0) {
+            row.setStyle("-fx-background-color: #f5f5f5;"); // Even row color
+        } else {
+            row.setStyle("-fx-background-color: #f7f7f7;"); // Odd row color
+        }
+
         // Candidate Name
         Label nameLabel = new Label(candidate.getName());
         nameLabel.getStyleClass().add("table-cell");
@@ -74,13 +96,15 @@ public class CastVoteController {
         // Party Symbol
         ImageView partySymbolView = new ImageView(candidate.getPartySymbol());
         partySymbolView.setFitHeight(40);
-        partySymbolView.setFitWidth(40);
-        AnchorPane.setLeftAnchor(partySymbolView, 850.0);
+        //mpartySymbolView.setFitWidth(40);
+        partySymbolView.setPreserveRatio(true);  // Maintain the aspect ratio
+
+        AnchorPane.setLeftAnchor(partySymbolView, 820.0);
         row.getChildren().add(partySymbolView);
 
         // Checkbox for voting
         CheckBox selectCheckbox = new CheckBox();
-        AnchorPane.setLeftAnchor(selectCheckbox, 1100.0);
+        AnchorPane.setLeftAnchor(selectCheckbox, 1080.0);
         AnchorPane.setTopAnchor(selectCheckbox, 10.0);
         row.getChildren().add(selectCheckbox);
 
