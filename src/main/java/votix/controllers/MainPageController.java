@@ -2,59 +2,92 @@ package votix.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+import votix.services.PersistenceHandler;
+
 import java.io.IOException;
 
 public class MainPageController {
 
+    public Button about;
     @FXML
-    private Button adminButton;
+    private Button admin;
 
     @FXML
-    private Button staffButton;
+    private Button staff;
 
     private Stage primaryStage;
-    public void setStage(Stage stage) {
+    private PersistenceHandler ph;
+
+    public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
     }
 
     // This method handles the "ADMIN" button click
     @FXML
     private void handleAdminLogin(MouseEvent event) {
-        // Logic for handling admin login
         System.out.println("Admin button clicked!");
-
-        // For example, you could change the scene here (for admin login)
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminPage.fxml"));
+        loadLoginScene("admin");
+        /*try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
             Scene adminScene = new Scene(loader.load(), 600, 400);
             primaryStage.setScene(adminScene);  // Set the new scene
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     // This method handles the "STAFF" button click
     @FXML
     private void handleStaffLogin(MouseEvent event) {
-        // Logic for handling staff login
         System.out.println("Staff button clicked!");
-
-        // You can similarly load another scene for staff login
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/StaffPage.fxml"));
+        loadLoginScene("staff");
+       /* try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
             Scene staffScene = new Scene(loader.load(), 600, 400);
             primaryStage.setScene(staffScene);  // Set the new scene
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+    @FXML
+    private void handleAbout(MouseEvent event)  {
+
+        try{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/about.fxml"));
+        Scene Scene = new Scene(loader.load(), 600, 400);
+
+        AboutController Controller = loader.getController();
+        Controller.setPrimaryStage(primaryStage);
+        primaryStage.setScene(Scene); // Set the new scene
+        primaryStage.show();
+
+        } catch (IOException e) {
+        e.printStackTrace();
+    }
+    }
+    private void loadLoginScene(String role) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
+            Scene loginScene = new Scene(loader.load(), 600, 400);
+
+            // Get the LoginController and pass the role
+            LoginController loginController = loader.getController();
+            loginController.setRole(role);
+            loginController.setph(ph);
+
+            loginController.setPrimaryStage(primaryStage);
+            primaryStage.setScene(loginScene); // Set the new scene
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    // Any other initialization logic can go here (e.g., setting default values, etc.)
-    public void initialize() {
-        // Initialization code
+    public void setph(PersistenceHandler p) {
+        this.ph = p;
     }
 }

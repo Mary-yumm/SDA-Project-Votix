@@ -202,7 +202,27 @@ public class mysql extends PersistenceHandler {
         }
         return 0; // Return false if verification fails
     }
-
+    @Override
+    public int verifyAdmin(String username, String password) {
+        String query = "SELECT adminID FROM ADMIN WHERE username = ? AND password = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int adminID = rs.getInt("adminID"); // Retrieve adminID
+                    System.out.println("Admin " + adminID + " logged in");
+                    return 1;
+                } else {
+                    System.out.println("Invalid credentials.");
+                    return 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
 
     @Override
@@ -502,6 +522,26 @@ public class mysql extends PersistenceHandler {
     @Override
     public void updateCount() {
 
+    }
+
+    public ArrayList<String> fetchResult()
+    {
+        ArrayList<String> partyNames = new ArrayList<>();
+        String partyQuery = "SELECT distinct partyName FROM CANDIDATE";
+
+        try (PreparedStatement voterPs = conn.prepareStatement(partyQuery)) {
+            ResultSet partyRs = voterPs.executeQuery();
+
+            while (partyRs.next()) {
+                String pname = partyRs.getString("partyName");
+                partyNames.add(pname);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return partyNames;
     }
 
     @Override

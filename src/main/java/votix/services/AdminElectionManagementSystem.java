@@ -18,6 +18,13 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         area = new ArrayList<>();
         this.ph = ph;
     }
+    public AdminElectionManagementSystem() {
+
+        area = new ArrayList<>();
+    }
+    public PersistenceHandler getPh() {return ph;}
+
+    public void setPh(PersistenceHandler ph) {this.ph = ph;}
 
     public void displayAllResults() {
     }
@@ -85,14 +92,14 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to view a specific log entry
 
     }
-
-    public PersistenceHandler getPersistenceHandler(){
-        return this.ph;
+    public PersistenceHandler getPersistentHandler() {return ph;}
+    @Override
+    public void setPersistenceHandler(PersistenceHandler ph) {this.ph = ph;}
+    public boolean authorizeAdmin(String username, String password)
+    {
+        int is_verified = ph.verifyAdmin(username,password);
+        return is_verified == 1;
     }
-    public void setPersistenceHandler(PersistenceHandler handler){
-    this.ph =  handler;
-    }
-
     public boolean checkEligibility(int age, String cnic, String nationality){
         return ph.checkEligibility( age, cnic, nationality);
     }
@@ -112,6 +119,8 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     }
 
     // not decided yet
+
+
 
     public ArrayList<PollingStation> getStations() {
         // Implementation to get stations

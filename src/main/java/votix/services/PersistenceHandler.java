@@ -41,6 +41,7 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<Candidate> loadCandidateData();
     public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
     public abstract int verifyStaff(String login, String password,String mac_address);
+    public abstract int verifyAdmin(String login, String password);
     public abstract ArrayList<Candidate> fetchCandidates(int areaid);
     public abstract boolean isVoterRegistered(String name,String cnic,int areaid);
     public abstract int fetchArea(int stationid);
