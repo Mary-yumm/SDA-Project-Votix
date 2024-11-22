@@ -176,6 +176,23 @@ public class AdminMenuController {
     @FXML
     public void update_DeactivaeStaff() {
         staffUpdationBtn();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/UpdateDeactiveStaff.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            UpdateDeactiveStaffController controller = loader.getController();
+
+            if (controller != null) {
+                System.out.println("setting UpdateDeactiveStaffController");
+                this.primaryStage.getScene();
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);
+            } else {
+                System.out.println("UpdateDeactiveStaffController is null!");
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

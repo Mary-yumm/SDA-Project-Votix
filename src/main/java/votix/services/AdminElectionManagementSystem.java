@@ -24,9 +24,13 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         return ph.addCandidate(cand, area);
     }
 
-    public PollingStaff managePollingStaff() {
-        // Implementation for managing polling staff
-        return new PollingStaff();
+    public void managePollingStaff(String operation, int id) {
+        if(operation.equals("deactivate")){
+            ph.deactivatePollingStaffAccount(id);
+        }
+        else if(operation.equals("activate")){
+            ph.activatePollingStaffAccount(id);
+        }
     }
     public ArrayList<String> getPartyNames(){
         return ph.getPartyNames();
@@ -109,6 +113,13 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     public String getElectionType() {
         return electionType;
+    }
+
+    public ArrayList<Candidate> getAllCand(){
+        return ph.fetchAllCandidates();
+    }
+    public void updatePollingStaff(Integer staffid, String username, String password, Integer stationid) {
+        ph.updatePollingStaffAccount(username, password,staffid, stationid);
     }
 
     // not decided yet

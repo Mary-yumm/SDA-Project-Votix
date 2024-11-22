@@ -275,7 +275,69 @@ public class mysql extends PersistenceHandler {
 
         return isRegistered;
     }
+    @Override
+    public void updatePollingStaffAccount(String username, String password, int staffid, int stationid) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET username = ?, password = ?, stationId = ? WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setInt(3, stationid);
+            ps.setInt(4, staffid);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + staffid);
+            } else {
+                System.out.println("data updated successfully for staffId " + staffid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void activatePollingStaffAccount(int id) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET status = 'ACTIVE' WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + id);
+            } else {
+                System.out.println("status updated successfully for staffId " + id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void deactivatePollingStaffAccount(int  staffid) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET status = 'INACTIVE' WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, staffid);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + staffid);
+            } else {
+                System.out.println("status updated successfully for staffId " + staffid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public int fetchArea(int stationId) {
@@ -674,7 +736,40 @@ public ArrayList<Integer> getStations(){
     public void deactivatePollingStaffAccount(PollingStaff staff) {
 
     }
+    public ArrayList<Candidate> fetchAllCandidates() {
+        ArrayList<Candidate> candidates = new ArrayList<>();
+        try {
+            // SQL query to fetch candidates that belong to the specified areaId
+            String query = "SELECT * FROM CANDIDATE ";
 
+            // Prepare the statement
+            PreparedStatement ps = conn.prepareStatement(query);
+            // Execute the query and retrieve results
+            ResultSet rs = ps.executeQuery();
+
+            // Loop through the result set to create Candidate objects
+            while (rs.next()) {
+                Candidate candidate = new Candidate();
+                candidate.setCid(rs.getInt("candidateId"));
+                candidate.setName(rs.getString("name"));
+                candidate.setPartyName(rs.getString("partyName"));
+                String partySymbolFile = rs.getString("partySymbol") + ".png";
+
+                // Construct the full path for the party symbol image
+                String imagePath = "/assets/partySymbols/" + partySymbolFile;
+                candidate.setPartySymbol(new Image(getClass().getResource(imagePath).toExternalForm()));
+
+                candidate.setRegistrationDate(rs.getDate("registrationDate"));
+                candidate.setNAPA(rs.getString("naPa"));
+
+                candidates.add(candidate);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return candidates;
+    }
     @Override
     public boolean addCandidate(Candidate candidate, String area) {
 
@@ -688,7 +783,13 @@ public ArrayList<Integer> getStations(){
             preparedStatement.setString(2, candidate.getName());
             preparedStatement.setString(3, candidate.getPartyName());
             preparedStatement.setDate(4, candidate.getRegistrationDate());
-            preparedStatement.setString(5, candidate.getPartySymbolPath());
+
+            //extracts the name of the symbol and adds it to the db
+            String filePath =  candidate.getPartySymbolPath();
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            String baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+
+            preparedStatement.setString(5, baseName);
 
             if(candidate.getNapa().equals("National Assembly")){
                 preparedStatement.setString(6, "NA");

@@ -120,7 +120,7 @@ public class addPollingStaffController {
     }
 
     boolean checkForEmptyFields() {
-        if (staffid.getText().isEmpty() || staffname.getText().isEmpty() || (String.valueOf(stationid.getValue())).isEmpty() || username.getText().isEmpty()  || password.getText().isEmpty()  || assignedrole.getValue().isEmpty()) {
+        if (staffid.getText().isEmpty() || staffname.getText().isEmpty() || stationid.getValue()==null || username.getText().isEmpty()  || password.getText().isEmpty()  || assignedrole.getValue()==null) {
             return false;
         }
 
