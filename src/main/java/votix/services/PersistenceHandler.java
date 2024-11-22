@@ -34,9 +34,9 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> getElectionForm();
     public abstract ArrayList<String> electionReportData();
     public abstract void log();
-    public abstract void updatePollingStaffAccount(PollingStaff staff);
+    public abstract void updatePollingStaffAccount(String username, String password, int staffid, int stationid);
     public abstract boolean addPollingStaffAccount(PollingStaff staff);
-    public abstract void deactivatePollingStaffAccount(PollingStaff staff);
+    public abstract void deactivatePollingStaffAccount(int staffid);
     public abstract boolean addCandidate(Candidate candidate, String area);
     public abstract int verifyStaff(String login, String password,String mac_address);
     public abstract ArrayList<Candidate> fetchCandidates(int areaid);
@@ -51,6 +51,7 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<Object> getStaffAssignments();
     public abstract ArrayList<PollingStaff> getStaffList();
     public abstract ArrayList<Integer> getStations();
+    public abstract void activatePollingStaffAccount(int id);
 }
 
 

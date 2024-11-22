@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.services.AdminElectionManagementSystem;
@@ -17,6 +18,10 @@ public class AdminMenuController {
     public Button viewLogs;
     @FXML
     public Button monitorSystems;
+    @FXML
+    public Button logout1;
+    @FXML
+    public ImageView logout2;
     @FXML
     private Button viewCandidate;
     @FXML
@@ -171,6 +176,23 @@ public class AdminMenuController {
     @FXML
     public void update_DeactivaeStaff() {
         staffUpdationBtn();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/UpdateDeactiveStaff.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            UpdateDeactiveStaffController controller = loader.getController();
+
+            if (controller != null) {
+                System.out.println("setting UpdateDeactiveStaffController");
+                this.primaryStage.getScene();
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);
+            } else {
+                System.out.println("UpdateDeactiveStaffController is null!");
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -229,4 +251,7 @@ public class AdminMenuController {
     }
 
 
+    public void logoutFtn(ActionEvent actionEvent) {
+
+    }
 }

@@ -478,7 +478,28 @@ public ArrayList<Integer> getStations(){
         return list;
 }
 
-   @Override
+    @Override
+    public void activatePollingStaffAccount(int id) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET status = 'ACTIVE' WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + id);
+            } else {
+                System.out.println("status updated successfully for staffId " + id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void ShowPollingStation() {
 
     }
@@ -559,8 +580,27 @@ public ArrayList<Integer> getStations(){
     }
 
     @Override
-    public void updatePollingStaffAccount(PollingStaff staff) {
+    public void updatePollingStaffAccount(String username, String password, int staffid, int stationid) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET username = ?, password = ?, stationId = ? WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setInt(3, stationid);
+            ps.setInt(4, staffid);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + staffid);
+            } else {
+                System.out.println("data updated successfully for staffId " + staffid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -593,8 +633,24 @@ public ArrayList<Integer> getStations(){
     }
 
     @Override
-    public void deactivatePollingStaffAccount(PollingStaff staff) {
+    public void deactivatePollingStaffAccount(int  staffid) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET status = 'INACTIVE' WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            ps.setInt(1, staffid);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + staffid);
+            } else {
+                System.out.println("status updated successfully for staffId " + staffid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

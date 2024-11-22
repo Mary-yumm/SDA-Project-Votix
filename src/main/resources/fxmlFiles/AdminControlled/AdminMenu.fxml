@@ -1,92 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="858.0" prefWidth="1500.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.AdminMenuController">
-   <children>
-      <Label layoutX="375.0" layoutY="62.0" text="Select an action to perform:" />
-      <Button fx:id="addCand" layoutX="480.0" layoutY="258.0" onAction="#addCandidate" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Add a Candidate" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button fx:id="viewForm" layoutX="480.0" layoutY="506.0" onAction="#viewElectionForm" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Election Forms" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button fx:id="viewStaff" alignment="CENTER" contentDisplay="CENTER" layoutX="909.0" layoutY="179.0" onAction="#viewStaffAssignments" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Staff Assignments" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button fx:id="viewreport" layoutX="480.0" layoutY="346.0" onAction="#viewElectionReport" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Election Report" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button fx:id="viewCandidate" layoutX="479.0" layoutY="179.0" onAction="#viewCandidateList" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Candidate List" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor></Button>
-      <Button fx:id="viewresult" layoutX="480.0" layoutY="430.0" onAction="#viewElectionResult" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Election Result" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="staffUpdation" alignment="CENTER" contentDisplay="CENTER" layoutX="909.0" layoutY="346.0" onAction="#update_DeactivaeStaff" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Update/Deactivate Polling Staff" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="pollingStaff" alignment="CENTER" contentDisplay="CENTER" layoutX="909.0" layoutY="258.0" onAction="#addPollingStaff" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Add Polling Staff" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
+   <!-- Page Title -->
+   <Label layoutX="578.0" layoutY="65.0" text="Select an action to perform:" />
 
-      <Separator layoutX="40.0" layoutY="19.0" prefHeight="18.0" prefWidth="1441.0" style="-fx-background-color: #385B4F;" />
-      <Separator layoutX="43.0" layoutY="749.0" prefHeight="18.0" prefWidth="1434.0" style="-fx-background-color: #385B4F;" />
-      <Button fx:id="viewLogs" alignment="CENTER" contentDisplay="CENTER" layoutX="909.0" layoutY="506.0" onAction="#viewLogs" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="View Logs" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-      <Button fx:id="monitorSystems" alignment="CENTER" contentDisplay="CENTER" layoutX="909.0" layoutY="429.0" onAction="#monitorActiveSystems" prefHeight="51.0" prefWidth="270.0" style="-fx-background-radius: 0;" styleClass="submit-button" text="Monitor Active Systems" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Button>
-   </children>
+   <!-- Buttons organized in a GridPane -->
+   <GridPane hgap="100" layoutX="429.0" layoutY="202.0" vgap="25">
+      <columnConstraints>
+         <ColumnConstraints />
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints maxHeight="59.2" minHeight="49.59999389648438" prefHeight="52.80000610351563" />
+         <RowConstraints maxHeight="60.800006103515614" minHeight="51.19999999999999" prefHeight="57.599993896484364" />
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
+      <Button fx:id="viewCandidate" onAction="#viewCandidateList" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="View Candidate List" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+      <Button fx:id="addCand" onAction="#addCandidate" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="Add a Candidate" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+      <Button fx:id="viewreport" onAction="#viewElectionReport" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="View Election Report" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+      <Button fx:id="viewresult" onAction="#viewElectionResult" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="View Election Result" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Button fx:id="viewForm" onAction="#viewElectionForm" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="View Election Forms" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+      <Button fx:id="viewStaff" onAction="#viewStaffAssignments" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="View Staff Assignments" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Button fx:id="pollingStaff" onAction="#addPollingStaff" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="Add Polling Staff" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+      <Button fx:id="staffUpdation" onAction="#update_DeactivaeStaff" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="Update/Deactivate Staff" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button fx:id="monitorSystems" onAction="#monitorActiveSystems" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="Monitor Active Systems" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+      <Button fx:id="viewLogs" onAction="#viewLogs" prefHeight="55.0" prefWidth="250.0" styleClass="submit-button" text="View Logs" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+   </GridPane>
+
+   <!-- Separators -->
+   <Separator layoutX="10.0" layoutY="19.0" prefHeight="18.0" prefWidth="1478.0" style="-fx-background-color: #385B4F;" />
+   <Separator layoutX="14.0" layoutY="727.0" prefHeight="18.0" prefWidth="1478.0" style="-fx-background-color: #385B4F;" />
+   <Group layoutX="1264.0" layoutY="652.0">
+      <children>
+         <Button fx:id="logout1" mnemonicParsing="false" onAction="#logoutFtn" prefHeight="48.0" prefWidth="157.0" styleClass="submit-button" text="Logout         " textAlignment="CENTER" />
+         <ImageView fx:id="logout2" accessibleRole="BUTTON" fitHeight="42.0" fitWidth="49.0" layoutX="101.0" layoutY="4.0" onMouseClicked="#logoutFtn" pickOnBounds="true" preserveRatio="true" styleClass="submit-button">
+            <image>
+               <Image url="@../../assets/exit.png" />
+            </image>
+         </ImageView>
+      </children>
+   </Group>
 </AnchorPane>
