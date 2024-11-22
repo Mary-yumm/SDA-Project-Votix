@@ -4,17 +4,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.DEMO;
 import votix.controllers.PopUps.ErrorMessageController;
-import votix.controllers.PopUps.NewCandidateController;
 import votix.controllers.PopUps.NewStaffController;
-import votix.models.Candidate;
 import votix.models.PollingStaff;
 import votix.services.AdminElectionManagementSystem;
 
@@ -32,6 +33,7 @@ public class addPollingStaffController {
     public TextField password;
     public ComboBox<String> assignedrole;
     public Button registerButton;
+    public ImageView backArrow;
     private AdminElectionManagementSystem ems;
     private Stage primaryStage;
 
@@ -39,6 +41,9 @@ public class addPollingStaffController {
         this.ems = ems;
         this.primaryStage = stage;
         initializeSystem();
+    }
+    public void initialize() {
+        backArrow.setCursor(Cursor.HAND);
     }
 
     void initializeSystem(){
@@ -53,7 +58,7 @@ public class addPollingStaffController {
         ObservableList<Integer> np = FXCollections.observableArrayList(list);
         stationid.setItems(np);
     }
-    public void returnToMenu(ActionEvent actionEvent) {
+    public void returnToMenu(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
             AnchorPane addCandidatePane = loader.load();

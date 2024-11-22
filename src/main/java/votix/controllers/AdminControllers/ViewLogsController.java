@@ -4,11 +4,14 @@ package votix.controllers.AdminControllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,6 +26,7 @@ import java.util.List;
 public class ViewLogsController {
 
     public AnchorPane contentPane;
+    public ImageView backArrow;
     private Stage stage;
 
     public Button pollingStation;
@@ -44,6 +48,7 @@ public class ViewLogsController {
         setupTextFieldValidator(pollingStationFilterTextField);
         setupTextFieldValidator(areaFilterTextField);
         setupFocusListeners();
+        backArrow.setCursor(Cursor.HAND);
     }
 
     // Method to set up focus listeners for text fields
@@ -113,17 +118,26 @@ public class ViewLogsController {
         AnchorPane row = new AnchorPane();
         row.getStyleClass().add("table-row");
 
-        // Log ID Label
+        // Log ID Label (Center-aligned)
         Label logIdLabel = new Label(String.valueOf(log.getLogId()));
         logIdLabel.getStyleClass().add("table-cell");
-        AnchorPane.setLeftAnchor(logIdLabel, 10.0);
+        logIdLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
+        AnchorPane.setLeftAnchor(logIdLabel, 0.0);   // Adjust for column position
+        AnchorPane.setRightAnchor(logIdLabel, 1130.0); // Make it symmetric for centering
+        AnchorPane.setTopAnchor(logIdLabel, 0.0);    // Center vertically
+        AnchorPane.setBottomAnchor(logIdLabel, 0.0); // Center vertically
         row.getChildren().add(logIdLabel);
 
-        // Action Label with Highlight
+        // Action Label (Center-aligned)
         Label actionLabel = new Label();
         actionLabel.getStyleClass().add("table-cell");
-        AnchorPane.setLeftAnchor(actionLabel, 250.0);
+        actionLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
+        AnchorPane.setLeftAnchor(actionLabel, 300.0);  // Adjust for column position
+        AnchorPane.setRightAnchor(actionLabel, 400.0); // Make it symmetric for centering
+        AnchorPane.setTopAnchor(actionLabel, 0.0);    // Center vertically
+        AnchorPane.setBottomAnchor(actionLabel, 0.0); // Center vertically
 
+        // Handle Highlighting Logic
         if (highlightText != null && !highlightText.isEmpty()) {
             switch (filterType.toLowerCase()) {
                 case "action":
@@ -151,16 +165,19 @@ public class ViewLogsController {
         }
         row.getChildren().add(actionLabel);
 
-        // Timestamp Label
+        // Timestamp Label (Center-aligned)
         Label timestampLabel = new Label(log.getTimeStamp());
         timestampLabel.getStyleClass().add("table-cell");
-        AnchorPane.setLeftAnchor(timestampLabel, 950.0);
+        timestampLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
+        AnchorPane.setLeftAnchor(timestampLabel, 970.0);  // Adjust for column position
+        AnchorPane.setRightAnchor(timestampLabel, 50.0);  // Make it symmetric for centering
+        AnchorPane.setTopAnchor(timestampLabel, 0.0);    // Center vertically
+        AnchorPane.setBottomAnchor(timestampLabel, 0.0); // Center vertically
         row.getChildren().add(timestampLabel);
 
         // Add the row to the log table
         logTable.getChildren().add(row);
     }
-
 
     // Helper method to create a label with highlighted text
     private HBox createHighlightedText(String fullText, String highlight) {
@@ -192,15 +209,16 @@ public class ViewLogsController {
 
 
     public void applyFiltersPollingStation() {
-        String pollingStationFilterText = pollingStationFilterTextField.getText().toLowerCase(); // Polling station filter text
+        String pollingStationFilterText = pollingStationFilterTextField.getText().toLowerCase();
 
         // Clear other text fields
         areaFilterTextField.clear();
         filterTextField.clear();
 
-        // Filter logs based on polling station ID mentioned in the action column
+        // Filter logs based on exact polling station ID
         List<Log> filteredLogs = ems.viewLogs().stream()
-                .filter(log -> pollingStationFilterText.isEmpty() || log.getAction().toLowerCase().contains("polling station " + pollingStationFilterText))
+                .filter(log -> pollingStationFilterText.isEmpty() ||
+                        log.getAction().toLowerCase().matches(".*\\bpolling station " + pollingStationFilterText + "\\b.*"))
                 .toList();
 
         // Keep headers and clear the log table content
@@ -211,16 +229,18 @@ public class ViewLogsController {
     }
 
 
+
     public void applyFiltersArea() {
-        String areaFilterText = areaFilterTextField.getText().toLowerCase(); // Area ID filter text
+        String areaFilterText = areaFilterTextField.getText().toLowerCase();
 
         // Clear other text fields
         pollingStationFilterTextField.clear();
         filterTextField.clear();
 
-        // Filter logs based on area ID mentioned in the action column
+        // Filter logs based on exact area ID
         List<Log> filteredLogs = ems.viewLogs().stream()
-                .filter(log -> areaFilterText.isEmpty() || log.getAction().toLowerCase().contains("area " + areaFilterText))
+                .filter(log -> areaFilterText.isEmpty() ||
+                        log.getAction().toLowerCase().matches(".*\\barea " + areaFilterText + "\\b.*"))
                 .toList();
 
         // Keep headers and clear the log table content
@@ -229,6 +249,7 @@ public class ViewLogsController {
             addLogRow(log, areaFilterText, "area"); // Highlight Area
         }
     }
+
 
 
     @FXML
@@ -252,7 +273,7 @@ public class ViewLogsController {
     }
 
 
-    public void returnToMenu(ActionEvent actionEvent) {
+    public void returnToMenu(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
             AnchorPane addCandidatePane = loader.load();
@@ -278,6 +299,20 @@ public class ViewLogsController {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    public void removeFilter(ActionEvent actionEvent) {
+        // Clear all filters
+        filterTextField.clear();
+        areaFilterTextField.clear();
+        pollingStationFilterTextField.clear();
+
+        // Reload all logs
+        logTable.getChildren().retainAll(logTable.getChildren().get(0));
+        for (Log log : ems.viewLogs()) {
+            addLogRow(log, null, null);
         }
     }
 

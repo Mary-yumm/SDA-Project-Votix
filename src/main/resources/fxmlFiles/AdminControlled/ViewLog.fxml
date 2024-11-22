@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ViewLogsController">
 
-   <!-- Filter Section -->
-   <HBox layoutX="104.0" layoutY="155.0" spacing="10.0" />
+   <!-- Title Bar -->
+   <AnchorPane prefHeight="100.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label styleClass="title-bar-text" text="Add Candidate" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0" />
+      <!-- ImageView with hand cursor on hover -->
+      <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="50.0" layoutY="23.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../../assets/back-arrow.png" />
+      </ImageView>
 
-   <!-- Additional filter options -->
-   <HBox layoutX="104.0" layoutY="195.0" spacing="10.0" />
+
+   </AnchorPane>
 
    <!-- Scrollable Content for Logs -->
-   <ScrollPane fitToWidth="true" layoutX="120.0" layoutY="286.0" prefHeight="466.0" prefWidth="1260.0" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="286.0">
+   <ScrollPane fitToWidth="true" layoutX="120.0" layoutY="286.0" prefHeight="466.0" prefWidth="1260.0" styleClass="custom-scroll-pane" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="286.0" >
       <VBox fx:id="logTable" spacing="10">
          <!-- Table Headers -->
          <HBox spacing="400.0" styleClass="table-header">
@@ -32,29 +37,16 @@
       </VBox>
    </ScrollPane>
 
-   <!-- Title Bar -->
-   <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="1486.0" styleClass="title-bar">
-      <children>
-         <Text fill="#e4e4e4" layoutX="578.0" layoutY="66.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Election Logs" />
-         <Button fx:id="backbtn" layoutX="40.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToMenu" opacity="0.69" prefHeight="54.0" prefWidth="108.0" style="-fx-border-color: #FFFF; -fx-background-radius: 20px; -fx-border-radius: 20px;" text="Back" textAlignment="JUSTIFY" textFill="WHITE">
-            <font>
-               <Font name="System Bold" size="7.0" />
-            </font>
-            <cursor>
-               <Cursor fx:constant="HAND" />
-            </cursor>
-         </Button>
-      </children>
-   </AnchorPane>
+
    <!-- Filter by log action -->
    <TextField fx:id="filterTextField" layoutX="123.0" layoutY="121.0" prefHeight="47.0" prefWidth="400.0" promptText="Enter log filter" styleClass="custom-text-field">
       <font>
          <Font size="5.0" />
       </font>
    </TextField>
-   <Button layoutX="449.0" layoutY="125.0" onAction="#filterLogs" styleClass="submit-button" text="Filter by Action" />
-   <Button fx:id="pollingStation" layoutX="1234.0" layoutY="221.0" onAction="#applyFiltersPollingStation" styleClass="submit-button" text="Apply Filter" />
-   <TextField fx:id="pollingStationFilterTextField" layoutX="905.0" layoutY="218.0" prefHeight="47.0" prefWidth="400.0" promptText="Filter by Polling Station ID" styleClass="custom-text-field">
+   <Button layoutX="512.0" layoutY="123.0" onAction="#filterLogs" styleClass="submit-button" text="Filter by Action" />
+   <Button fx:id="pollingStation" layoutX="1197.0" layoutY="221.0" onAction="#applyFiltersPollingStation" styleClass="submit-button" text="Apply Filter" />
+   <TextField fx:id="pollingStationFilterTextField" layoutX="832.0" layoutY="220.0" prefHeight="47.0" prefWidth="230.0" promptText="Filter by Polling Station ID" styleClass="custom-text-field">
       <font>
          <Font size="5.0" />
       </font>
@@ -64,6 +56,7 @@
          <Font size="5.0" />
       </font>
    </TextField>
-   <Button fx:id="Area" layoutX="464.0" layoutY="221.0" onAction="#applyFiltersArea" styleClass="submit-button" text="Apply Filter" />
+   <Button fx:id="Area" layoutX="533.0" layoutY="221.0" onAction="#applyFiltersArea" styleClass="submit-button" text="Apply Filter" />
+   <Button fx:id="removeFilter" layoutX="1184.0" layoutY="776.0" onAction="#removeFilter" styleClass="submit-button" text="Remove Filter" />
 
 </AnchorPane>

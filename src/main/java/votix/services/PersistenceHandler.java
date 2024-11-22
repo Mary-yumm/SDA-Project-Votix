@@ -48,7 +48,6 @@ public abstract class PersistenceHandler {
     public abstract void changeVoterStatus(String cnic);
     public abstract ArrayList<String> getPartyNames();
     public abstract ArrayList<String> getAreaID();
-    public abstract ArrayList<Candidate> fetchAllCandidates();
     public abstract ArrayList<Object> getStaffAssignments();
     public abstract ArrayList<PollingStaff> getStaffList();
     public abstract ArrayList<Integer> getStations();

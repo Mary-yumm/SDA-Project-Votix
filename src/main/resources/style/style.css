@@ -255,3 +255,41 @@
     -fx-border-width: 1px;
     -fx-border-color: #ccc; /* Light gray border for separation */
 }
+
+/* Style the ComboBox */
+.combo-box {
+    -fx-font-size: 14px;
+    -fx-background-color: #f0f0f0; /* Light background */
+    -fx-border-color: #ccc; /* Border color */
+    -fx-border-radius: 5px; /* Rounded corners */
+    -fx-padding: 5px; /* Padding inside ComboBox */
+    -fx-pref-width: 250px; /* Preferred width */
+    -fx-background-insets: 0, 1; /* Spacing between ComboBox and its dropdown */
+}
+
+.combo-box .combo-box-popup {
+    -fx-background-color: #ffffff; /* White background for the dropdown */
+    -fx-border-color: #ccc; /* Border color for the dropdown */
+    -fx-border-radius: 5px; /* Rounded corners for the dropdown */
+    -fx-padding: 5px;
+}
+
+.combo-box .list-cell {
+    -fx-font-size: 14px;
+    -fx-padding: 8px; /* Padding inside the items */
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #4d7d6c; /* Hover effect for items */
+}
+
+.combo-box .list-cell:selected {
+    -fx-background-color: #f0f0f0; /* Custom color for the selected item (change this to your preferred color) */
+    -fx-text-fill: black; /* Ensure text is visible on the selected item */
+}
+
+.combo-box .arrow {
+    -fx-background-color: #385B4F; /* Custom color for the arrow */
+    -fx-background-radius: 3px;
+}
+
