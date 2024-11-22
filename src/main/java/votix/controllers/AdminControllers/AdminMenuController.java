@@ -2,11 +2,11 @@ package votix.controllers.AdminControllers;
 
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.services.AdminElectionManagementSystem;
@@ -282,7 +282,7 @@ public class AdminMenuController {
     }
 
 
-    public void logoutFtn(ActionEvent actionEvent) {
+    public void logoutFtn(MouseEvent actionEvent) {
 
     }
 }

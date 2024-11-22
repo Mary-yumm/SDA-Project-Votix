@@ -4,7 +4,6 @@ import votix.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
@@ -128,9 +127,6 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
       }
         System.out.println("Errorr...............");
         return new ArrayList<>();
-    }
-    public ArrayList<Candidate> getAllCand(){
-        return ph.fetchAllCandidates();
     }
 
     public void createLogEntry(String entry) {

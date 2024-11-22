@@ -2,13 +2,15 @@ package votix.controllers.AdminControllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.DEMO;
@@ -24,6 +26,7 @@ public class addCandidateController {
 
 
     public Button backbtn;
+    public ImageView backArrow;
     private AdminElectionManagementSystem ems;
     private Stage stage;
     private Scene scene;
@@ -57,6 +60,11 @@ public class addCandidateController {
     @FXML
     private Button registerButton;
 
+    public void initialize() {
+        backArrow.setCursor(Cursor.HAND);
+    }
+
+
 
     public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem, Stage st, Scene sc) {
         if(electionManagementSystem == null){
@@ -75,6 +83,8 @@ public class addCandidateController {
         initializingMethod(); //after connection to ems, load data onto comboboxes
         this.stage =st;
         this.scene = sc;
+        nationality.setValue(null);  // This clears the default selection
+
     }
 
     public void AddNewCandidate() throws IOException {
@@ -209,7 +219,7 @@ public class addCandidateController {
     }
 
     boolean isIdInUse() {
-        List<Candidate> candidates = ems.getAllCand();
+        List<Candidate> candidates = ems.getCands();
 
         for (Candidate cand : candidates) {
             if (cand.getCid()== Integer.parseInt(cid.getText())) {
@@ -222,7 +232,7 @@ public class addCandidateController {
     }
 
 
-    public void returnToMenu(ActionEvent actionEvent) {
+    public void returnToMenu(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
             AnchorPane addCandidatePane = loader.load();

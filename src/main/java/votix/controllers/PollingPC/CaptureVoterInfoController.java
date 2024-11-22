@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import votix.controllers.PopUps.ErrorMessageController;
 import votix.services.PollingPCElectionManagementSystem;
 
 import java.io.IOException;
@@ -66,25 +67,24 @@ public class CaptureVoterInfoController {
 
     @FXML
     private void handleSubmit() {
-        boolean is_registered = ems.isVoterRegistered(nameTextField.getText(),cnicTextField.getText());
+        boolean is_registered = ems.isVoterRegistered(nameTextField.getText(), cnicTextField.getText());
         boolean isValid = !nameTextField.getText().isEmpty() && !cnicTextField.getText().isEmpty();
 
         if (isValid && is_registered) {
-            boolean hasVoted = ems.getVoterStatus(cnicTextField.getText(),stationId);
-            if(!hasVoted) {
+            boolean hasVoted = ems.getVoterStatus(cnicTextField.getText(), stationId);
+            if (!hasVoted) {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/PollingPC/CastVote.fxml"));
                     AnchorPane castVotePane = loader.load();
                     CastVoteController controller = loader.getController();
 
                     if (controller != null) {
-                        //check if ems is null
                         if (ems == null) {
                             System.out.println("EMS is null in capture voter info !");
                         } else {
                             System.out.println("EMS is not null in capture voter info !");
                         }
-                        controller.setElectionManagementSystem(ems, cnicTextField.getText()); // Only set the EMS, populateCandidates will be called
+                        controller.setElectionManagementSystem(ems, cnicTextField.getText());
                     }
 
                     Stage secondaryStage = new Stage();
@@ -104,20 +104,46 @@ public class CaptureVoterInfoController {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-            else{
-                System.out.println("Voter has already given the vote!");
+            } else {
+                // Voter has already cast the vote, show error popup
+                showErrorPopup("You've already voted.");
             }
         } else {
-            if(!is_registered) {
-                System.out.println("not registered");
-            }
-            else {
-                System.out.println("fields empty");
-
+            // Fields are empty or voter is not registered
+            if (!is_registered) {
+                showErrorPopup("You are not registered.");
+            } else if (!isValid) {
+                showErrorPopup("Please fill in all fields.");
             }
         }
     }
+
+    private void showErrorPopup(String message) {
+        try {
+            // Load the FXML for the error popup
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/PopUps/ErrorMessage.fxml"));
+            AnchorPane errorPopup = loader.load();
+            ErrorMessageController errorMessageController = loader.getController();
+
+            // Set the message in the popup
+            errorMessageController.setMessageLabel(message);
+
+            // Create a new stage for the popup
+            Stage popupStage = new Stage();
+            popupStage.setTitle("Error");
+            Scene scene = new Scene(errorPopup);
+            popupStage.setScene(scene);
+
+            // Set the primary stage for closing if needed
+            errorMessageController.setPrimaryStage(popupStage);
+
+            popupStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 //    private void simulateFingerprintCapture() {
 //        // Simulate fingerprint data capture

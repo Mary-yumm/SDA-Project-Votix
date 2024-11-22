@@ -58,12 +58,23 @@ public class mysql extends PersistenceHandler {
                 Candidate candidate = new Candidate();
                 candidate.setCid(rs.getInt("candidateId"));
                 candidate.setName(rs.getString("name"));
-                String imagePath = rs.getString("partySymbol");
-
-                // Print the image path to the console
-                System.out.println("Image Path: " + imagePath);
                 candidate.setPartyName(rs.getString("partyName"));
-                candidate.setPartySymbol(new Image(getClass().getResource("/assets/pti.png").toExternalForm()));  // Adjust path as needed
+
+                // Retrieve the party symbol name from the database
+                String partySymbolFile = rs.getString("partySymbol") + ".png";
+
+                // Construct the full path for the party symbol image
+                String imagePath = "/assets/partySymbols/" + partySymbolFile;
+
+                // Load the image if the file exists
+                try {
+                    candidate.setPartySymbol(new Image(getClass().getResource(imagePath).toExternalForm()));
+                } catch (NullPointerException e) {
+                    System.err.println("Image not found for path: " + imagePath);
+                    // Optionally set a default image
+                    candidate.setPartySymbol(new Image(getClass().getResource("/assets/partySymbols/default.png").toExternalForm()));
+                }
+
                 candidate.setRegistrationDate(rs.getDate("registrationDate"));
                 candidate.setNAPA(rs.getString("naPa"));
 
@@ -76,40 +87,6 @@ public class mysql extends PersistenceHandler {
         return candidates;
     }
 
-
-    public ArrayList<Candidate> fetchAllCandidates() {
-        ArrayList<Candidate> candidates = new ArrayList<>();
-        try {
-            // SQL query to fetch candidates that belong to the specified areaId
-            String query = "SELECT * FROM CANDIDATE ";
-
-            // Prepare the statement
-            PreparedStatement ps = conn.prepareStatement(query);
-            // Execute the query and retrieve results
-            ResultSet rs = ps.executeQuery();
-
-            // Loop through the result set to create Candidate objects
-            while (rs.next()) {
-                Candidate candidate = new Candidate();
-                candidate.setCid(rs.getInt("candidateId"));
-                candidate.setName(rs.getString("name"));
-                String imagePath = rs.getString("partySymbol");
-
-                // Print the image path to the console
-                System.out.println("Image Path: " + imagePath);
-                candidate.setPartyName(rs.getString("partyName"));
-                candidate.setPartySymbol(new Image(getClass().getResource("/assets/pti.png").toExternalForm()));  // Adjust path as needed
-                candidate.setRegistrationDate(rs.getDate("registrationDate"));
-                candidate.setNAPA(rs.getString("naPa"));
-
-                candidates.add(candidate);
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return candidates;
-    }
 
     @Override
         public ArrayList<Object> getStaffAssignments() {
@@ -510,7 +487,36 @@ public ArrayList<Integer> getStations(){
         return list;
 }
 
-   @Override
+    @Override
+    public Voter getVoterByCnic(String cnic) {
+        Voter voter = null;
+        String query = "SELECT * FROM VOTER WHERE cnic = ?"; // Using parameterized query to prevent SQL injection
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            // Set the CNIC parameter
+            stmt.setString(1, cnic);
+
+            // Execute the query
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Retrieve voter details from result set
+                    String name = rs.getString("name");
+                    String gender = rs.getString("gender");
+                    boolean status = rs.getBoolean("status");
+
+                    // Create a new Voter object and set its properties
+                    voter = new Voter(cnic, name, gender, status);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log or handle exception as needed
+        }
+
+        return voter; // Return the found voter or null if not found
+    }
+
+
+    @Override
     public void ShowPollingStation() {
 
     }

@@ -1,11 +1,13 @@
 package votix.controllers.AdminControllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,6 +20,8 @@ import java.util.List;
 public class MonitorActiveSystemsController {
 
     public AnchorPane contentPane;
+    public ImageView backArrow;
+    public ComboBox status;
     private Stage stage;
 
     public Button backbtn;
@@ -27,7 +31,40 @@ public class MonitorActiveSystemsController {
 
     public void initialize() {
         // Initialization
+        backArrow.setCursor(Cursor.HAND);
+
+        // Set ComboBox options
+        status.getItems().addAll("All", "Active", "Inactive");
+        status.setValue("All"); // Default selection
+
+        // Add listener to handle ComboBox changes
+        status.valueProperty().addListener((observable, oldValue, newValue) -> filterSystems((String) newValue));
     }
+
+    @FXML
+    private void filterSystems(String newValue) {
+        String filter = (String) status.getValue(); // Get the current filter value
+
+        // Clear other filters if necessary
+        // (If you have other filters like pollingStationFilterTextField or areaFilterTextField, you can clear them here.)
+
+        // Filter systems based on the selected status (Active, Inactive, or All)
+        List<PollingStationPC> filteredSystems = ems.getPollingPCs().stream()
+                .filter(system -> switch (filter) {
+                    case "Active" -> system.getSystemStatus();
+                    case "Inactive" -> !system.getSystemStatus();
+                    default -> true; // "All" option
+                })
+                .toList();
+
+        // Keep headers and clear the system table content
+        systemTable.getChildren().retainAll(systemTable.getChildren().get(0)); // Retain the header row only
+        for (PollingStationPC system : filteredSystems) {
+            addSystemRow(system);  // Add matching rows
+        }
+    }
+
+
 
     public void setElectionManagementSystem(AdminElectionManagementSystem system, Stage st) {
         this.ems = system;
@@ -47,41 +84,63 @@ public class MonitorActiveSystemsController {
         AnchorPane row = new AnchorPane();
         row.getStyleClass().add("table-row");
 
-        // System ID Label
+        // System ID Label (Center-aligned)
         Label systemIdLabel = new Label(system.getSystemID());
         systemIdLabel.getStyleClass().add("table-cell");
-        AnchorPane.setLeftAnchor(systemIdLabel, 60.0);
+        systemIdLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
+        AnchorPane.setLeftAnchor(systemIdLabel, 20.0);   // Adjust for column position
+        AnchorPane.setRightAnchor(systemIdLabel, 1100.0); // Symmetric for centering
+        AnchorPane.setTopAnchor(systemIdLabel, 0.0);    // Center vertically
+        AnchorPane.setBottomAnchor(systemIdLabel, 0.0); // Center vertically
         row.getChildren().add(systemIdLabel);
 
-        // Station ID Label
+        // Station ID Label (Center-aligned)
         Label stationIdLabel = new Label(String.valueOf(system.getStationID()));
         stationIdLabel.getStyleClass().add("table-cell");
-        AnchorPane.setLeftAnchor(stationIdLabel, 320.0);
+        stationIdLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
+        AnchorPane.setLeftAnchor(stationIdLabel, 300.0);  // Adjust for column position
+        AnchorPane.setRightAnchor(stationIdLabel, 850.0); // Symmetric for centering
+        AnchorPane.setTopAnchor(stationIdLabel, 0.0);    // Center vertically
+        AnchorPane.setBottomAnchor(stationIdLabel, 0.0); // Center vertically
         row.getChildren().add(stationIdLabel);
 
-        // Status Label
+        // Status Label (Center-aligned)
         Label statusLabel = new Label(system.getSystemStatus() ? "Active" : "Inactive");
         statusLabel.getStyleClass().add("table-cell");
-        AnchorPane.setLeftAnchor(statusLabel, 540.0);
+        statusLabel.getStyleClass().add(system.getSystemStatus() ? "voted" : "not-voted"); // Add dynamic style class
+        statusLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
+        AnchorPane.setLeftAnchor(statusLabel, 500.0);  // Adjust for column position
+        AnchorPane.setRightAnchor(statusLabel, 560.0); // Symmetric for centering
+        AnchorPane.setTopAnchor(statusLabel, 0.0);    // Center vertically
+        AnchorPane.setBottomAnchor(statusLabel, 0.0); // Center vertically
         row.getChildren().add(statusLabel);
 
-        // Config Label
+
+        // Config Label (Center-aligned)
         Label configLabel = new Label(system.getConfigurationSettings());
         configLabel.getStyleClass().add("table-cell");
-        AnchorPane.setLeftAnchor(configLabel, 720.0);
+        configLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
+        AnchorPane.setLeftAnchor(configLabel, 700.0);  // Adjust for column position
+        AnchorPane.setRightAnchor(configLabel, 250.0); // Symmetric for centering
+        AnchorPane.setTopAnchor(configLabel, 0.0);    // Center vertically
+        AnchorPane.setBottomAnchor(configLabel, 0.0); // Center vertically
         row.getChildren().add(configLabel);
 
-        // Area Name Label
+        // Area Name Label (Center-aligned)
         Label areaNameLabel = new Label(system.getAreaName());
         areaNameLabel.getStyleClass().add("table-cell");
-        AnchorPane.setLeftAnchor(areaNameLabel, 1000.0);
+        areaNameLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
+        AnchorPane.setLeftAnchor(areaNameLabel, 1050.0);  // Adjust for column position
+        AnchorPane.setRightAnchor(areaNameLabel, 30.0);  // Symmetric for centering
+        AnchorPane.setTopAnchor(areaNameLabel, 0.0);     // Center vertically
+        AnchorPane.setBottomAnchor(areaNameLabel, 0.0);  // Center vertically
         row.getChildren().add(areaNameLabel);
 
         // Add the row to the system table
         systemTable.getChildren().add(row);
     }
 
-    public void returnToMenu(ActionEvent actionEvent) {
+    public void returnToMenu(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
             AnchorPane addCandidatePane = loader.load();

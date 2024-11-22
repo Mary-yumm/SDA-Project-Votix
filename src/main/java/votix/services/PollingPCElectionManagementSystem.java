@@ -3,6 +3,7 @@ package votix.services;
 import votix.models.Area;
 import votix.models.Candidate;
 import votix.models.PollingStation;
+import votix.models.Voter;
 
 import java.util.ArrayList;
 
@@ -102,6 +103,10 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     @Override
     public void createLogEntry(String entry) {
 
+    }
+
+    public Voter getVoterByCnic(String cnic){
+        return ph.getVoterByCnic(cnic);
     }
 
 }
