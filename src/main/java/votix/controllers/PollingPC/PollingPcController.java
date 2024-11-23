@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import votix.services.PollingPCElectionManagementSystem;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class PollingPcController {
     private Button tab3Button; // Polling Station Info Button
 
     private PollingPCElectionManagementSystem ems; // Your Election Management System instance
+    private Stage primaryStage;
 
     // Setter to receive ElectionManagementSystem from the MainApp
     public void setElectionManagementSystem(PollingPCElectionManagementSystem electionManagementSystem) {
@@ -33,6 +35,12 @@ public class PollingPcController {
         }
 
     }
+    public void setPrimaryStage(Stage primaryStage) {
+        System.out.println("in pc primary stage");
+
+        this.primaryStage = primaryStage;
+    }
+
 //    @FXML
 //    private void initialize() {
 //       // loadCaptureVoterInfo();
