@@ -5,6 +5,7 @@ import votix.models.*;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class mysql extends PersistenceHandler {
 
@@ -240,12 +241,23 @@ public class mysql extends PersistenceHandler {
                 Candidate candidate = new Candidate();
                 candidate.setCid(rs.getInt("candidateId"));
                 candidate.setName(rs.getString("name"));
-                String imagePath = rs.getString("partySymbol");
-
-                // Print the image path to the console
-                System.out.println("Image Path: " + imagePath);
                 candidate.setPartyName(rs.getString("partyName"));
-                candidate.setPartySymbol(new Image(getClass().getResource("/assets/pti.png").toExternalForm()));  // Adjust path as needed
+
+                // Retrieve the party symbol name from the database
+                String partySymbolFile = rs.getString("partySymbol") + ".png";
+
+                // Construct the full path for the party symbol image
+                String imagePath = "/assets/partySymbols/" + partySymbolFile;
+
+                // Load the image if the file exists
+                try {
+                    candidate.setPartySymbol(new Image(getClass().getResource(imagePath).toExternalForm()));
+                } catch (NullPointerException e) {
+                    System.err.println("Image not found for path: " + imagePath);
+                    // Optionally set a default image
+                    candidate.setPartySymbol(new Image(getClass().getResource("/assets/partySymbols/default.png").toExternalForm()));
+                }
+
                 candidate.setRegistrationDate(rs.getDate("registrationDate"));
                 candidate.setNAPA(rs.getString("naPa"));
 
@@ -258,40 +270,6 @@ public class mysql extends PersistenceHandler {
         return candidates;
     }
 
-
-    public ArrayList<Candidate> fetchAllCandidates() {
-        ArrayList<Candidate> candidates = new ArrayList<>();
-        try {
-            // SQL query to fetch candidates that belong to the specified areaId
-            String query = "SELECT * FROM CANDIDATE ";
-
-            // Prepare the statement
-            PreparedStatement ps = conn.prepareStatement(query);
-            // Execute the query and retrieve results
-            ResultSet rs = ps.executeQuery();
-
-            // Loop through the result set to create Candidate objects
-            while (rs.next()) {
-                Candidate candidate = new Candidate();
-                candidate.setCid(rs.getInt("candidateId"));
-                candidate.setName(rs.getString("name"));
-                String imagePath = rs.getString("partySymbol");
-
-                // Print the image path to the console
-                System.out.println("Image Path: " + imagePath);
-                candidate.setPartyName(rs.getString("partyName"));
-                candidate.setPartySymbol(new Image(getClass().getResource("/assets/pti.png").toExternalForm()));  // Adjust path as needed
-                candidate.setRegistrationDate(rs.getDate("registrationDate"));
-                candidate.setNAPA(rs.getString("naPa"));
-
-                candidates.add(candidate);
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return candidates;
-    }
 
     @Override
         public ArrayList<Object> getStaffAssignments() {
@@ -333,6 +311,63 @@ public class mysql extends PersistenceHandler {
 
             return staffList; // Return the list of staff details
         }
+
+        @Override   //returns all the staff members
+    public ArrayList<PollingStaff> getStaffList() {
+
+            ArrayList<PollingStaff> staffList = new ArrayList<>();
+            try {
+                String staffQuery = "SELECT * FROM POLLINGSTAFF";
+                PreparedStatement staffPs = conn.prepareStatement(staffQuery);
+                ResultSet staffRs = staffPs.executeQuery();
+
+                while (staffRs.next()) {
+                    PollingStaff staff = new PollingStaff();
+                    staff.setStaffID(staffRs.getInt("staffId"));
+                    staff.setName(staffRs.getString("name"));
+                    staff.setAssignedStation(staffRs.getInt("stationId"));
+                    staff.setRole(staffRs.getString("role"));
+                    staff.setUsername(staffRs.getString("username"));
+                    staff.setPassword(staffRs.getString("password"));
+
+                    staffList.add(staff);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+                return staffList;
+
+        }
+    @Override
+    public List<PollingStationPC> getPollingPCs() {
+        List<PollingStationPC> pollingPCs = new ArrayList<>();
+        String query = """
+        SELECT pc.systemId, pc.stationId, pc.systemStatus, pc.config, a.areaName
+        FROM POLLINGSTATIONPC pc
+        JOIN POLLINGSTATION ps ON pc.stationId = ps.stationId
+        JOIN AREA a ON ps.areaId = a.areaId
+    """;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                PollingStationPC pc = new PollingStationPC();
+                pc.setSystemID(rs.getString("systemId"));
+                pc.setStationID(rs.getInt("stationId"));
+                pc.setSystemStatus("Active".equals(rs.getString("systemStatus")));
+                pc.setConfigurationSettings(rs.getString("config"));
+                pc.setAreaName(rs.getString("areaName"));
+
+                pollingPCs.add(pc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle exception
+        }
+
+        return pollingPCs;
+    }
+
 
     @Override
     public int verifyStaff(String username, String password,String currentMac) {
@@ -444,7 +479,69 @@ public class mysql extends PersistenceHandler {
 
         return isRegistered;
     }
+    @Override
+    public void updatePollingStaffAccount(String username, String password, int staffid, int stationid) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET username = ?, password = ?, stationId = ? WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setInt(3, stationid);
+            ps.setInt(4, staffid);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + staffid);
+            } else {
+                System.out.println("data updated successfully for staffId " + staffid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void activatePollingStaffAccount(int id) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET status = 'ACTIVE' WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + id);
+            } else {
+                System.out.println("status updated successfully for staffId " + id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void deactivatePollingStaffAccount(int  staffid) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET status = 'INACTIVE' WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, staffid);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + staffid);
+            } else {
+                System.out.println("status updated successfully for staffId " + staffid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public int fetchArea(int stationId) {
@@ -633,23 +730,56 @@ public class mysql extends PersistenceHandler {
         return votersList;
     }
 
+public ArrayList<Integer> getStations(){
+        ArrayList<Integer> list = new ArrayList<>();
 
+        try {
 
+        String query = "SELECT stationId FROM POLLINGSTATION ";
+
+        PreparedStatement ps = conn.prepareStatement(query);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            int sid= rs.getInt("stationId");
+            list.add(sid);
+        }
+            return list;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+        return list;
+}
 
     @Override
-    public ArrayList<Candidate> loadCandidateData() {
-        return null;
-    }
+    public Voter getVoterByCnic(String cnic) {
+        Voter voter = null;
+        String query = "SELECT * FROM VOTER WHERE cnic = ?"; // Using parameterized query to prevent SQL injection
 
-    @Override
-    public ArrayList<PollingStaff> loadPollingStaffAssignments() {
-        return null;
-    }
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            // Set the CNIC parameter
+            stmt.setString(1, cnic);
 
-//    @Override
-//    public boolean connect() {
-//        return false;
-//    }
+            // Execute the query
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Retrieve voter details from result set
+                    String name = rs.getString("name");
+                    String gender = rs.getString("gender");
+                    boolean status = rs.getBoolean("status");
+
+                    // Create a new Voter object and set its properties
+                    voter = new Voter(cnic, name, gender, status);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log or handle exception as needed
+        }
+
+        return voter; // Return the found voter or null if not found
+    }
 
 
     @Override
@@ -753,20 +883,118 @@ public class mysql extends PersistenceHandler {
     }
 
     @Override
+    public void createLog(String message) {
+        String sql = "INSERT INTO AUDITLOG (action, timeStamp) VALUES (?, NOW())";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, message);
+            pstmt.executeUpdate();
+            System.out.println("Log entry successfully added: " + message);
+        } catch (SQLException e) {
+            System.err.println("Failed to log message: " + message);
+            e.printStackTrace();
+        }
+    }
+
+   /* @Override
+    public List<Log> ViewLogs() {
+        List<Log> logs = new ArrayList<>();
+        String query = "SELECT logId, action, timeStamp FROM AUDITLOG";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int logId = rs.getInt("logId");
+                String action = rs.getString("action");
+                String timeStamp = rs.getString("timeStamp");
+
+                // Create a Log object and add it to the list
+                logs.add(new Log(logId, action, timeStamp));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error fetching logs: " + e.getMessage());
+        }
+
+        return logs;
+
+    }*/
+
+
+
+    @Override
     public void updatePollingStaffAccount(PollingStaff staff) {
 
     }
 
     @Override
-    public void addPollingStaffAccount(PollingStaff staff) {
+    public boolean addPollingStaffAccount(PollingStaff staff) {
+        String sql = "INSERT INTO POLLINGSTAFF (staffId, stationId, name, role, username, password) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
 
+        try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+
+            // Set the values in the prepared statement
+            preparedStatement.setInt(1, staff.getStaffID());
+            preparedStatement.setInt(2, staff.getAssignedStation());
+            preparedStatement.setString(3, staff.getName());
+            preparedStatement.setString(4, staff.getRole());
+            preparedStatement.setString(5, staff.getUsername());
+            preparedStatement.setString(6, staff.getPassword());
+
+            // Execute the update (INSERT)
+            preparedStatement.executeUpdate();
+
+            System.out.println("staff added successfully.");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error while adding staff: " + e.getMessage());
+            return false;
+        }
+        return true;
     }
 
     @Override
     public void deactivatePollingStaffAccount(PollingStaff staff) {
 
     }
+    public ArrayList<Candidate> fetchAllCandidates() {
+        ArrayList<Candidate> candidates = new ArrayList<>();
+        try {
+            // SQL query to fetch candidates that belong to the specified areaId
+            String query = "SELECT * FROM CANDIDATE ";
 
+            // Prepare the statement
+            PreparedStatement ps = conn.prepareStatement(query);
+            // Execute the query and retrieve results
+            ResultSet rs = ps.executeQuery();
+
+            // Loop through the result set to create Candidate objects
+            while (rs.next()) {
+                Candidate candidate = new Candidate();
+                candidate.setCid(rs.getInt("candidateId"));
+                candidate.setName(rs.getString("name"));
+                candidate.setPartyName(rs.getString("partyName"));
+                String partySymbolFile = rs.getString("partySymbol") + ".png";
+
+                // Construct the full path for the party symbol image
+                String imagePath = "/assets/partySymbols/" + partySymbolFile;
+                candidate.setPartySymbol(new Image(getClass().getResource(imagePath).toExternalForm()));
+
+                candidate.setRegistrationDate(rs.getDate("registrationDate"));
+                candidate.setNAPA(rs.getString("naPa"));
+
+                candidates.add(candidate);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return candidates;
+    }
     @Override
     public boolean addCandidate(Candidate candidate, String area) {
 
@@ -780,7 +1008,13 @@ public class mysql extends PersistenceHandler {
             preparedStatement.setString(2, candidate.getName());
             preparedStatement.setString(3, candidate.getPartyName());
             preparedStatement.setDate(4, candidate.getRegistrationDate());
-            preparedStatement.setString(5, candidate.getPartySymbolPath());  // Store the file path or a reference to the image
+
+            //extracts the name of the symbol and adds it to the db
+            String filePath =  candidate.getPartySymbolPath();
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            String baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+
+            preparedStatement.setString(5, baseName);
 
             if(candidate.getNapa().equals("National Assembly")){
                 preparedStatement.setString(6, "NA");
@@ -796,11 +1030,11 @@ public class mysql extends PersistenceHandler {
 
             try (PreparedStatement preparedStatement1 = conn.prepareStatement(sql1)) {
 
-                // Set the values in the prepared statement
+
                 preparedStatement1.setInt(1, candidate.getCid());
                 preparedStatement1.setString(2, area);
 
-                // Execute the update (INSERT)
+
                 preparedStatement1.executeUpdate();
 
                 System.out.println("Candidate area added successfully.");
@@ -841,50 +1075,17 @@ public class mysql extends PersistenceHandler {
         return partyNames;
     }
 
-    @Override
-    public boolean checkEligibility(int age, String cnic, String nationality) {
-        return false;
-    }
-
-    public boolean checkEligibility(String cnic, int age, String nationality) {
-        String sql = "SELECT age, nationality FROM candidate_verification WHERE cnic = ?";
-        try {
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-
-            pstmt.setString(1, cnic);
-
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                int dbAge = rs.getInt("age");
-                String dbNationality = rs.getString("nationality");
-
-                if (dbAge >= 25 && dbNationality.equalsIgnoreCase("Pakistani")) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                System.out.println("No candidate found with CNIC: " + cnic);
-                return false;
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error checking eligibility: " + e.getMessage());
-            return false;
-        }
-    }
     public ArrayList<String> getAreaID() {
         ArrayList<String> areaIDs = new ArrayList<>();
-        String areaQuery = "SELECT DISTINCT areaID FROM AREA"; // Assuming "AREA" is the table name and "areaID" is the column.
+        String areaQuery = "SELECT DISTINCT areaID FROM AREA";
 
         try (PreparedStatement areaPs = conn.prepareStatement(areaQuery)) {
             ResultSet areaRs = areaPs.executeQuery();
 
             while (areaRs.next()) {
-                // Fetch the areaID as an integer, then convert it to String.
+
                 int areaID = areaRs.getInt("areaID");
-                areaIDs.add(String.valueOf(areaID)); // Convert the integer to a String and add to the list.
+                areaIDs.add(String.valueOf(areaID));
             }
 
         } catch (SQLException e) {
@@ -893,4 +1094,5 @@ public class mysql extends PersistenceHandler {
 
         return areaIDs;
     }
+
 }

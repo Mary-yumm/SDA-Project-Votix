@@ -55,8 +55,9 @@ public class MainPageController {
         primaryStage.setScene(Scene);
         primaryStage.show();
 
-        } catch (IOException e) {
-        e.printStackTrace();
+        }catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load about.fxml. Check the file path.");
         }
     }
     private void loadLoginScene(String role) {

@@ -3,7 +3,7 @@ package votix.services;
 import votix.models.*;
 
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
 public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
@@ -47,9 +47,13 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         return ph.addCandidate(cand, area);
     }
 
-    public PollingStaff managePollingStaff() {
-        // Implementation for managing polling staff
-        return new PollingStaff();
+    public void managePollingStaff(String operation, int id) {
+        if(operation.equals("deactivate")){
+            ph.deactivatePollingStaffAccount(id);
+        }
+        else if(operation.equals("activate")){
+            ph.activatePollingStaffAccount(id);
+        }
     }
     public ArrayList<String> getPartyNames(){
         return ph.getPartyNames();
@@ -102,9 +106,13 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to filter logs
     }
 
-    public void viewLog(String logId) {
+    public List<Log> viewLogs() {
         // Implementation to view a specific log entry
+        return ph.ViewLogs();
+    }
 
+    public List<PollingStationPC> getPollingPCs(){
+        return ph.getPollingPCs();
     }
     public PersistenceHandler getPersistentHandler() {return ph;}
     @Override
@@ -114,9 +122,9 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         int is_verified = ph.verifyAdmin(username,password);
         return is_verified == 1;
     }
-    public boolean checkEligibility(int age, String cnic, String nationality){
-        return ph.checkEligibility( age, cnic, nationality);
-    }
+
+
+
     public ArrayList<String> getAreaID(){
     return ph.getAreaID();
     }
@@ -132,13 +140,18 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         return electionType;
     }
 
+    public ArrayList<Candidate> getAllCand(){
+        return ph.fetchAllCandidates();
+    }
+    public void updatePollingStaff(Integer staffid, String username, String password, Integer stationid) {
+        ph.updatePollingStaffAccount(username, password,staffid, stationid);
+    }
+
     // not decided yet
 
-
-
-    public ArrayList<PollingStation> getStations() {
+    public ArrayList<Integer> getStations() {
         // Implementation to get stations
-        return new ArrayList<>();
+        return ph.getStations();
     }
 
     public ArrayList<Candidate> getCands() {
@@ -151,9 +164,7 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         System.out.println("Errorr...............");
         return new ArrayList<>();
     }
-    public ArrayList<Candidate> getAllCand(){
-        return ph.fetchAllCandidates();
-    }
+
 
     public void createLogEntry(String entry) {
         // Implementation to create a log entry
@@ -162,8 +173,12 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     public void searchStaffByStaffName() {
       //  return ph.getStaffByName();
     }
+    public boolean addPollingStaff(PollingStaff p){return ph.addPollingStaffAccount(p);}
 
     public void searchStaffByAreaID() {
+    }
+    public ArrayList<PollingStaff> getPollingStaff() {
+        return ph.getStaffList();
     }
 
     public ArrayList<Object> getStaffAssignments() {

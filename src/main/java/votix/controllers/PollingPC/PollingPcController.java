@@ -27,6 +27,7 @@ public class PollingPcController {
         this.ems = electionManagementSystem;
         if(ems!=null) {
             System.out.println("ems set in PollingPcController: " + (ems != null));  // Debugging line
+            selectTab1();
         }
         else{
             System.out.println("ems set in PollingPcController: null");

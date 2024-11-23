@@ -1,70 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<fx:root prefHeight="440.0" prefWidth="573.0" type="Pane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.VeiwLogController">
-   <children>
-      <Pane layoutY="-8.0">
-         <children>
-            <VBox alignment="CENTER" prefHeight="451.0" prefWidth="573.0" spacing="20" style="-fx-background-color: #385B4F;">
-               <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #faf7f7;">
-                  <children>
-                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="94.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" width="900.0" />
-                     <ImageView fitHeight="94.0" fitWidth="110.0" layoutX="13.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../../../../../../Desktop/VotixCompanyLogo2.png" />
-                        </image>
-                     </ImageView>
-                     <Text fill="#e4e4e4" layoutX="303.0" layoutY="69.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Election Logs" />
-                     <ChoiceBox layoutX="538.0" layoutY="175.0" prefHeight="25.0" prefWidth="303.0" />
-                     <Label layoutX="57.0" layoutY="120.0" prefHeight="27.0" prefWidth="310.0" text="Election Date:" textAlignment="CENTER">
-                        <font>
-                           <Font name="System Bold" size="18.0" />
-                        </font>
-                     </Label>
-                     <Label layoutX="197.0" layoutY="119.0" styleClass="label" text="12 4 2024">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <Text layoutX="57.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-                     <AnchorPane layoutX="49.0" layoutY="201.0" prefHeight="154.0" prefWidth="825.0">
-                        <children>
-                           <AnchorPane layoutX="25.0" prefHeight="154.0" prefWidth="786.0">
-                              <children>
-                                 <TableView layoutX="-15.0" layoutY="14.0" prefHeight="365.0" prefWidth="786.0">
-                                   <columns>
-                                     <TableColumn prefWidth="200.0" text="Candidate Name" />
-                                     <TableColumn prefWidth="200.0" text="Party Name" />
-                                       <TableColumn prefWidth="200.0" text="Votes Received" />
-                                   </columns>
-                                 </TableView>
-                              </children>
-                           </AnchorPane>
-                        </children>
-                     </AnchorPane>
-                     <Text layoutX="57.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search by type of Log" wrappingWidth="477.3151397705078">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Text>
-                  </children>
-               </Pane>
-               <HBox prefHeight="4.0" prefWidth="536.0" style="-fx-background-color: #385B4F;" />
-            </VBox>
-         </children>
-      </Pane>
-   </children>
-</fx:root>
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ViewLogsController">
+
+   <!-- Title Bar -->
+   <AnchorPane prefHeight="100.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label styleClass="title-bar-text" text="View Logs" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0" />
+      <!-- ImageView with hand cursor on hover -->
+      <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="50.0" layoutY="23.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../../assets/back-arrow.png" />
+      </ImageView>
+
+
+   </AnchorPane>
+
+   <!-- Scrollable Content for Logs -->
+   <ScrollPane fitToWidth="true" layoutX="120.0" layoutY="286.0" prefHeight="466.0" prefWidth="1260.0" styleClass="custom-scroll-pane" AnchorPane.bottomAnchor="83.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="286.0" >
+      <VBox fx:id="logTable" spacing="10">
+         <!-- Table Headers -->
+         <HBox spacing="400.0" styleClass="table-header">
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Log ID" />
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Action" />
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Time Stamp" />
+         </HBox>
+         <!-- Log rows will be dynamically added here by the controller -->
+      </VBox>
+   </ScrollPane>
+
+
+   <!-- Filter by log action -->
+   <TextField fx:id="filterTextField" layoutX="123.0" layoutY="121.0" prefHeight="47.0" prefWidth="400.0" promptText="Enter log filter" styleClass="custom-text-field">
+      <font>
+         <Font size="5.0" />
+      </font>
+   </TextField>
+   <Button layoutX="512.0" layoutY="123.0" onAction="#filterLogs" styleClass="submit-button" text="Filter by Action" />
+   <Button fx:id="pollingStation" layoutX="1197.0" layoutY="221.0" onAction="#applyFiltersPollingStation" styleClass="submit-button" text="Apply Filter" />
+   <TextField fx:id="pollingStationFilterTextField" layoutX="832.0" layoutY="220.0" prefHeight="47.0" prefWidth="230.0" promptText="Filter by Polling Station ID" styleClass="custom-text-field">
+      <font>
+         <Font size="5.0" />
+      </font>
+   </TextField>
+   <TextField fx:id="areaFilterTextField" layoutX="120.0" layoutY="217.0" prefHeight="47.0" prefWidth="400.0" promptText="Filter by Area ID" styleClass="custom-text-field">
+      <font>
+         <Font size="5.0" />
+      </font>
+   </TextField>
+   <Button fx:id="Area" layoutX="533.0" layoutY="221.0" onAction="#applyFiltersArea" styleClass="submit-button" text="Apply Filter" />
+   <Button fx:id="removeFilter" layoutX="1184.0" layoutY="776.0" onAction="#removeFilter" styleClass="submit-button" text="Remove Filter" />
+
+</AnchorPane>

@@ -8,9 +8,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import votix.controllers.MainPageController;
 import votix.services.AdminElectionManagementSystem;
 import votix.services.PersistenceHandler;
 
@@ -20,6 +23,10 @@ public class AdminMenuController {
     public Button viewLogs;
     @FXML
     public Button monitorSystems;
+    @FXML
+    public Button logout1;
+    @FXML
+    public ImageView logout2;
     @FXML
     private Button viewCandidate;
     @FXML
@@ -109,8 +116,7 @@ public class AdminMenuController {
             // Check if controller is not null and set EMS
             if (controller != null) {
                 System.out.println("setting");
-                //this.primaryStage.getScene();
-                controller.setElectionManagementSystem(this.ems, this.primaryStage, this.primaryStage.getScene());  // Pass the ems instance
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);
             } else {
                 System.out.println("addCandidateController is null!");  // Debugging line
             }
@@ -131,10 +137,9 @@ public class AdminMenuController {
 
             if (controller != null) {
                 System.out.println("setting");
-                this.primaryStage.getScene();
                controller.setElectionManagementSystem(this.ems, this.primaryStage);
             } else {
-                System.out.println("addCandidateController is null!");
+                System.out.println("viewCandidateController is null!");
             }
             contentPane.getChildren().setAll(addCandidatePane);
         }
@@ -154,10 +159,9 @@ public class AdminMenuController {
             // Check if controller is not null and set EMS
             if (controller != null) {
                 System.out.println("setting");
-                this.primaryStage.getScene();
                 controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
             } else {
-                System.out.println("addCandidateController is null!");  // Debugging line
+                System.out.println("staffAssignmentsController is null!");  // Debugging line
             }
             contentPane.getChildren().setAll(addCandidatePane);
         }
@@ -204,6 +208,22 @@ public class AdminMenuController {
     @FXML
     public void addPollingStaff() {
         pollingStaffBtn();
+        /*try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/addPollingStaff.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            addPollingStaffController controller = loader.getController();
+
+            // Check if controller is not null and set EMS
+            if (controller != null) {
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
+            } else {
+                System.out.println("add polling staff is null!");  // Debugging line
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
     @FXML
@@ -237,10 +257,58 @@ public class AdminMenuController {
     }
 
     @FXML
-    public void monitorActiveSystems() {monitorSystemsBtn();}
+    public void monitorActiveSystems() {
+        monitorSystemsBtn(); // Highlight the button
+        /*try {
+            // Load the MonitorActiveSystems.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/MonitorActiveSystems.fxml"));
+            AnchorPane monitorSystemsPane = loader.load();
+
+            // Get the controller of the MonitorActiveSystems.fxml
+            MonitorActiveSystemsController controller = loader.getController();
+
+            // Set EMS in the controller
+            if (controller != null) {
+                System.out.println("Setting EMS in MonitorActiveSystemsController");
+                controller.setElectionManagementSystem(this.ems, this.primaryStage); // Pass the EMS instance
+            } else {
+                System.out.println("MonitorActiveSystemsController is null!");
+            }
+
+            // Add the loaded FXML content to the content pane
+            contentPane.getChildren().setAll(monitorSystemsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
 
     @FXML
-    public void viewLogs() {viewLogsBtn();}
+    public void viewLogs() {
+        viewLogsBtn();
+        /*try {
+            // Load the ViewLogs.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ViewLog.fxml"));
+            AnchorPane viewLogsPane = loader.load();
+
+            // Get the controller of the ViewLogs.fxml
+            ViewLogsController controller = loader.getController();
+
+            // Set EMS and PersistenceHandler in the controller
+            if (controller != null) {
+                System.out.println("Setting EMS and PersistenceHandler in ViewLogsController");
+                controller.setEMS(this.ems, this.primaryStage);
+            } else {
+                System.out.println("ViewLogsController is null!");  // Debugging line
+            }
+
+            // Add the loaded FXML content to the content pane
+            contentPane.getChildren().setAll(viewLogsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
 
     @FXML
     public void viewElectionForm() {
@@ -266,4 +334,23 @@ public class AdminMenuController {
     }
 
 
+    public void logoutFtn(MouseEvent actionEvent) {
+
+        try {
+            // Load the previous screen (MainPage.fxml)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
+            Scene scene = new Scene(loader.load(), 1920, 1080);
+
+            // Get the controller of MainPage and set up necessary bindings again
+            MainPageController mainPageController = loader.getController();
+            mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
+
+            // Set the scene and show the primaryStage
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+}
 }

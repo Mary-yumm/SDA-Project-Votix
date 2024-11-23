@@ -27,7 +27,26 @@
             this.eligibilityStatus=status;
             this.NAPA=napa;
             this.registrationDate = java.sql.Date.valueOf(LocalDate.now());
-            this.PartySymbol=  new Image("D:/semester 5/SDA/finalllll/src/main/resources/assets/pti.png");
+
+
+            setPartySymbols(party);
+        }
+        void setPartySymbols(String party){
+            String imagePath = "";
+            switch (party) {
+                case "Pakistan Peoples Party" -> imagePath = "/assets/partySymbols/Arrow.png";
+                case "Pakistan Muslim League (N)" -> imagePath = "/assets/partySymbols/Tiger.png";
+                case "Pakistan Tehreek-e-Insaf" -> imagePath = "/assets/partySymbols/Bat.png";
+                case "Tehreek-e-Labbaik Pakistan" -> imagePath = "/assets/partySymbols/Crane.png";
+                case "Milli Muslim League" -> imagePath = "/assets/partySymbols/Hammer.png";
+                case "Jamaat-e-Islami" -> imagePath = "/assets/partySymbols/Trazu.png";
+                case "Muttahida Qaumi Movement" -> imagePath = "/assets/partySymbols/Kite.png";
+                case "Pakistan Awami Tehreek" -> imagePath = "/assets/partySymbols/Bicycle.png";
+                case "Jamiat Ulema-e-Islam (F)" -> imagePath = "/assets/partySymbols/Flag.png";
+                case "Awami Muslim League" -> imagePath = "/assets/partySymbols/Inkpot.png";
+                case "Awami National Party" -> imagePath = "/assets/partySymbols/Lantern.png";
+            }
+            this.PartySymbol = new Image(getClass().getResource(imagePath).toExternalForm());
         }
         public int getCid() { return Cid; }
         public void setCid(int cid) { this.Cid = cid; }

@@ -5,8 +5,10 @@ import votix.models.Candidate;
 import votix.models.ElectionResult;
 import votix.models.PollingStaff;
 import votix.models.PollingStation;
+import votix.models.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class PersistenceHandler {
     protected String connectionString;
@@ -39,14 +41,17 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> getElectionForm();
     public abstract ArrayList<String> electionReportData();
     public abstract void log();
+    public abstract void createLog(String message);
+    //public abstract List<Log> ViewLogs();
     public abstract void updatePollingStaffAccount(PollingStaff staff);
-    public abstract void addPollingStaffAccount(PollingStaff staff);
+    public abstract boolean addPollingStaffAccount(PollingStaff staff);
     public abstract void deactivatePollingStaffAccount(PollingStaff staff);
     public abstract boolean addCandidate(Candidate candidate, String area);
-    public abstract ArrayList<Candidate> loadCandidateData();
-    public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
+    //public abstract ArrayList<Candidate> loadCandidateData();
+    //public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
     public abstract int verifyStaff(String login, String password,String mac_address);
     public abstract int verifyAdmin(String login, String password);
+    public abstract List<PollingStationPC> getPollingPCs();
     public abstract ArrayList<Candidate> fetchCandidates(int areaid);
     public abstract boolean isVoterRegistered(String name,String cnic,int areaid);
     public abstract int fetchArea(int stationid);
@@ -54,10 +59,17 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<PollingStation> fetchStations(int areaID);
     public abstract void changeVoterStatus(String cnic);
     public abstract ArrayList<String> getPartyNames();
-    public abstract boolean checkEligibility(int age,String cnic,  String nationality);
     public abstract ArrayList<String> getAreaID();
-    public abstract ArrayList<Candidate> fetchAllCandidates();
     public abstract ArrayList<Object> getStaffAssignments();
+    public abstract ArrayList<PollingStaff> getStaffList();
+    public abstract ArrayList<Integer> getStations();
+    public abstract Voter getVoterByCnic(String cnic);
+
+    public abstract ArrayList<Candidate> fetchAllCandidates();
+    public abstract void updatePollingStaffAccount(String username, String password, int staffid, int stationid);
+    public abstract void deactivatePollingStaffAccount(int staffid);
+    public abstract void activatePollingStaffAccount(int id);
+
 
     public abstract ArrayList<ElectionResult> WinnerByArea(String areaName);
     public abstract int fetchTotalVotesByArea(String areaName);

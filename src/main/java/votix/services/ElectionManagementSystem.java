@@ -1,7 +1,6 @@
 package votix.services;
 
 import votix.models.Candidate;
-import votix.models.PollingStation;
 
 import java.util.ArrayList;
 
@@ -15,12 +14,11 @@ public interface ElectionManagementSystem {
 
     // not decided yet
 
-    public ArrayList<PollingStation> getStations();
+    public ArrayList<Integer> getStations();
 
     public ArrayList<Candidate> getCands();
 
     public void createLogEntry(String entry);
 
-    boolean checkEligibility(int i, String text, String value);
 }
 
