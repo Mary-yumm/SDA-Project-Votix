@@ -1,33 +1,45 @@
 package votix.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import votix.services.PersistenceHandler;
+
 import java.io.IOException;
 
 public class AboutController {
 
+    public Button backButton;
+    public AnchorPane contentPane;
     private Stage primaryStage;
+    private PersistenceHandler ph;
 
     @FXML
-    public void handleBackButtonAction(ActionEvent actionEvent) {
-        try {
-            // Load the previous screen (MainPage.fxml)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
-            Scene scene = new Scene(loader.load(), 1920, 1080);
+    public void handleBackButtonAction(MouseEvent actionEvent) {
+//        try {
+//            // Load the previous screen (MainPage.fxml)
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
+//            AnchorPane menu = loader.load();
+//
+//            // Get the controller of MainPage and set up necessary bindings again
+//            MainPageController mainPageController = loader.getController();
+//            mainPageController.setph(ph);
+//            mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
+//
+//            contentPane.getChildren().setAll(menu);
+//            contentPane.requestLayout();  // Request a layout refresh
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
 
-            // Get the controller of MainPage and set up necessary bindings again
-            MainPageController mainPageController = loader.getController();
-            mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
-
-            // Set the scene and show the primaryStage
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void setPh(PersistenceHandler ph){
+        this.ph=ph;
     }
 
 

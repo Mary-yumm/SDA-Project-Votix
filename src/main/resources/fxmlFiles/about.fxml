@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AboutController">
+<AnchorPane fx:id="contentPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AboutController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="783.0" layoutX="151.0" layoutY="150.0" stroke="WHITE" strokeWidth="0.0" width="1619.0" />
@@ -63,7 +63,7 @@
          </image>
       </ImageView>
       <Rectangle fx:id="bg" arcHeight="50.0" arcWidth="50.0" fill="#37594d30" height="547.0" layoutX="247.0" layoutY="317.0" stroke="WHITE" strokeType="INSIDE" width="1437.0" />
-        <Button fx:id="backButton" layoutX="1583.0" layoutY="262.0" onAction="#handleBackButtonAction" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #e72f2f; -fx-text-fill: white; -fx-font-size: 16px;" text="Back" />
+        <Button fx:id="backButton" layoutX="1583.0" layoutY="262.0" onMouseClicked="#handleBackButtonAction" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #e72f2f; -fx-text-fill: white; -fx-font-size: 16px;" text="Back" />
 
     </children>
 
