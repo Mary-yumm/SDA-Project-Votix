@@ -44,6 +44,7 @@ public class CaptureVoterInfoController {
     public void initialize() {
         restrictNameField();
         restrictCnicField();
+
     }
 
     private void restrictNameField() {
