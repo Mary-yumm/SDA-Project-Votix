@@ -17,11 +17,17 @@ public class DEMO extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
+
+        PersistenceHandler handler = new mysql("jdbc:mysql://100.91.228.86/votix", "username", "password");
+
         // Load the FXML file
         FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/mainpage.fxml"));
 
         // Load the scene from the FXML file
         Scene scene = new Scene(fxmlLoader.load());
+
+        // Set window title
+        stage.setTitle("Voting System");
 
         // Get screen bounds (primary screen)
         Screen screen = Screen.getPrimary();
@@ -32,15 +38,13 @@ public class DEMO extends Application {
          stage.setWidth(screenWidth);   // Set 80% of screen width
          stage.setHeight(screenHeight); // Set 80% of screen height
 
-        // Set window title
-        stage.setTitle("Voting System");
-
-        // After loading the FXML, get the controller and set the ElectionManagementSystem
+        // Main Page Controller
         MainPageController controller = fxmlLoader.getController();
-        PersistenceHandler handler = new mysql("jdbc:mysql://100.91.228.86/votix", "username", "password");
 
-      // Set the primary stage in the controller
+        // Set the primary stage in the controller
         controller.setPrimaryStage(stage);
+
+        // Set the db
         controller.setph(handler);
 
         // Set the scene to the stage

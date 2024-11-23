@@ -34,6 +34,7 @@ public class staffAssignmentsController {
     private Stage stage;
     @FXML
     ComboBox <String> area;
+
     public void setElectionManagementSystem(AdminElectionManagementSystem ems, Stage primaryStage) {
     this.ems = ems;
     this.stage = primaryStage;

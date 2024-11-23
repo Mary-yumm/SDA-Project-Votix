@@ -32,13 +32,6 @@ public class MainPageController {
     private void handleAdminLogin(MouseEvent event) {
         System.out.println("Admin button clicked!");
         loadLoginScene("admin");
-        /*try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
-            Scene adminScene = new Scene(loader.load(), 600, 400);
-            primaryStage.setScene(adminScene);  // Set the new scene
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     // This method handles the "STAFF" button click
@@ -46,42 +39,40 @@ public class MainPageController {
     private void handleStaffLogin(MouseEvent event) {
         System.out.println("Staff button clicked!");
         loadLoginScene("staff");
-       /* try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
-            Scene staffScene = new Scene(loader.load(), 600, 400);
-            primaryStage.setScene(staffScene);  // Set the new scene
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
     @FXML
     private void handleAbout(MouseEvent event)  {
 
         try{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/about.fxml"));
-        Scene Scene = new Scene(loader.load(), 600, 400);
+        Scene Scene = new Scene(loader.load());
 
         AboutController Controller = loader.getController();
         Controller.setPrimaryStage(primaryStage);
-        primaryStage.setScene(Scene); // Set the new scene
+        Controller.setPh(ph);
+
+        // Set the new scene
+        primaryStage.setScene(Scene);
         primaryStage.show();
 
         } catch (IOException e) {
         e.printStackTrace();
-    }
+        }
     }
     private void loadLoginScene(String role) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
-            Scene loginScene = new Scene(loader.load(), 600, 400);
+            Scene loginScene = new Scene(loader.load());
 
             // Get the LoginController and pass the role
             LoginController loginController = loader.getController();
             loginController.setRole(role);
-            loginController.setph(ph);
-
+            loginController.setPh(ph);
             loginController.setPrimaryStage(primaryStage);
+
             primaryStage.setScene(loginScene); // Set the new scene
+            primaryStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -5,11 +5,16 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import votix.services.PersistenceHandler;
+
 import java.io.IOException;
 
 public class AboutController {
 
     private Stage primaryStage;
+
+    private PersistenceHandler ph;
+
 
     @FXML
     public void handleBackButtonAction(ActionEvent actionEvent) {
@@ -35,4 +40,12 @@ public class AboutController {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
+    public PersistenceHandler getPh() {
+        return ph;
+    }
+
+    public void setPh(PersistenceHandler ph) {
+        this.ph = ph;
+    }
+
 }

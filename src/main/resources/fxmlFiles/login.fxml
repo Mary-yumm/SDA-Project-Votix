@@ -38,7 +38,7 @@
               <PasswordField fx:id="passwordField" layoutX="210.0" layoutY="239.0" maxWidth="250.0" prefWidth="250.0" promptText="Password" style="-fx-padding: 5px 10px; -fx-font-size: 14px; -fx-height: 30px;" />
          
                              <!-- Login Button -->
-              <Button fx:id="LoginButton" layoutX="210.0" layoutY="337.0" onMouseClicked="#handleLogin" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 25; -fx-background-color: linear-gradient(to bottom, #385B4F, #2c473d); -fx-text-fill: white; -fx-font-size: 24px; -fx-font-family: 'Century Gothic Bold Italic';" styleClass="login-button" text="Login" textAlignment="CENTER">
+              <Button fx:id="LoginButton" layoutX="210.0" layoutY="337.0" onMouseClicked="#handleLogin" prefHeight="40.0" prefWidth="250.0" style="-fx-background-radius: 25; -fx-background-color: linear-gradient(to bottom, #385B4F, #2c473d); -fx-text-fill: white; -fx-font-size: 24px; -fx-font-family: 'Century Gothic Bold Italic';" styleClass="submit-button" text="Login" textAlignment="CENTER">
                <font>
                   <Font name="Century Gothic Bold" size="24.0" />
                </font>
@@ -50,6 +50,6 @@
             </Text>
          </children>
       </Group>
-      <Button fx:id="backButton" layoutX="1545.0" layoutY="280.0" onMouseClicked="#handleBackButtonAction" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #e72f2f; -fx-text-fill: white; -fx-font-size: 16px;" text="Back" />
+      <Button fx:id="backButton" layoutX="1545.0" layoutY="280.0" onMouseClicked="#handleBackButtonAction" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #385b4f; -fx-text-fill: white; -fx-font-size: 16px;" styleClass="submit-button" text="Back" />
    </children>
 </AnchorPane>

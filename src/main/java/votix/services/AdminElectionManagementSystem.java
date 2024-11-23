@@ -1,9 +1,7 @@
 package votix.services;
 
-import votix.models.Area;
-import votix.models.Candidate;
-import votix.models.PollingStaff;
-import votix.models.PollingStation;
+import votix.models.*;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -12,6 +10,7 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     private PersistenceHandler ph;
     private ArrayList<Area> area;
     private String electionType;
+
 
     public AdminElectionManagementSystem(PersistenceHandler ph) {
 
@@ -29,6 +28,21 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     public void displayAllResults() {
     }
 
+    public ArrayList<ElectionResult> fetchElectionResults()
+    {
+        return ph.fetchElectionResults();
+    }
+    public ArrayList<ElectionResult> searchElectionResultsByArea(String areaName) {
+        return ph.searchByArea(areaName);
+    }
+
+    public ArrayList<ElectionResult> searchElectionResultsByCandidate(String candidateName) {
+        return ph.searchByCandidate(candidateName);
+    }
+
+    public ArrayList<ElectionResult> searchElectionResultsByParty(String partyName) {
+        return ph.searchByParty(partyName);
+    }
     public boolean addCandidate(Candidate cand, String area) {
         return ph.addCandidate(cand, area);
     }
@@ -156,5 +170,12 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
        return ph.getStaffAssignments();
     }
 
+
+    public ArrayList<ElectionResult> WinnerByArea(String searchArea) {
+        return ph.WinnerByArea(searchArea);
+    }
+    public int fetchTotalVotesByArea(String areaName){
+        return ph.fetchTotalVotesByArea(areaName);
+    }
 
 }

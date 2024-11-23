@@ -2,6 +2,7 @@ package votix.services;
 
 
 import votix.models.Candidate;
+import votix.models.ElectionResult;
 import votix.models.PollingStaff;
 import votix.models.PollingStation;
 
@@ -18,6 +19,10 @@ public abstract class PersistenceHandler {
 
     // Abstract methods to be implemented by subclasses
     public abstract void ShowPollingStation();
+    public abstract ArrayList<ElectionResult> fetchElectionResults();
+    public abstract ArrayList<ElectionResult> searchByArea(String areaName);
+    public abstract ArrayList<ElectionResult> searchByCandidate(String candidateName);
+    public abstract ArrayList<ElectionResult> searchByParty(String partyName);
 
     public abstract boolean connect();
     public abstract boolean disconnect();
@@ -53,6 +58,9 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<String> getAreaID();
     public abstract ArrayList<Candidate> fetchAllCandidates();
     public abstract ArrayList<Object> getStaffAssignments();
+
+    public abstract ArrayList<ElectionResult> WinnerByArea(String areaName);
+    public abstract int fetchTotalVotesByArea(String areaName);
 }
 
 

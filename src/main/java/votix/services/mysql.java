@@ -36,6 +36,189 @@ public class mysql extends PersistenceHandler {
         }
     }
 
+
+    @Override
+    public ArrayList<ElectionResult> WinnerByArea(String areaName)
+    {
+        ArrayList<ElectionResult> temp = new ArrayList<>();
+
+        // Query to fetch election results, joining AREA and CANDIDATE tables
+        String query = "SELECT AREA.areaName, CANDIDATE.name, CANDIDATE.partyName, ELECTIONRESULT.voteCount "
+                + "FROM votix.ELECTIONRESULT "
+                + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                + "WHERE areaName LIKE ? "
+                + "ORDER BY ELECTIONRESULT.voteCount DESC "
+                + "LIMIT 2";
+
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, "%" + areaName + "%");
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    temp.add(new ElectionResult(
+                            rs.getString("areaName"),
+                            rs.getString("name"),
+                            rs.getString("partyName"),
+                            rs.getInt("voteCount")
+                    ));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return temp;
+    }
+
+    public int fetchTotalVotesByArea(String areaName) {
+
+        int totalVotes = 0; // Initialize total votes to 0
+        try {
+            // SQL query to fetch the total votes for areas matching 'Islamabad'
+            String query = "SELECT SUM(ELECTIONRESULT.voteCount) AS totalVotes " +
+                    "FROM votix.ELECTIONRESULT " +
+                    "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId " +
+                    "WHERE AREA.areaName LIKE ? " +
+                    "GROUP BY ELECTIONRESULT.areaId";
+
+            // Prepare the statement
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + areaName + "%");
+
+            // Execute the query and retrieve results
+            ResultSet rs = ps.executeQuery();
+
+            // Check if the result set has at least one row
+            if (rs.next()) {
+                // Retrieve the total votes from the result set
+                totalVotes = rs.getInt("totalVotes");
+            }
+        } catch (SQLException e) {
+            // Print the exception for debugging
+            e.printStackTrace();
+        }
+        return totalVotes; // Return the total votes
+    }
+
+    @Override
+    public ArrayList<ElectionResult> fetchElectionResults() {
+            ArrayList<ElectionResult> electionResults = new ArrayList<>();
+
+            try {
+                // Query to fetch election results, joining AREA and CANDIDATE tables
+                String electionQuery = "SELECT AREA.areaName, CANDIDATE.name, CANDIDATE.partyName, ELECTIONRESULT.voteCount "
+                        + "FROM votix.ELECTIONRESULT "
+                        + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                        + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId";
+
+                // Prepare the SQL statement
+                PreparedStatement electionPs = conn.prepareStatement(electionQuery);
+
+                // Execute the query
+                ResultSet electionRs = electionPs.executeQuery();
+
+                // Process the result set
+                while (electionRs.next()) {
+                    String areaName = electionRs.getString("areaName");
+                    String candidateName = electionRs.getString("name");
+                    String partyName = electionRs.getString("partyName");
+                    int voteCount = electionRs.getInt("voteCount");
+
+                    // Create ElectionResult object and set the values
+                    ElectionResult electionResult = new ElectionResult();
+                    electionResult.setAreaName(areaName);
+                    electionResult.setCandidateName(candidateName);
+                    electionResult.setPartyName(partyName);
+                    electionResult.setVoteCount(voteCount);
+
+                    // Add the election result to the list
+                    electionResults.add(electionResult);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return electionResults;
+        }
+
+    public ArrayList<ElectionResult> searchByArea(String areaName) {
+        ArrayList<ElectionResult> results = new ArrayList<>();
+        String query = "SELECT areaName, name, partyName, voteCount "
+                + "FROM votix.ELECTIONRESULT "
+                + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                + "WHERE areaName LIKE ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + areaName + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                results.add(new ElectionResult(
+                        rs.getString("areaName"),
+                        rs.getString("name"),
+                        rs.getString("partyName"),
+                        rs.getInt("voteCount")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public ArrayList<ElectionResult> searchByCandidate(String candidateName) {
+        ArrayList<ElectionResult> results = new ArrayList<>();
+        String query = "SELECT areaName, name, partyName, voteCount "
+                + "FROM votix.ELECTIONRESULT "
+                + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                + "WHERE name LIKE ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + candidateName + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                results.add(new ElectionResult(
+                        rs.getString("areaName"),
+                        rs.getString("name"),
+                        rs.getString("partyName"),
+                        rs.getInt("voteCount")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public ArrayList<ElectionResult> searchByParty(String partyName) {
+        ArrayList<ElectionResult> results = new ArrayList<>();
+        String query = "SELECT areaName, name, partyName, voteCount "
+                + "FROM votix.ELECTIONRESULT "
+                + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                + "WHERE partyName LIKE ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + partyName + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                results.add(new ElectionResult(
+                        rs.getString("areaName"),
+                        rs.getString("name"),
+                        rs.getString("partyName"),
+                        rs.getInt("voteCount")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
     @Override
     public ArrayList<Candidate> fetchCandidates(int areaId) {
         ArrayList<Candidate> candidates = new ArrayList<>();

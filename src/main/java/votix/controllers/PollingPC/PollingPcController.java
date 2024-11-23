@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import votix.services.PersistenceHandler;
 import votix.services.PollingPCElectionManagementSystem;
 
 import java.io.IOException;
@@ -108,4 +109,5 @@ public class PollingPcController {
         // Add the 'selected' class to the clicked button
         activeButton.getStyleClass().add("selected");
     }
+
 }
