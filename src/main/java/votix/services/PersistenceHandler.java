@@ -1,7 +1,6 @@
 package votix.services;
 
 
-import com.mysql.cj.log.Log;
 import votix.models.*;
 
 import java.util.ArrayList;
@@ -44,8 +43,8 @@ public abstract class PersistenceHandler {
     public abstract boolean addPollingStaffAccount(PollingStaff staff);
     public abstract void deactivatePollingStaffAccount(PollingStaff staff);
     public abstract boolean addCandidate(Candidate candidate, String area);
-    public abstract ArrayList<Candidate> loadCandidateData();
-    public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
+    //public abstract ArrayList<Candidate> loadCandidateData();
+    //public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
     public abstract int verifyStaff(String login, String password,String mac_address);
     public abstract int verifyAdmin(String login, String password);
     public abstract List<PollingStationPC> getPollingPCs();

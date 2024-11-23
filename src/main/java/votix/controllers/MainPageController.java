@@ -58,17 +58,21 @@ public class MainPageController {
     private void handleAbout(MouseEvent event)  {
 
         try{
+            System.out.println("hereeee1");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/about.fxml"));
-        Scene Scene = new Scene(loader.load(), 600, 400);
-
+        Scene Scene = new Scene(loader.load(), 1920, 1080);
+        System.out.println("hereeee2");
         AboutController Controller = loader.getController();
         Controller.setPrimaryStage(primaryStage);
         primaryStage.setScene(Scene); // Set the new scene
+            System.out.println("hereeee3");
         primaryStage.show();
+            System.out.println("hereeee");
 
-        } catch (IOException e) {
-        e.printStackTrace();
-    }
+        }catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load about.fxml. Check the file path.");
+        }
     }
     private void loadLoginScene(String role) {
         try {

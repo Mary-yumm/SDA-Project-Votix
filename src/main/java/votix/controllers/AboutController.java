@@ -34,5 +34,6 @@ public class AboutController {
     // Set the primary stage so we can use it later for scene switching
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        System.out.println("stage");
     }
 }

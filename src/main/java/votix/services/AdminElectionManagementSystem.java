@@ -1,6 +1,5 @@
 package votix.services;
 
-import com.mysql.cj.log.Log;
 import votix.models.*;
 
 import java.util.ArrayList;

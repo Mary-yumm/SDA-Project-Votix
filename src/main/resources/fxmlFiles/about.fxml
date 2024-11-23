@@ -51,9 +51,10 @@
                 </TextFlow>
                 <TextFlow>
                     <Text style="-fx-font-size: 16px; -fx-fill: black;"> Hamna Arshad I221098</Text>
-                   <TextFlow />
                 </TextFlow>
+                <TextFlow>
                  <Text style="-fx-font-size: 16px; -fx-fill: black;"> Maryam Masood I221169</Text>
+                </TextFlow>
             </children>
         </VBox>
       <ImageView fitHeight="159.0" fitWidth="845.0" layoutX="538.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
