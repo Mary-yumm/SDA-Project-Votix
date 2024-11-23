@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class CastVoteController {
 
     @FXML
@@ -137,6 +140,10 @@ public class CastVoteController {
 
                 ems.castVote(candidateId);
                 ems.updateVoterStatus(cnic);
+                ems.createLogEntry("Vote Cast for CNIC: " + cnic);
+                // Notify ViewLogsController via SSE
+                notifyViewLogs("Vote cast for candidate ID: " + candidateId);
+                System.out.println("voteddd");
 
             }
 
@@ -145,4 +152,25 @@ public class CastVoteController {
             stage.close();
         }
     }
+
+    private void notifyViewLogs(String message) {
+        try {
+            URL url = new URL("http://100.91.228.86:8080/notify"); // Replace localhost with the backend server's IP
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+
+            // Add the message parameter to the request
+            String data = "message=" + message;
+            connection.getOutputStream().write(data.getBytes());
+            connection.getOutputStream().flush();
+            connection.getOutputStream().close();
+
+            connection.getResponseCode(); // Optional: Check response code
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

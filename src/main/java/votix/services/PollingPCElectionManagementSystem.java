@@ -102,7 +102,7 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
 
     @Override
     public void createLogEntry(String entry) {
-
+        ph.createLog(entry);
     }
 
     public Voter getVoterByCnic(String cnic){
