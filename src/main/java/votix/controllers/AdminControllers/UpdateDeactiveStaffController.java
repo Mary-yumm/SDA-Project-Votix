@@ -4,10 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.DEMO;
@@ -28,6 +31,7 @@ public class UpdateDeactiveStaffController {
     public Button deactivateAccount;
     public ComboBox<Integer> staffId;
     public Button ActivateAccount;
+    public ImageView backArrow;
     Stage primaryStage;
     AdminElectionManagementSystem ems;
 
@@ -36,6 +40,10 @@ public class UpdateDeactiveStaffController {
         this.primaryStage = stage;
         loadIds();
     }
+    public void initialize() {
+        backArrow.setCursor(Cursor.HAND);
+    }
+
     void loadIds(){
         ArrayList<Integer> list = ems.getStations();
         ObservableList<Integer> np = FXCollections.observableArrayList(list);
@@ -79,7 +87,7 @@ public class UpdateDeactiveStaffController {
         stage.show();
     }
 
-    public void returnToMenu(ActionEvent actionEvent) {
+    public void returnToMenu(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
             AnchorPane addCandidatePane = loader.load();

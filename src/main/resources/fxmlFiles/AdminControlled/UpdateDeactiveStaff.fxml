@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -16,14 +17,11 @@
       <AnchorPane prefHeight="100.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Text fill="#e4e4e4" layoutX="450.0" layoutY="68.0" style="-fx-font-size: 48px;" text="Manage Polling Staff Account" />
-            <Button fx:id="backbtn" layoutX="53.0" layoutY="23.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToMenu" opacity="0.69" prefHeight="54.0" prefWidth="108.0" style="-fx-border-color: #FFFF; -fx-background-radius: 20px; -fx-border-radius: 20px;" text="Back" textAlignment="JUSTIFY" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="7.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+            <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="52.0" layoutY="23.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/back-arrow.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <VBox layoutX="386.0" layoutY="259.0" prefHeight="402.0" prefWidth="726.0" spacing="20.0" style="-fx-background-color: #e1e1e1;" styleClass="form-section" AnchorPane.leftAnchor="386.0" AnchorPane.topAnchor="259.0">
@@ -54,13 +52,13 @@
             <Button fx:id="updateAccount" onAction="#UpdateAccount" prefWidth="200.0" styleClass="submit-button" text="Update Account" />
          </children>
       </VBox>
-      <Button fx:id="deactivateAccount" layoutX="1152.0" layoutY="178.0" onAction="#deactivateAccount" prefWidth="200.0" styleClass="submit-button" text="Deactivate Account" />
+      <Button fx:id="deactivateAccount" layoutX="1152.0" layoutY="178.0" onAction="#deactivateAccount" prefHeight="44.0" prefWidth="226.0" styleClass="submit-button" text="Deactivate Account" />
       <Label layoutX="181.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="275.0" text="Select Staff member:">
          <font>
             <Font size="11.0" />
          </font>
       </Label>
       <ComboBox fx:id="staffId" layoutX="475.0" layoutY="146.0" prefHeight="32.0" prefWidth="153.0" />
-      <Button fx:id="ActivateAccount" layoutX="1152.0" layoutY="126.0" onAction="#activateAccount" prefWidth="200.0" styleClass="submit-button" text="Activate Account" />
+      <Button fx:id="ActivateAccount" layoutX="1152.0" layoutY="126.0" onAction="#activateAccount" prefHeight="44.0" prefWidth="226.0" styleClass="submit-button" text="Activate Account" />
    </children>
 </AnchorPane>
