@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="contentPane" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AboutController">
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AboutController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="783.0" layoutX="151.0" layoutY="150.0" stroke="WHITE" strokeWidth="0.0" width="1619.0" />

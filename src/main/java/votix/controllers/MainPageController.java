@@ -91,7 +91,7 @@ public class MainPageController {
             System.out.println("Setting PersistenceHandler in login controller");
             loginController.setRole(role);
             loginController.setph(ph);
-
+            loginController.setPrimaryStage(this.primaryStage);
         } else {
             System.out.println("LoginController is null!");  // Debugging line
         }

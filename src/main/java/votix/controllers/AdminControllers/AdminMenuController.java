@@ -114,8 +114,7 @@ public class AdminMenuController {
             // Check if controller is not null and set EMS
             if (controller != null) {
                 System.out.println("setting");
-                //this.primaryStage.getScene();
-                controller.setElectionManagementSystem(this.ems, this.primaryStage, this.primaryStage.getScene());  // Pass the ems instance
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
             } else {
                 System.out.println("addCandidateController is null!");  // Debugging line
             }
@@ -136,7 +135,6 @@ public class AdminMenuController {
 
             if (controller != null) {
                 System.out.println("setting");
-                this.primaryStage.getScene();
                controller.setElectionManagementSystem(this.ems, this.primaryStage);
             } else {
                 System.out.println("addCandidateController is null!");
@@ -159,7 +157,6 @@ public class AdminMenuController {
             // Check if controller is not null and set EMS
             if (controller != null) {
                 System.out.println("setting");
-                this.primaryStage.getScene();
                 controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
             } else {
                 System.out.println("addCandidateController is null!");  // Debugging line
@@ -211,7 +208,6 @@ public class AdminMenuController {
 
             if (controller != null) {
                 System.out.println("setting UpdateDeactiveStaffController");
-                this.primaryStage.getScene();
                 controller.setElectionManagementSystem(this.ems, this.primaryStage);
             } else {
                 System.out.println("UpdateDeactiveStaffController is null!");

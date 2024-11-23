@@ -29,7 +29,6 @@ public class addCandidateController {
     public ImageView backArrow;
     private AdminElectionManagementSystem ems;
     private Stage stage;
-    private Scene scene;
     @FXML
     private AnchorPane contentPane;
 
@@ -66,7 +65,7 @@ public class addCandidateController {
 
 
 
-    public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem, Stage st, Scene sc) {
+    public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem, Stage st) {
         if(electionManagementSystem == null){
             System.out.println("Receieved ems is null");
         }
@@ -82,7 +81,6 @@ public class addCandidateController {
         }
         initializingMethod(); //after connection to ems, load data onto comboboxes
         this.stage =st;
-        this.scene = sc;
         nationality.setValue(null);  // This clears the default selection
 
     }
