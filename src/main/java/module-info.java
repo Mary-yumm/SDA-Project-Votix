@@ -9,6 +9,7 @@ module org.example.sdaprojectvotix {
     requires reactor.core;
     requires spring.boot.autoconfigure;
     requires spring.boot;
+    requires mysql.connector.j;
 
     opens votix to javafx.fxml;
     exports votix;
