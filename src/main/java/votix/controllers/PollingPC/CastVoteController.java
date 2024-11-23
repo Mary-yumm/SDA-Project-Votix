@@ -56,6 +56,47 @@ public class CastVoteController {
 
         populateCandidates();
     }
+    public void handleSubmit(ActionEvent actionEvent) {
+        // Check if there is a selected checkbox
+        if (lastSelectedCheckbox != null && lastSelectedCheckbox.isSelected()) {
+            // Retrieve the candidate ID from the map using the selected checkbox
+            Integer candidateId = checkboxCandidateMap.get(lastSelectedCheckbox);
+            if (candidateId != null) {
+
+                ems.castVote(candidateId);
+                ems.updateVoterStatus(cnic);
+                ems.createLogEntry("Vote Cast for CNIC: " + cnic);
+                // Notify ViewLogsController via SSE
+                notifyViewLogs("Vote cast for candidate ID: " + candidateId);
+                System.out.println("voteddd");
+
+            }
+
+            // Close the window
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    private void notifyViewLogs(String message) {
+        try {
+            URL url = new URL("http://100.91.228.86:8080/notify"); // Replace localhost with the backend server's IP
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+
+            // Add the message parameter to the request
+            String data = "message=" + message;
+            connection.getOutputStream().write(data.getBytes());
+            connection.getOutputStream().flush();
+            connection.getOutputStream().close();
+
+            connection.getResponseCode(); // Optional: Check response code
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     // New method to populate candidates after ems is set
     private void populateCandidates() {
@@ -131,46 +172,6 @@ public class CastVoteController {
         lastSelectedCheckbox = currentCheckbox;
     }
 
-    public void handleSubmit(ActionEvent actionEvent) {
-        // Check if there is a selected checkbox
-        if (lastSelectedCheckbox != null && lastSelectedCheckbox.isSelected()) {
-            // Retrieve the candidate ID from the map using the selected checkbox
-            Integer candidateId = checkboxCandidateMap.get(lastSelectedCheckbox);
-            if (candidateId != null) {
 
-                ems.castVote(candidateId);
-                ems.updateVoterStatus(cnic);
-                ems.createLogEntry("Vote Cast for CNIC: " + cnic);
-                // Notify ViewLogsController via SSE
-                notifyViewLogs("Vote cast for candidate ID: " + candidateId);
-                System.out.println("voteddd");
-
-            }
-
-            // Close the window
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.close();
-        }
-    }
-
-    private void notifyViewLogs(String message) {
-        try {
-            URL url = new URL("http://100.91.228.86:8080/notify"); // Replace localhost with the backend server's IP
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setDoOutput(true);
-
-            // Add the message parameter to the request
-            String data = "message=" + message;
-            connection.getOutputStream().write(data.getBytes());
-            connection.getOutputStream().flush();
-            connection.getOutputStream().close();
-
-            connection.getResponseCode(); // Optional: Check response code
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }
