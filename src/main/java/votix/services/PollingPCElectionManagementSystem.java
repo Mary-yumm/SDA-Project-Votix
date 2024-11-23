@@ -3,6 +3,7 @@ package votix.services;
 import votix.models.Area;
 import votix.models.Candidate;
 import votix.models.PollingStation;
+import votix.models.Voter;
 
 import java.util.ArrayList;
 
@@ -80,7 +81,7 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     }
 
     @Override
-    public ArrayList<PollingStation> getStations() {
+    public ArrayList<Integer> getStations() {
         return null;
     }
 
@@ -101,14 +102,11 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
 
     @Override
     public void createLogEntry(String entry) {
-
+        ph.createLog(entry);
     }
 
-
-    //no use
-    @Override
-    public boolean checkEligibility(int i, String text, String value) {
-        return false;
+    public Voter getVoterByCnic(String cnic){
+        return ph.getVoterByCnic(cnic);
     }
 
 }

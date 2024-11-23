@@ -5,12 +5,13 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,6 +23,7 @@ import votix.services.PersistenceHandler;
 public class candidateListController {
 
     public AnchorPane contentPane;
+    public ImageView backArrow;
     @FXML
     private ResourceBundle resources;
 
@@ -40,6 +42,10 @@ public class candidateListController {
         this.ems = system;
         this.primaryStage = st;
         populateCandidates(); // Call to populate candidates after setting EMS
+    }
+    public void initialize() {
+        // Initialization
+        backArrow.setCursor(Cursor.HAND);
     }
 
     // Method to populate candidates in the UI
@@ -84,6 +90,9 @@ public class candidateListController {
         ImageView partySymbolView = new ImageView(candidate.getPartySymbol());
         partySymbolView.setFitHeight(40);
         partySymbolView.setFitWidth(40);
+        // Set margin to adjust the position of the party symbol
+        HBox.setMargin(partySymbolView, new Insets(0, 0, 0, 50)); // Adjust the left margin (50 is an example)
+
         row.getChildren().add(partySymbolView);
 
         // Placeholder for vote count or other candidate-specific details
@@ -95,7 +104,7 @@ public class candidateListController {
         candidateTable.getChildren().add(row); // Add row to the table
     }
 
-    public void returnToMenu(ActionEvent actionEvent) {
+    public void returnToMenu(MouseEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
             AnchorPane addCandidatePane = loader.load();
@@ -112,11 +121,6 @@ public class candidateListController {
             contentPane.getChildren().setAll(addCandidatePane);
             contentPane.requestLayout();  // Request a layout refresh
 
-            // Optionally reset the scene if necessary
-            Scene currentScene = this.primaryStage.getScene();
-            if (currentScene != null) {
-                currentScene.setRoot(contentPane);  // Ensure contentPane is the root
-            }
 
             System.out.println(contentPane);
             System.out.println("contentPane visible: " + contentPane.isVisible());

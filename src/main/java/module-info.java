@@ -5,6 +5,11 @@ module org.example.sdaprojectvotix {
     requires com.dlsc.formsfx;
     requires java.desktop;
     requires java.sql;
+    requires spring.web;
+    requires reactor.core;
+    requires spring.boot.autoconfigure;
+    requires spring.boot;
+    requires mysql.connector.j;
 
     opens votix to javafx.fxml;
     exports votix;

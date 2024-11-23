@@ -9,6 +9,16 @@ public class PollingStaff {
     private String username;
     private String password;
 
+    public PollingStaff(){}
+
+    public PollingStaff(int staffid, String name, int stationid, String role, String username, String password ){
+        this.staffID = staffid;
+        this.name = name;
+        this.assignedStation=stationid;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+    }
     // Methods
     public void login() {
         // Login logic
@@ -20,14 +30,6 @@ public class PollingStaff {
 
     public void deactivateAccount(PollingStaff account) {
         // Deactivate account
-    }
-
-    public void manageAccount() {
-        // Manage account details
-    }
-
-    public void viewAssignments() {
-        // View assignments
     }
 
     public int getStaffID() {

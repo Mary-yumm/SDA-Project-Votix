@@ -2,12 +2,13 @@ package votix.controllers.AdminControllers;
 
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -20,6 +21,10 @@ public class AdminMenuController {
     public Button viewLogs;
     @FXML
     public Button monitorSystems;
+    @FXML
+    public Button logout1;
+    @FXML
+    public ImageView logout2;
     @FXML
     private Button viewCandidate;
     @FXML
@@ -199,11 +204,44 @@ public class AdminMenuController {
     @FXML
     public void update_DeactivaeStaff() {
         staffUpdationBtn();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/UpdateDeactiveStaff.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            UpdateDeactiveStaffController controller = loader.getController();
+
+            if (controller != null) {
+                System.out.println("setting UpdateDeactiveStaffController");
+                this.primaryStage.getScene();
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);
+            } else {
+                System.out.println("UpdateDeactiveStaffController is null!");
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void addPollingStaff() {
         pollingStaffBtn();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/addPollingStaff.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            addPollingStaffController controller = loader.getController();
+
+            // Check if controller is not null and set EMS
+            if (controller != null) {
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);  // Pass the ems instance
+            } else {
+                System.out.println("add polling staff is null!");  // Debugging line
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -212,10 +250,58 @@ public class AdminMenuController {
     }
 
     @FXML
-    public void monitorActiveSystems() {monitorSystemsBtn();}
+    public void monitorActiveSystems() {
+        monitorSystemsBtn(); // Highlight the button
+        try {
+            // Load the MonitorActiveSystems.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/MonitorActiveSystems.fxml"));
+            AnchorPane monitorSystemsPane = loader.load();
+
+            // Get the controller of the MonitorActiveSystems.fxml
+            MonitorActiveSystemsController controller = loader.getController();
+
+            // Set EMS in the controller
+            if (controller != null) {
+                System.out.println("Setting EMS in MonitorActiveSystemsController");
+                controller.setElectionManagementSystem(this.ems, this.primaryStage); // Pass the EMS instance
+            } else {
+                System.out.println("MonitorActiveSystemsController is null!");
+            }
+
+            // Add the loaded FXML content to the content pane
+            contentPane.getChildren().setAll(monitorSystemsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
-    public void viewLogs() {viewLogsBtn();}
+    public void viewLogs() {
+        viewLogsBtn();
+        try {
+            // Load the ViewLogs.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ViewLog.fxml"));
+            AnchorPane viewLogsPane = loader.load();
+
+            // Get the controller of the ViewLogs.fxml
+            ViewLogsController controller = loader.getController();
+
+            // Set EMS and PersistenceHandler in the controller
+            if (controller != null) {
+                System.out.println("Setting EMS and PersistenceHandler in ViewLogsController");
+                controller.setEMS(this.ems, this.primaryStage);
+            } else {
+                System.out.println("ViewLogsController is null!");  // Debugging line
+            }
+
+            // Add the loaded FXML content to the content pane
+            contentPane.getChildren().setAll(viewLogsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     public void viewElectionForm() {
@@ -241,4 +327,7 @@ public class AdminMenuController {
     }
 
 
+    public void logoutFtn(MouseEvent actionEvent) {
+
+    }
 }
