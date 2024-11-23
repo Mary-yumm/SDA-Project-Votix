@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.controllers.AdminControllers.AdminMenuController;
 import votix.controllers.PollingPC.*;
@@ -25,6 +26,7 @@ public class LoginController {
 
     //@FXML
     public Button LoginButton;
+    public AnchorPane contentPane;
 
     //private Label roleLabel;
 
@@ -50,6 +52,7 @@ public class LoginController {
     // Add this method to set the primary stage
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        System.out.println("Primary stage set in login controller: " + primaryStage);
     }
 
     public void setConnection(PersistenceHandler ph){
@@ -63,8 +66,12 @@ public class LoginController {
 
     @FXML
     private void handleLogin() {
+        System.out.println("Login button clicked!");
+
 
         if (Objects.equals(getRole(), "staff")) {
+            System.out.println("Login button for staff clicked!");
+
             staffLogin();
         }
         else if (Objects.equals(getRole(), "admin")) {
@@ -91,21 +98,23 @@ public class LoginController {
 
                 // Load PollingPc.fxml and switch to it on successful login
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxmlFiles/PollingPC/PollingPc.fxml"));
-                Scene pollingScene = new Scene(fxmlLoader.load(), 1920, 1080);
-
+                AnchorPane menu = fxmlLoader.load();
                 // Get the controller for PollingPC and set necessary dependencies
                 PollingPcController pollingController = fxmlLoader.getController();
                 pollingController.setElectionManagementSystem(PEMS);
 
                 // Switch the scene
                 if (primaryStage != null) {
-                    primaryStage.setScene(pollingScene);
+                    pollingController.setPrimaryStage(this.primaryStage);
                 } else {
                     System.out.println("Primary stage is null.");
                 }
+                contentPane.getChildren().setAll(menu);
             } else {
                 System.out.println("Invalid credentials or unauthorized device.");
             }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,21 +131,24 @@ public class LoginController {
 
                 // Load PollingPc.fxml and switch to it on successful login
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
-                Scene Scene = new Scene(fxmlLoader.load(), 1920, 1080);
+                AnchorPane menu = fxmlLoader.load();
 
                 // Get the controller for PollingPC and set necessary dependencies
                 AdminMenuController controller = fxmlLoader.getController();
                 //AdminElectionManagementSystem ad = new AdminElectionManagementSystem(ph);
 
                 //controller.setConnection(ph);
-                controller.setElectionManagementSystem(AEMS);
+
 
                 // Switch the scene
                 if (primaryStage != null) {
-                    primaryStage.setScene(Scene);
+                    controller.setElectionManagementSystem(AEMS);
+                    controller.setPrimaryStage(this.primaryStage);
                 } else {
                     System.out.println("Primary stage is null.");
                 }
+                contentPane.getChildren().setAll(menu);
+
             } else {System.out.println("Invalid credentials");}
 
         } catch (IOException e) {
@@ -159,7 +171,7 @@ public class LoginController {
 
                 // Match Wi-Fi adapter by its name or description (Windows typically uses "Wi-Fi")
                 String displayName = networkInterface.getDisplayName().toLowerCase();
-                if (displayName.contains("wi-fi") || displayName.contains("wireless")) {
+                if (displayName.contains("wlan0") || displayName.contains("wi-fi") || displayName.contains("wireless")) {
                     byte[] mac = networkInterface.getHardwareAddress();
 
                     if (mac != null) {
@@ -185,6 +197,7 @@ public class LoginController {
     }
 
     public void setph(PersistenceHandler ph) {
+        System.out.println("in ph login");
         this.ph=ph;
     }
 
