@@ -1,4 +1,3 @@
-
 package votix.controllers;
 
 import javafx.fxml.FXML;
@@ -77,40 +76,40 @@ public class LoginController {
     }
 
 
-        private void staffLogin()
-        {
-            String username = usernameField.getText();
-            String password = passwordField.getText();
-            String mac_address = getCurrentMacAddress();
+    private void staffLogin()
+    {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        String mac_address = getCurrentMacAddress();
 
-            try {
-                PEMS = new PollingPCElectionManagementSystem();
-                PEMS.setPersistenceHandler(ph);
-                // Use the dbHandler to verify staff credentials and MAC address
-                if (PEMS.authorizePollingStaff(username, password,mac_address)) {
-                    PEMS.initializeArrays();
+        try {
+            PEMS = new PollingPCElectionManagementSystem();
+            PEMS.setPersistenceHandler(ph);
+            // Use the dbHandler to verify staff credentials and MAC address
+            if (PEMS.authorizePollingStaff(username, password,mac_address)) {
+                PEMS.initializeArrays();
 
-                    // Load PollingPc.fxml and switch to it on successful login
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxmlFiles/PollingPC/PollingPc.fxml"));
-                    Scene pollingScene = new Scene(fxmlLoader.load(), 1920, 1080);
+                // Load PollingPc.fxml and switch to it on successful login
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxmlFiles/PollingPC/PollingPc.fxml"));
+                Scene pollingScene = new Scene(fxmlLoader.load(), 1920, 1080);
 
-                    // Get the controller for PollingPC and set necessary dependencies
-                    PollingPcController pollingController = fxmlLoader.getController();
-                    pollingController.setElectionManagementSystem(PEMS);
+                // Get the controller for PollingPC and set necessary dependencies
+                PollingPcController pollingController = fxmlLoader.getController();
+                pollingController.setElectionManagementSystem(PEMS);
 
-                    // Switch the scene
-                    if (primaryStage != null) {
-                        primaryStage.setScene(pollingScene);
-                    } else {
-                        System.out.println("Primary stage is null.");
-                    }
+                // Switch the scene
+                if (primaryStage != null) {
+                    primaryStage.setScene(pollingScene);
                 } else {
-                    System.out.println("Invalid credentials or unauthorized device.");
+                    System.out.println("Primary stage is null.");
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } else {
+                System.out.println("Invalid credentials or unauthorized device.");
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
     private void adminLogin()
     {
         String username = usernameField.getText();
@@ -146,40 +145,42 @@ public class LoginController {
 
     }
 
-        private String getCurrentMacAddress() {
+    private String getCurrentMacAddress() {
         try {
-            // Get all network interfaces (returns Enumeration)
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
 
             while (networkInterfaces.hasMoreElements()) {
                 NetworkInterface networkInterface = networkInterfaces.nextElement();
 
-                // Skip non-physical interfaces (e.g., loop back, docker)
+                // Skip loopback and down interfaces
                 if (networkInterface.isLoopback() || !networkInterface.isUp()) {
                     continue;
                 }
 
-                // Ensure networkInterface has a MAC address
-                byte[] mac = networkInterface.getHardwareAddress();
-                if (mac != null) {
-                    StringBuilder macAddress = new StringBuilder();
-                    for (byte macByte : mac) {
-                        macAddress.append(String.format("%02X:", macByte));
-                    }
+                // Match Wi-Fi adapter by its name or description (Windows typically uses "Wi-Fi")
+                String displayName = networkInterface.getDisplayName().toLowerCase();
+                if (displayName.contains("wi-fi") || displayName.contains("wireless")) {
+                    byte[] mac = networkInterface.getHardwareAddress();
 
-                    // Remove trailing colon
-                    if (!macAddress.isEmpty()) {
-                        macAddress.setLength(macAddress.length() - 1);
-                    }
+                    if (mac != null) {
+                        StringBuilder macAddress = new StringBuilder();
+                        for (byte macByte : mac) {
+                            macAddress.append(String.format("%02X:", macByte));
+                        }
+                        // Remove the trailing colon
+                        if (macAddress.length() > 0) {
+                            macAddress.setLength(macAddress.length() - 1);
+                        }
 
-                    System.out.println("Detected MAC Address: " + macAddress);
-                    return macAddress.toString();
+                        System.out.println("Wi-Fi MAC Address: " + macAddress);
+                        return macAddress.toString();
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Unable to retrieve MAC address.");
+        System.out.println("Unable to retrieve Wi-Fi MAC address.");
         return null;
     }
 
@@ -205,4 +206,3 @@ public class LoginController {
         }
     }
 }
-
