@@ -6,6 +6,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -15,8 +17,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" prefHeight="451.0" prefWidth="573.0" spacing="20" style="-fx-background-color: #385B4F;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ElectionResultController">
-   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #FFFFFF;">
+<VBox fx:id="contentPane" alignment="CENTER" prefHeight="451.0" prefWidth="573.0" spacing="20" style="-fx-background-color: #385B4F;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ElectionResultController">
+   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" style="-fx-background-color: #FFFFFF;">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="112.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="1500.0" />
          <Text fill="#e4e4e4" layoutX="598.0" layoutY="66.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Election Result" />
@@ -48,6 +50,11 @@
          <TextField fx:id="CandName" layoutX="618.0" layoutY="242.0" promptText="Candidate Name" />
          <TextField fx:id="AreaName" layoutX="196.0" layoutY="242.0" promptText="Area Name" />
          <Label fx:id="datee" layoutX="244.0" layoutY="171.0" text="Datee" />
+         <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="57.0" layoutY="25.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../assets/back-arrow.png" />
+            </image>
+         </ImageView>
       </children>
    </Pane>
    <HBox prefHeight="4.0" prefWidth="536.0" style="-fx-background-color: #385B4F;" />

@@ -105,6 +105,14 @@ public class LoginController {
                 PollingPcController pollingController = fxmlLoader.getController();
                 pollingController.setElectionManagementSystem(PEMS);
 
+                 Screen screen = Screen.getPrimary();
+                 double screenWidth = screen.getVisualBounds().getWidth();
+                double screenHeight = screen.getVisualBounds().getHeight();
+                primaryStage.setWidth(screenWidth);   // Set 80% of screen width
+                primaryStage.setHeight(screenHeight); // Set 80% of screen height
+                primaryStage.centerOnScreen();
+
+
                 // Switch the scene
                 if (primaryStage != null) {
                     pollingController.setPrimaryStage(this.primaryStage);
@@ -133,18 +141,6 @@ public class LoginController {
                 // Load PollingPc.fxml and switch to it on successful login
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
                 AnchorPane menu = fxmlLoader.load();
-               // primaryStage.setWidth(1500);
-               // primaryStage.setHeight(845);
-
-                Screen screen = Screen.getPrimary();
-                double screenWidth = screen.getVisualBounds().getWidth();
-                double screenHeight = screen.getVisualBounds().getHeight();
-                System.out.println("i am hereeeeeeeeeeeeeeeee");
-                // Set the scene size to fit the screen (for example, 80% of the screen size)
-
-              //  primaryStage.setWidth(screenWidth*0.78);   // Set 80% of screen width
-               // primaryStage.setHeight(screenHeight*0.85); // Set 80% of screen height
-
 
                 // Get the controller for PollingPC and set necessary dependencies
                 AdminMenuController controller = fxmlLoader.getController();

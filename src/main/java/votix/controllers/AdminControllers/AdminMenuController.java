@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import votix.controllers.MainPageController;
 import votix.services.AdminElectionManagementSystem;
 import votix.services.PersistenceHandler;
 
@@ -324,6 +325,28 @@ public class AdminMenuController {
 
 
     public void logoutFtn(MouseEvent actionEvent) {
+        try {
+            // Load the ViewLogs.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/mainpage.fxml"));
+            AnchorPane viewLogsPane = loader.load();
 
+            // Get the controller of the ViewLogs.fxml
+            MainPageController controller = loader.getController();
+
+            // Set EMS and PersistenceHandler in the controller
+            if (controller != null) {
+                System.out.println("Setting EMS and PersistenceHandler in ViewLogsController");
+                //controller.setEMS(this.ems, this.primaryStage);
+                controller.setPrimaryStage(this.primaryStage);
+                controller.setph(this.ems.getPh());
+            } else {
+                System.out.println("ViewLogsController is null!");  // Debugging line
+            }
+
+            // Add the loaded FXML content to the content pane
+            contentPane.getChildren().setAll(viewLogsPane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import votix.models.ElectionResult;
 import votix.services.AdminElectionManagementSystem;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class ElectionResultController {
 
     public ImageView backArrow;
+    public VBox contentPane;
     @FXML
     private Button AreaSearch;
     @FXML
@@ -220,7 +222,7 @@ public class ElectionResultController {
 
     public void returnToMenu(MouseEvent mouseEvent) {
 
-     /*   try {
+       try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
             AnchorPane addCandidatePane = loader.load();
             AdminMenuController controller = loader.getController();
@@ -243,6 +245,6 @@ public class ElectionResultController {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }
