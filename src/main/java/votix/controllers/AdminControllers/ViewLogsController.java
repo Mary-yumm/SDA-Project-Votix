@@ -1,6 +1,7 @@
 package votix.controllers.AdminControllers;
 
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +21,11 @@ import javafx.util.converter.IntegerStringConverter;
 import votix.models.Log;
 import votix.services.AdminElectionManagementSystem;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class ViewLogsController {
@@ -42,6 +47,36 @@ public class ViewLogsController {
 
 
     private AdminElectionManagementSystem ems; // Reference to the EMS object
+
+    private Thread sseListenerThread;
+
+    private void listenToSSE() {
+        sseListenerThread = new Thread(() -> {
+            try {
+                URL url = new URL("http://100.91.228.86:8080/events"); // SSE URL
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!line.isEmpty()) {
+                        String finalLine = line;
+                        Platform.runLater(() -> {
+                            System.out.println("New SSE Event: " + finalLine);
+
+                            // Optionally, re-populate logs or handle event
+                            populateLogTable();
+                        });
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        sseListenerThread.setDaemon(true);
+        sseListenerThread.start();
+    }
 
     @FXML
     public void initialize() {
@@ -97,6 +132,9 @@ public class ViewLogsController {
         if (ems != null) {
             System.out.println("EMS set in ViewLogsController");
             populateLogTable(); // Populate logs immediately after EMS is set
+
+            // Start listening for SSE updates
+            listenToSSE();
         }
     }
 
@@ -108,10 +146,18 @@ public class ViewLogsController {
             return;
         }
 
+        // Sort logs by timestamp in descending order
+        logs.sort((log1, log2) -> log2.getTimeStamp().compareTo(log1.getTimeStamp()));
+
+        // Retain only the header row and clear other rows
+        logTable.getChildren().retainAll(logTable.getChildren().get(0)); // Retain the first child (header)
+
+        // Add each log as a new row to the log table
         for (Log log : logs) {
             addLogRow(log, null, null); // Add each log as a row to the log table without highlighting
         }
     }
+
 
     private void addLogRow(Log log, String highlightText, String filterType) {
         // Create the main AnchorPane for the row
