@@ -142,8 +142,8 @@ public class LoginController {
                 System.out.println("i am hereeeeeeeeeeeeeeeee");
                 // Set the scene size to fit the screen (for example, 80% of the screen size)
 
-                primaryStage.setWidth(screenWidth*0.78);   // Set 80% of screen width
-                primaryStage.setHeight(screenHeight*0.85); // Set 80% of screen height
+              //  primaryStage.setWidth(screenWidth*0.78);   // Set 80% of screen width
+               // primaryStage.setHeight(screenHeight*0.85); // Set 80% of screen height
 
 
                 // Get the controller for PollingPC and set necessary dependencies
