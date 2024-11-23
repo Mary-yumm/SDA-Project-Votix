@@ -52,6 +52,7 @@ public class CaptureVoterInfoController {
                 nameTextField.setText(oldValue);
             }
         });
+
     }
 
     private void restrictCnicField() {
