@@ -11,22 +11,49 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     private ArrayList<Area> area;
     private String electionType;
 
+
     public AdminElectionManagementSystem(PersistenceHandler ph) {
 
         area = new ArrayList<>();
         this.ph = ph;
     }
+    public AdminElectionManagementSystem() {
+
+        area = new ArrayList<>();
+    }
+    public PersistenceHandler getPh() {return ph;}
+
+    public void setPh(PersistenceHandler ph) {this.ph = ph;}
 
     public void displayAllResults() {
     }
 
+    public ArrayList<ElectionResult> fetchElectionResults()
+    {
+        return ph.fetchElectionResults();
+    }
+    public ArrayList<ElectionResult> searchElectionResultsByArea(String areaName) {
+        return ph.searchByArea(areaName);
+    }
+
+    public ArrayList<ElectionResult> searchElectionResultsByCandidate(String candidateName) {
+        return ph.searchByCandidate(candidateName);
+    }
+
+    public ArrayList<ElectionResult> searchElectionResultsByParty(String partyName) {
+        return ph.searchByParty(partyName);
+    }
     public boolean addCandidate(Candidate cand, String area) {
         return ph.addCandidate(cand, area);
     }
 
-    public PollingStaff managePollingStaff() {
-        // Implementation for managing polling staff
-        return new PollingStaff();
+    public void managePollingStaff(String operation, int id) {
+        if(operation.equals("deactivate")){
+            ph.deactivatePollingStaffAccount(id);
+        }
+        else if(operation.equals("activate")){
+            ph.activatePollingStaffAccount(id);
+        }
     }
     public ArrayList<String> getPartyNames(){
         return ph.getPartyNames();
@@ -87,13 +114,15 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     public List<PollingStationPC> getPollingPCs(){
         return ph.getPollingPCs();
     }
+    public PersistenceHandler getPersistentHandler() {return ph;}
+    @Override
+    public void setPersistenceHandler(PersistenceHandler ph) {this.ph = ph;}
+    public boolean authorizeAdmin(String username, String password)
+    {
+        int is_verified = ph.verifyAdmin(username,password);
+        return is_verified == 1;
+    }
 
-    public PersistenceHandler getPersistenceHandler(){
-        return this.ph;
-    }
-    public void setPersistenceHandler(PersistenceHandler handler){
-    this.ph =  handler;
-    }
 
 
     public ArrayList<String> getAreaID(){
@@ -109,6 +138,13 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     public String getElectionType() {
         return electionType;
+    }
+
+    public ArrayList<Candidate> getAllCand(){
+        return ph.fetchAllCandidates();
+    }
+    public void updatePollingStaff(Integer staffid, String username, String password, Integer stationid) {
+        ph.updatePollingStaffAccount(username, password,staffid, stationid);
     }
 
     // not decided yet
@@ -128,6 +164,7 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         System.out.println("Errorr...............");
         return new ArrayList<>();
     }
+
 
     public void createLogEntry(String entry) {
         // Implementation to create a log entry

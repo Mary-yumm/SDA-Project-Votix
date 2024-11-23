@@ -219,7 +219,7 @@ public class addCandidateController {
     }
 
     boolean isIdInUse() {
-        List<Candidate> candidates = ems.getCands();
+        List<Candidate> candidates = ems.getAllCand();
 
         for (Candidate cand : candidates) {
             if (cand.getCid()== Integer.parseInt(cid.getText())) {

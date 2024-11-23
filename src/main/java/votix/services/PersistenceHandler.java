@@ -17,6 +17,11 @@ public abstract class PersistenceHandler {
 
     // Abstract methods to be implemented by subclasses
     public abstract void ShowPollingStation();
+    public abstract ArrayList<ElectionResult> fetchElectionResults();
+    public abstract ArrayList<ElectionResult> searchByArea(String areaName);
+    public abstract ArrayList<ElectionResult> searchByCandidate(String candidateName);
+    public abstract ArrayList<ElectionResult> searchByParty(String partyName);
+
     public abstract boolean connect();
     public abstract boolean disconnect();
     public abstract void executeQuery(String query);
@@ -38,8 +43,11 @@ public abstract class PersistenceHandler {
     public abstract boolean addPollingStaffAccount(PollingStaff staff);
     public abstract void deactivatePollingStaffAccount(PollingStaff staff);
     public abstract boolean addCandidate(Candidate candidate, String area);
+    //public abstract ArrayList<Candidate> loadCandidateData();
+    //public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
+    public abstract int verifyStaff(String login, String password,String mac_address);
+    public abstract int verifyAdmin(String login, String password);
     public abstract List<PollingStationPC> getPollingPCs();
-    public abstract int verifyStaff(String login, String password, String mac_address);
     public abstract ArrayList<Candidate> fetchCandidates(int areaid);
     public abstract boolean isVoterRegistered(String name,String cnic,int areaid);
     public abstract int fetchArea(int stationid);
@@ -51,8 +59,13 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<Object> getStaffAssignments();
     public abstract ArrayList<PollingStaff> getStaffList();
     public abstract ArrayList<Integer> getStations();
-
     public abstract Voter getVoterByCnic(String cnic);
+
+    public abstract ArrayList<Candidate> fetchAllCandidates();
+    public abstract void updatePollingStaffAccount(String username, String password, int staffid, int stationid);
+    public abstract void deactivatePollingStaffAccount(int staffid);
+    public abstract void activatePollingStaffAccount(int id);
+
 }
 
 

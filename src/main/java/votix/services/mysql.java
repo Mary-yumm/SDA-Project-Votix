@@ -37,6 +37,127 @@ public class mysql extends PersistenceHandler {
         }
     }
 
+
+    @Override
+    public ArrayList<ElectionResult> fetchElectionResults() {
+            ArrayList<ElectionResult> electionResults = new ArrayList<>();
+
+            try {
+                // Query to fetch election results, joining AREA and CANDIDATE tables
+                String electionQuery = "SELECT AREA.areaName, CANDIDATE.name, CANDIDATE.partyName, ELECTIONRESULT.voteCount "
+                        + "FROM votix.ELECTIONRESULT "
+                        + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                        + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId";
+
+                // Prepare the SQL statement
+                PreparedStatement electionPs = conn.prepareStatement(electionQuery);
+
+                // Execute the query
+                ResultSet electionRs = electionPs.executeQuery();
+
+                // Process the result set
+                while (electionRs.next()) {
+                    String areaName = electionRs.getString("areaName");
+                    String candidateName = electionRs.getString("name");
+                    String partyName = electionRs.getString("partyName");
+                    int voteCount = electionRs.getInt("voteCount");
+
+                    // Create ElectionResult object and set the values
+                    ElectionResult electionResult = new ElectionResult();
+                    electionResult.setAreaName(areaName);
+                    electionResult.setCandidateName(candidateName);
+                    electionResult.setPartyName(partyName);
+                    electionResult.setVoteCount(voteCount);
+
+                    // Add the election result to the list
+                    electionResults.add(electionResult);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return electionResults;
+        }
+
+    public ArrayList<ElectionResult> searchByArea(String areaName) {
+        ArrayList<ElectionResult> results = new ArrayList<>();
+        String query = "SELECT areaName, name, partyName, voteCount "
+                + "FROM votix.ELECTIONRESULT "
+                + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                + "WHERE areaName LIKE ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + areaName + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                results.add(new ElectionResult(
+                        rs.getString("areaName"),
+                        rs.getString("name"),
+                        rs.getString("partyName"),
+                        rs.getInt("voteCount")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public ArrayList<ElectionResult> searchByCandidate(String candidateName) {
+        ArrayList<ElectionResult> results = new ArrayList<>();
+        String query = "SELECT areaName, name, partyName, voteCount "
+                + "FROM votix.ELECTIONRESULT "
+                + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                + "WHERE name LIKE ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + candidateName + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                results.add(new ElectionResult(
+                        rs.getString("areaName"),
+                        rs.getString("name"),
+                        rs.getString("partyName"),
+                        rs.getInt("voteCount")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
+    public ArrayList<ElectionResult> searchByParty(String partyName) {
+        ArrayList<ElectionResult> results = new ArrayList<>();
+        String query = "SELECT areaName, name, partyName, voteCount "
+                + "FROM votix.ELECTIONRESULT "
+                + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                + "WHERE partyName LIKE ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + partyName + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                results.add(new ElectionResult(
+                        rs.getString("areaName"),
+                        rs.getString("name"),
+                        rs.getString("partyName"),
+                        rs.getInt("voteCount")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return results;
+    }
+
     @Override
     public ArrayList<Candidate> fetchCandidates(int areaId) {
         ArrayList<Candidate> candidates = new ArrayList<>();
@@ -237,7 +358,27 @@ public class mysql extends PersistenceHandler {
         }
         return 0; // Return false if verification fails
     }
-
+    @Override
+    public int verifyAdmin(String username, String password) {
+        String query = "SELECT adminID FROM ADMIN WHERE username = ? AND password = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int adminID = rs.getInt("adminID"); // Retrieve adminID
+                    System.out.println("Admin " + adminID + " logged in");
+                    return 1;
+                } else {
+                    System.out.println("Invalid credentials.");
+                    return 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
     @Override
     public boolean isVoterRegistered(String name, String cnic, int areaid) {
@@ -275,7 +416,69 @@ public class mysql extends PersistenceHandler {
 
         return isRegistered;
     }
+    @Override
+    public void updatePollingStaffAccount(String username, String password, int staffid, int stationid) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET username = ?, password = ?, stationId = ? WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
 
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setInt(3, stationid);
+            ps.setInt(4, staffid);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + staffid);
+            } else {
+                System.out.println("data updated successfully for staffId " + staffid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void activatePollingStaffAccount(int id) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET status = 'ACTIVE' WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, id);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + id);
+            } else {
+                System.out.println("status updated successfully for staffId " + id);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void deactivatePollingStaffAccount(int  staffid) {
+        try {
+            String query = "UPDATE POLLINGSTAFF SET status = 'INACTIVE' WHERE staffId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+
+            ps.setInt(1, staffid);
+
+            int res = ps.executeUpdate();
+
+            if (res == 0) {
+                System.out.println("No matching record found for staffId " + staffid);
+            } else {
+                System.out.println("status updated successfully for staffId " + staffid);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public int fetchArea(int stationId) {
@@ -571,6 +774,26 @@ public ArrayList<Integer> getStations(){
 
     }
 
+    public ArrayList<String> fetchResult()
+    {
+        ArrayList<String> partyNames = new ArrayList<>();
+        String partyQuery = "SELECT distinct partyName FROM CANDIDATE";
+
+        try (PreparedStatement voterPs = conn.prepareStatement(partyQuery)) {
+            ResultSet partyRs = voterPs.executeQuery();
+
+            while (partyRs.next()) {
+                String pname = partyRs.getString("partyName");
+                partyNames.add(pname);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return partyNames;
+    }
+
     @Override
     public void saveReport() {
 
@@ -674,7 +897,40 @@ public ArrayList<Integer> getStations(){
     public void deactivatePollingStaffAccount(PollingStaff staff) {
 
     }
+    public ArrayList<Candidate> fetchAllCandidates() {
+        ArrayList<Candidate> candidates = new ArrayList<>();
+        try {
+            // SQL query to fetch candidates that belong to the specified areaId
+            String query = "SELECT * FROM CANDIDATE ";
 
+            // Prepare the statement
+            PreparedStatement ps = conn.prepareStatement(query);
+            // Execute the query and retrieve results
+            ResultSet rs = ps.executeQuery();
+
+            // Loop through the result set to create Candidate objects
+            while (rs.next()) {
+                Candidate candidate = new Candidate();
+                candidate.setCid(rs.getInt("candidateId"));
+                candidate.setName(rs.getString("name"));
+                candidate.setPartyName(rs.getString("partyName"));
+                String partySymbolFile = rs.getString("partySymbol") + ".png";
+
+                // Construct the full path for the party symbol image
+                String imagePath = "/assets/partySymbols/" + partySymbolFile;
+                candidate.setPartySymbol(new Image(getClass().getResource(imagePath).toExternalForm()));
+
+                candidate.setRegistrationDate(rs.getDate("registrationDate"));
+                candidate.setNAPA(rs.getString("naPa"));
+
+                candidates.add(candidate);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return candidates;
+    }
     @Override
     public boolean addCandidate(Candidate candidate, String area) {
 
@@ -688,7 +944,13 @@ public ArrayList<Integer> getStations(){
             preparedStatement.setString(2, candidate.getName());
             preparedStatement.setString(3, candidate.getPartyName());
             preparedStatement.setDate(4, candidate.getRegistrationDate());
-            preparedStatement.setString(5, candidate.getPartySymbolPath());
+
+            //extracts the name of the symbol and adds it to the db
+            String filePath =  candidate.getPartySymbolPath();
+            String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
+            String baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+
+            preparedStatement.setString(5, baseName);
 
             if(candidate.getNapa().equals("National Assembly")){
                 preparedStatement.setString(6, "NA");

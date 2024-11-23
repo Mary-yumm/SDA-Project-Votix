@@ -52,7 +52,7 @@ public class candidateListController {
     private void populateCandidates() {
         if (ems != null) {
             System.out.println("EMS is not null, loading candidates...");
-            List<Candidate> candidates = ems.getCands();
+            List<Candidate> candidates = ems.getAllCand();
 
             if (candidates == null || candidates.isEmpty()) {
                 System.out.println("No candidates found!");
