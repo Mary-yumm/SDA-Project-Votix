@@ -127,10 +127,10 @@ public class LoginController {
 
                 // Get the controller for PollingPC and set necessary dependencies
                 AdminMenuController controller = fxmlLoader.getController();
-                AdminElectionManagementSystem ad = new AdminElectionManagementSystem(ph);
+                //AdminElectionManagementSystem ad = new AdminElectionManagementSystem(ph);
 
-                controller.setConnection(ph);
-                controller.setElectionManagementSystem(ad);
+                //controller.setConnection(ph);
+                controller.setElectionManagementSystem(AEMS);
 
                 // Switch the scene
                 if (primaryStage != null) {
