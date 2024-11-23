@@ -3,6 +3,8 @@ package votix.controllers.AdminControllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -10,11 +12,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.models.ElectionResult;
 import votix.services.AdminElectionManagementSystem;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -47,6 +52,10 @@ public class ElectionResultController {
     private Label datee;
     @FXML
     private ChoiceBox<?> napa;
+
+    @FXML
+    public ImageView backArrow;
+
 
     private AdminElectionManagementSystem ems;
     private Stage Primarystage;
@@ -126,6 +135,7 @@ public class ElectionResultController {
 
     @FXML
     public void initialize() {
+        backArrow.setCursor(Cursor.HAND);
         // Initialize the table columns
         areacol.setCellValueFactory(new PropertyValueFactory<>("areaName"));
         candcol.setCellValueFactory(new PropertyValueFactory<>("candidateName"));
@@ -189,6 +199,32 @@ public class ElectionResultController {
                 //System.out.println(result);
             //}
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void returnToMenu(MouseEvent actionEvent) {
+        try {
+            System.out.println("Returning to the Admin Menu...");
+
+            // Load the FXML file for the Admin Menu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
+            AnchorPane adminMenuPane = loader.load();
+
+            // Get the controller for the Admin Menu
+            AdminMenuController controller = loader.getController();
+
+            if (controller != null) {
+                System.out.println("Admin Menu Controller set.");
+                // Pass required data to the Admin Menu controller
+                controller.setElectionManagementSystem(this.ems);
+                controller.setPrimaryStage(this.Primarystage);
+            }
+
+            // Set the new pane as the scene's root
+            Primarystage.getScene().setRoot(adminMenuPane);
+        } catch (IOException e) {
+            System.out.println("Error loading Admin Menu.");
             e.printStackTrace();
         }
     }

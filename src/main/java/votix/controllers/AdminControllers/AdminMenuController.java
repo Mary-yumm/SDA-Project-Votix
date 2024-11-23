@@ -51,6 +51,9 @@ public class AdminMenuController {
     private PersistenceHandler ph;
 
 
+
+
+
     public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem) {
         this.ems = electionManagementSystem;
         if (ems != null) {
@@ -59,6 +62,7 @@ public class AdminMenuController {
             System.out.println("ems set in admin menu: null");
         }
     }
+
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -72,7 +76,9 @@ public class AdminMenuController {
         setActiveButton(viewCandidate);
     }
 
-    public void addCandBtn() { setActiveButton(addCand); }
+    public void addCandBtn() {
+        setActiveButton(addCand);
+    }
 
     public void viewFormBtn() {
         setActiveButton(viewForm);
@@ -82,7 +88,9 @@ public class AdminMenuController {
         setActiveButton(viewreport);
     }
 
-    public void viewStaffBtn() { setActiveButton(viewStaff);}
+    public void viewStaffBtn() {
+        setActiveButton(viewStaff);
+    }
 
     public void viewresultBtn() {
         setActiveButton(viewresult);
@@ -121,8 +129,7 @@ public class AdminMenuController {
                 System.out.println("addCandidateController is null!");  // Debugging line
             }
             contentPane.getChildren().setAll(addCandidatePane);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -137,13 +144,12 @@ public class AdminMenuController {
 
             if (controller != null) {
                 System.out.println("setting");
-               controller.setElectionManagementSystem(this.ems, this.primaryStage);
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);
             } else {
                 System.out.println("viewCandidateController is null!");
             }
             contentPane.getChildren().setAll(addCandidatePane);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -164,8 +170,7 @@ public class AdminMenuController {
                 System.out.println("staffAssignmentsController is null!");  // Debugging line
             }
             contentPane.getChildren().setAll(addCandidatePane);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -352,5 +357,5 @@ public class AdminMenuController {
             e.printStackTrace();
         }
 
-}
+    }
 }

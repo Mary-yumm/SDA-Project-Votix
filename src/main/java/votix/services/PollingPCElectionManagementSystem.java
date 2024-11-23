@@ -1,11 +1,9 @@
 package votix.services;
 
-import votix.models.Area;
-import votix.models.Candidate;
-import votix.models.PollingStation;
-import votix.models.Voter;
+import votix.models.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PollingPCElectionManagementSystem implements ElectionManagementSystem {
     private PersistenceHandler ph;
@@ -103,6 +101,11 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     @Override
     public void createLogEntry(String entry) {
         ph.createLog(entry);
+    }
+
+    @Override
+    public List<Log> viewLogs() {
+        return List.of();
     }
 
     public Voter getVoterByCnic(String cnic){

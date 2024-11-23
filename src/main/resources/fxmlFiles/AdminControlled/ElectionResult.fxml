@@ -6,6 +6,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -49,6 +51,11 @@
          <TextField fx:id="CandName" layoutX="812.0" layoutY="229.0" prefHeight="26.0" prefWidth="264.0" promptText="Candidate Name" />
          <TextField fx:id="AreaName" layoutX="426.0" layoutY="229.0" prefHeight="26.0" prefWidth="264.0" promptText="Area Name" />
          <Label fx:id="datee" layoutX="408.0" layoutY="162.0" text="Datee" />
+         <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="50.0" layoutY="23.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../assets/back-arrow.png" />
+            </image>
+         </ImageView>
       </children>
    </Pane>
    <HBox prefHeight="4.0" prefWidth="536.0" style="-fx-background-color: #385B4F;" />

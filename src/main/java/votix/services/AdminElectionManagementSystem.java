@@ -106,10 +106,10 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to filter logs
     }
 
-    public List<Log> viewLogs() {
+    /*public List<Log> viewLogs() {
         // Implementation to view a specific log entry
         return ph.ViewLogs();
-    }
+    }*/
 
     public List<PollingStationPC> getPollingPCs(){
         return ph.getPollingPCs();
@@ -168,6 +168,11 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     public void createLogEntry(String entry) {
         // Implementation to create a log entry
+    }
+
+    @Override
+    public List<Log> viewLogs() {
+        return List.of();
     }
 
     public void searchStaffByStaffName() {

@@ -1,8 +1,10 @@
 package votix.services;
 
 import votix.models.Candidate;
+import votix.models.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface ElectionManagementSystem {
 
@@ -20,5 +22,6 @@ public interface ElectionManagementSystem {
 
     public void createLogEntry(String entry);
 
+    List<Log> viewLogs();
 }
 
