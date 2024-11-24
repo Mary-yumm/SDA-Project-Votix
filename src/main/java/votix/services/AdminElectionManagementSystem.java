@@ -185,5 +185,14 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
        return ph.getStaffAssignments();
     }
 
+    public void changeSystemStatus(int systemID,boolean status){
+        if(status){
+            ph.setSystemActive(systemID);
+        }
+        else{
+            ph.setSystemInactive(systemID);
+        }
+
+    }
 
 }

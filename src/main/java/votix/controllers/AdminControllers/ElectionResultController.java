@@ -3,6 +3,7 @@ package votix.controllers.AdminControllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -10,16 +11,22 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import votix.models.ElectionResult;
 import votix.services.AdminElectionManagementSystem;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ElectionResultController {
 
+    public ImageView backArrow;
+    public VBox contentPane;
     @FXML
     private Button AreaSearch;
     @FXML
@@ -211,5 +218,33 @@ public class ElectionResultController {
 
     public void setPrimarystage(Stage primarystage) {
         this.Primarystage = primarystage;
+    }
+
+    public void returnToMenu(MouseEvent mouseEvent) {
+
+       try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            AdminMenuController controller = loader.getController();
+
+            // Check if controller is not null and set EMS and primaryStage
+            if (controller != null) {
+                System.out.println("setting admin");
+                controller.setElectionManagementSystem(this.ems);  // Pass the ems instance
+                controller.setPrimaryStage(this.Primarystage);      // Pass the primaryStage instance
+            }
+
+            // Update contentPane
+            contentPane.getChildren().setAll(addCandidatePane);
+            contentPane.requestLayout();  // Request a layout refresh
+
+
+            System.out.println(contentPane);
+            System.out.println("contentPane visible: " + contentPane.isVisible());
+            System.out.println("contentPane parent: " + contentPane.getParent());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

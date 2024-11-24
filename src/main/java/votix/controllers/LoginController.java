@@ -5,7 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import votix.controllers.AdminControllers.AdminMenuController;
 import votix.controllers.PollingPC.*;
 
@@ -103,6 +105,14 @@ public class LoginController {
                 PollingPcController pollingController = fxmlLoader.getController();
                 pollingController.setElectionManagementSystem(PEMS);
 
+                 Screen screen = Screen.getPrimary();
+                 double screenWidth = screen.getVisualBounds().getWidth();
+                double screenHeight = screen.getVisualBounds().getHeight();
+                primaryStage.setWidth(screenWidth);   // Set 80% of screen width
+                primaryStage.setHeight(screenHeight); // Set 80% of screen height
+                primaryStage.centerOnScreen();
+
+
                 // Switch the scene
                 if (primaryStage != null) {
                     pollingController.setPrimaryStage(this.primaryStage);
@@ -128,7 +138,6 @@ public class LoginController {
             AEMS.setPersistenceHandler(ph);
             // Use the dbHandler to verify staff credentials and MAC address
             if (AEMS.authorizeAdmin(username, password)) {
-
                 // Load PollingPc.fxml and switch to it on successful login
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
                 AnchorPane menu = fxmlLoader.load();
@@ -205,7 +214,7 @@ public class LoginController {
         try {
             // Load the previous screen (MainPage.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
-            Scene scene = new Scene(loader.load(), 1920, 1080);
+            Scene scene = new Scene(loader.load());
 
             // Get the controller of MainPage and set up necessary bindings again
             MainPageController mainPageController = loader.getController();
