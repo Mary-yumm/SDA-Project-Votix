@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class mysql extends PersistenceHandler {
+public class mysqlSingleton extends PersistenceHandler {
 
     private Connection conn;
     private String dbUrl;
@@ -18,8 +18,9 @@ public class mysql extends PersistenceHandler {
     private int connectionTimeout;
     private int maxRetries;
 
+    private static mysqlSingleton instance = null;
 
-    public mysql(String dbUrl,String username,String password) throws ClassNotFoundException {
+    private mysqlSingleton(String dbUrl, String username, String password) throws ClassNotFoundException {
         // replace with your password
         try {
             // Optional: Load the SQL Server JDBC driver
@@ -33,9 +34,19 @@ public class mysql extends PersistenceHandler {
                 System.out.println("Failed to establish connection.");
             }
         } catch (SQLException e) {
+            System.out.println("Failed to establish connection.");
             e.printStackTrace();
         }
     }
+
+    public static mysqlSingleton getInstance(String dbUrl, String username, String password) throws ClassNotFoundException {
+        if(instance == null){
+            instance = new mysqlSingleton(dbUrl,username, password);
+            System.out.println(dbUrl+", "+username+", "+password);
+        }
+        return instance;
+    }
+
 
 
     @Override
