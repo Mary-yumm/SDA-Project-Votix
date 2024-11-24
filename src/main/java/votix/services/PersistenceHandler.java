@@ -44,6 +44,8 @@ public abstract class PersistenceHandler {
     public abstract void updatePollingStaffAccount(String username, String password, int staffid, int stationid);
     public abstract void deactivatePollingStaffAccount(int staffid);
     public abstract void activatePollingStaffAccount(int id);
+    public abstract void setSystemInactive(int systemID);
+    public abstract void setSystemActive(int systemID);
 
 }
 

@@ -459,6 +459,54 @@ public class mysql extends PersistenceHandler {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void setSystemInactive(int systemID) {
+        // SQL query to update system status to 'Inactive' based on systemID
+        String query = "UPDATE POLLINGSTATIONPC SET systemStatus = 'Inactive' WHERE systemId = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            // Set the systemID in the query
+            ps.setInt(1, systemID);
+
+            // Execute the update
+            int rowsUpdated = ps.executeUpdate();
+
+            // Check if any row was updated
+            if (rowsUpdated == 0) {
+                System.out.println("No system found with systemId: " + systemID);
+            } else {
+                System.out.println("System " + systemID + " has been set to Inactive.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setSystemActive(int systemID) {
+        // SQL query to update system status to 'Active' based on systemID
+        String query = "UPDATE POLLINGSTATIONPC SET systemStatus = 'Active' WHERE systemId = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            // Set the systemID in the query
+            ps.setInt(1, systemID);
+
+            // Execute the update
+            int rowsUpdated = ps.executeUpdate();
+
+            // Check if any row was updated
+            if (rowsUpdated == 0) {
+                System.out.println("No system found with systemId: " + systemID);
+            } else {
+                System.out.println("System " + systemID + " has been set to Active.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void deactivatePollingStaffAccount(int  staffid) {
         try {
@@ -724,55 +772,6 @@ public ArrayList<Integer> getStations(){
 
     }
 
-    @Override
-    public boolean connect() {
-        return false;
-    }
-
-    @Override
-    public boolean disconnect() {
-        return false;
-    }
-
-    @Override
-    public void executeQuery(String query) {
-
-    }
-
-    @Override
-    public int executeUpdate(String query) {
-        return 0;
-    }
-
-    @Override
-    public void beginTransaction() {
-
-    }
-
-    @Override
-    public void commit() {
-
-    }
-
-    @Override
-    public void rollback() {
-
-    }
-
-    @Override
-    public void biometricVerification() {
-
-    }
-
-    @Override
-    public void retrieveVotes() {
-
-    }
-
-    @Override
-    public void updateCount() {
-
-    }
 
     public ArrayList<String> fetchResult()
     {
@@ -794,10 +793,6 @@ public ArrayList<Integer> getStations(){
         return partyNames;
     }
 
-    @Override
-    public void saveReport() {
-
-    }
 
     @Override
     public ArrayList<String> reportData() {
@@ -814,10 +809,6 @@ public ArrayList<Integer> getStations(){
         return null;
     }
 
-    @Override
-    public void log() {
-
-    }
 
     @Override
     public void createLog(String message) {
@@ -858,12 +849,6 @@ public ArrayList<Integer> getStations(){
     }
 
 
-
-    @Override
-    public void updatePollingStaffAccount(PollingStaff staff) {
-
-    }
-
     @Override
     public boolean addPollingStaffAccount(PollingStaff staff) {
         String sql = "INSERT INTO POLLINGSTAFF (staffId, stationId, name, role, username, password) "
@@ -893,10 +878,7 @@ public ArrayList<Integer> getStations(){
         return true;
     }
 
-    @Override
-    public void deactivatePollingStaffAccount(PollingStaff staff) {
 
-    }
     public ArrayList<Candidate> fetchAllCandidates() {
         ArrayList<Candidate> candidates = new ArrayList<>();
         try {
