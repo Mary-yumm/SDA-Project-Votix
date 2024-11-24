@@ -10,16 +10,16 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AboutController">
+<AnchorPane fx:id="contentpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AboutController">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="1080.0" stroke="BLACK" strokeType="INSIDE" width="1920.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="783.0" layoutX="151.0" layoutY="150.0" stroke="WHITE" strokeWidth="0.0" width="1619.0" />
-        <ImageView fitHeight="134.0" fitWidth="211.0" layoutX="296.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="835.0" stroke="BLACK" strokeType="INSIDE" width="1500.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="751.0" layoutX="44.0" layoutY="45.0" stroke="WHITE" strokeWidth="0.0" width="1418.0" />
+        <ImageView fitHeight="134.0" fitWidth="211.0" layoutX="96.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../assets/VotixCompanyLogo2.png" />
             </image>
         </ImageView>
-        <VBox layoutX="296.0" layoutY="343.0" prefHeight="494.0" prefWidth="1348.0" spacing="10.0">
+        <VBox layoutX="79.0" layoutY="231.0" minWidth="-Infinity" prefHeight="494.0" prefWidth="1348.0" spacing="10.0">
             <children>
                 <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #e72f2f;" text="About Votix Election Management System" />
                 <TextFlow>
@@ -57,13 +57,13 @@
                 </TextFlow>
             </children>
         </VBox>
-      <ImageView fitHeight="159.0" fitWidth="845.0" layoutX="538.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="159.0" fitWidth="845.0" layoutX="331.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/ems.png" />
          </image>
       </ImageView>
-      <Rectangle fx:id="bg" arcHeight="50.0" arcWidth="50.0" fill="#37594d30" height="547.0" layoutX="247.0" layoutY="317.0" stroke="WHITE" strokeType="INSIDE" width="1437.0" />
-        <Button fx:id="backButton" layoutX="1583.0" layoutY="262.0" onMouseClicked="#handleBackButtonAction" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #e72f2f; -fx-text-fill: white; -fx-font-size: 16px;" text="Back" />
+        <Button fx:id="BackButton" layoutX="1332.0" layoutY="160.0" onMouseClicked="#HandleBackButtonAction" prefHeight="37.0" prefWidth="80.0" style="-fx-background-color: #e72f2f; -fx-text-fill: white; -fx-font-size: 16px;" text="Back" />
+      <Rectangle fx:id="bg" arcHeight="50.0" arcWidth="50.0" fill="#37594d30" height="565.0" layoutX="48.0" layoutY="210.0" stroke="WHITE" strokeType="INSIDE" width="1409.0" />
 
     </children>
 

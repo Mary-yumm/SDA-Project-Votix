@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import votix.controllers.AdminControllers.AdminMenuController;
 import votix.controllers.PollingPC.*;
@@ -88,7 +89,13 @@ public class LoginController {
                 // Get the controller for PollingPC and set necessary dependencies
                 PollingPcController pollingController = fxmlLoader.getController();
                 pollingController.setElectionManagementSystem(PEMS);
-                //pollingController.setPh(ph);
+                 Screen screen = Screen.getPrimary();
+                 double screenWidth = screen.getVisualBounds().getWidth();
+                double screenHeight = screen.getVisualBounds().getHeight();
+                primaryStage.setWidth(screenWidth);   // Set 80% of screen width
+                primaryStage.setHeight(screenHeight); // Set 80% of screen height
+                primaryStage.centerOnScreen();
+
 
                 // Switch the scene
                 if (primaryStage != null) {
@@ -131,8 +138,6 @@ public class LoginController {
                 } else {
                     System.out.println("Primary stage is null.");
                 }
-                contentPane.getChildren().setAll(menu);
-
             } else {System.out.println("Invalid credentials");}
 
         } catch (IOException e) {
@@ -198,7 +203,4 @@ public class LoginController {
         System.out.println("Unable to retrieve Wi-Fi MAC address.");
         return null;
     }
-
-
 }
-

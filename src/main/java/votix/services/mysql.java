@@ -37,9 +37,73 @@ public class mysql extends PersistenceHandler {
         }
     }
 
+    @Override
+    public ArrayList<ElectionResult> getForm(int sID , String areaName, String Napa) {
+
+        ArrayList<ElectionResult> temp = new ArrayList<>();
+        String query = "SELECT " +
+                "    CANDIDATE.name, " +
+                "    CANDIDATE.partyName, " +
+                "    ELECTIONRESULT.voteCount " +
+                "FROM " +
+                "    votix.ELECTIONRESULT " +
+                "JOIN " +
+                "    AREA ON ELECTIONRESULT.areaId = AREA.areaId " +
+                "JOIN " +
+                "    CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId " +
+                "JOIN " +
+                "    POLLINGSTATION ON AREA.areaId = POLLINGSTATION.areaId " +
+                "WHERE " +
+                "    AREA.areaName LIKE ? " +
+                "    AND CANDIDATE.naPa LIKE ? " +
+                "    AND POLLINGSTATION.stationId = ? ;";
+
+    try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setString(1, "%" + areaName + "%");
+        stmt.setString(2, "%" + Napa + "%");
+        stmt.setInt(3, sID);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            temp.add(new ElectionResult(
+                    areaName,
+                    rs.getString("name"),
+                    rs.getString("partyName"),
+                    rs.getInt("voteCount")
+            ));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return temp;
+
+    }
 
     @Override
-    public ArrayList<ElectionResult> WinnerByArea(String areaName)
+    public ArrayList<Integer> getStations(String areaName){
+        ArrayList<Integer> temp = new ArrayList<>();
+
+        // Query to fetch election results, joining AREA and CANDIDATE tables
+        String query = "SELECT stationId "
+                + "FROM votix.POLLINGSTATION "
+                + "JOIN AREA ON POLLINGSTATION.areaId = AREA.areaId "
+                + "WHERE areaName LIKE ? ";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + areaName + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                temp.add(rs.getInt("stationId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+    @Override
+    public ArrayList<ElectionResult> WinnerByArea(String areaName, String napa)
     {
         ArrayList<ElectionResult> temp = new ArrayList<>();
 
@@ -49,11 +113,14 @@ public class mysql extends PersistenceHandler {
                 + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
                 + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
                 + "WHERE areaName LIKE ? "
+                + "AND CANDIDATE.naPa LIKE ? "
                 + "ORDER BY ELECTIONRESULT.voteCount DESC "
                 + "LIMIT 2";
 
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, "%" + areaName + "%");
+                stmt.setString(2, "%" + napa + "%");
+
                 ResultSet rs = stmt.executeQuery();
 
                 while (rs.next()) {
@@ -101,18 +168,21 @@ public class mysql extends PersistenceHandler {
     }
 
     @Override
-    public ArrayList<ElectionResult> fetchElectionResults() {
+    public ArrayList<ElectionResult> fetchElectionResults(String napa) {
             ArrayList<ElectionResult> electionResults = new ArrayList<>();
+        System.out.println("In mysql Input napa: " + napa);
 
-            try {
+        try {
                 // Query to fetch election results, joining AREA and CANDIDATE tables
                 String electionQuery = "SELECT AREA.areaName, CANDIDATE.name, CANDIDATE.partyName, ELECTIONRESULT.voteCount "
                         + "FROM votix.ELECTIONRESULT "
                         + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
-                        + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId";
+                        + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                        + "WHERE CANDIDATE.naPa LIKE ? ";
 
                 // Prepare the SQL statement
                 PreparedStatement electionPs = conn.prepareStatement(electionQuery);
+                electionPs.setString(1, "%" + napa + "%");
 
                 // Execute the query
                 ResultSet electionRs = electionPs.executeQuery();
@@ -522,6 +592,54 @@ public class mysql extends PersistenceHandler {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void setSystemInactive(int systemID) {
+        // SQL query to update system status to 'Inactive' based on systemID
+        String query = "UPDATE POLLINGSTATIONPC SET systemStatus = 'Inactive' WHERE systemId = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            // Set the systemID in the query
+            ps.setInt(1, systemID);
+
+            // Execute the update
+            int rowsUpdated = ps.executeUpdate();
+
+            // Check if any row was updated
+            if (rowsUpdated == 0) {
+                System.out.println("No system found with systemId: " + systemID);
+            } else {
+                System.out.println("System " + systemID + " has been set to Inactive.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setSystemActive(int systemID) {
+        // SQL query to update system status to 'Active' based on systemID
+        String query = "UPDATE POLLINGSTATIONPC SET systemStatus = 'Active' WHERE systemId = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            // Set the systemID in the query
+            ps.setInt(1, systemID);
+
+            // Execute the update
+            int rowsUpdated = ps.executeUpdate();
+
+            // Check if any row was updated
+            if (rowsUpdated == 0) {
+                System.out.println("No system found with systemId: " + systemID);
+            } else {
+                System.out.println("System " + systemID + " has been set to Active.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void deactivatePollingStaffAccount(int  staffid) {
         try {
@@ -782,60 +900,6 @@ public ArrayList<Integer> getStations(){
     }
 
 
-    @Override
-    public void ShowPollingStation() {
-
-    }
-
-    @Override
-    public boolean connect() {
-        return false;
-    }
-
-    @Override
-    public boolean disconnect() {
-        return false;
-    }
-
-    @Override
-    public void executeQuery(String query) {
-
-    }
-
-    @Override
-    public int executeUpdate(String query) {
-        return 0;
-    }
-
-    @Override
-    public void beginTransaction() {
-
-    }
-
-    @Override
-    public void commit() {
-
-    }
-
-    @Override
-    public void rollback() {
-
-    }
-
-    @Override
-    public void biometricVerification() {
-
-    }
-
-    @Override
-    public void retrieveVotes() {
-
-    }
-
-    @Override
-    public void updateCount() {
-
-    }
 
     public ArrayList<String> fetchResult()
     {
@@ -857,10 +921,6 @@ public ArrayList<Integer> getStations(){
         return partyNames;
     }
 
-    @Override
-    public void saveReport() {
-
-    }
 
     @Override
     public ArrayList<String> reportData() {
@@ -877,10 +937,6 @@ public ArrayList<Integer> getStations(){
         return null;
     }
 
-    @Override
-    public void log() {
-
-    }
 
     @Override
     public void createLog(String message) {
@@ -896,7 +952,9 @@ public ArrayList<Integer> getStations(){
         }
     }
 
-   /* @Override
+
+
+    @Override
     public List<Log> ViewLogs() {
         List<Log> logs = new ArrayList<>();
         String query = "SELECT logId, action, timeStamp FROM AUDITLOG";
@@ -919,14 +977,8 @@ public ArrayList<Integer> getStations(){
 
         return logs;
 
-    }*/
-
-
-
-    @Override
-    public void updatePollingStaffAccount(PollingStaff staff) {
-
     }
+
 
     @Override
     public boolean addPollingStaffAccount(PollingStaff staff) {
@@ -957,10 +1009,7 @@ public ArrayList<Integer> getStations(){
         return true;
     }
 
-    @Override
-    public void deactivatePollingStaffAccount(PollingStaff staff) {
 
-    }
     public ArrayList<Candidate> fetchAllCandidates() {
         ArrayList<Candidate> candidates = new ArrayList<>();
         try {

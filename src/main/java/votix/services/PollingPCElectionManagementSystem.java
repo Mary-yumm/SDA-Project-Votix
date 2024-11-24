@@ -79,6 +79,11 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     }
 
     @Override
+    public ArrayList<Integer> getStations(String searchArea) {
+        return null;
+    }
+
+    @Override
     public ArrayList<Integer> getStations() {
         return null;
     }
@@ -106,6 +111,11 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     @Override
     public List<Log> viewLogs() {
         return List.of();
+    }
+
+    @Override
+    public ArrayList<ElectionResult> getForm(int stID, String searchArea, String napa) {
+        return null;
     }
 
     public Voter getVoterByCnic(String cnic){

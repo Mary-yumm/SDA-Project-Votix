@@ -1,76 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="contentPane" prefHeight="1080.0" prefWidth="1920.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ElectionFormController">
-   <children>
-      <AnchorPane prefHeight="100.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane fx:id="contentPane" prefHeight="858.0" prefWidth="1500.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ElectionFormController">
          <children>
-            <Text fill="#e4e4e4" layoutX="770.0" layoutY="59.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Election Form" />
-            <Button fx:id="backbtn" layoutX="51.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnToMenu" opacity="0.69" prefHeight="54.0" prefWidth="108.0" style="-fx-border-color: #FFFF; -fx-background-radius: 20px; -fx-border-radius: 20px;" text="Back" textAlignment="JUSTIFY" textFill="WHITE">
+            <Rectangle arcHeight="100.0" arcWidth="100.0" height="669.0" layoutX="559.0" layoutY="161.0" stroke="WHITE" strokeType="INSIDE" width="906.0">
+               <fill>
+                  <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.13192982971668243" green="0.378947377204895" blue="0.25955554842948914" opacity="0.15000000596046448" />
+                           </color>
+                        </Stop>
+                        <Stop offset="0.006729475100942127">
+                           <color>
+                              <Color red="0.13192982971668243" green="0.378947377204895" blue="0.25955554842948914" opacity="0.15000000596046448" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill></Rectangle>
+            <AnchorPane prefHeight="100.0" prefWidth="1500.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Text fill="#e4e4e4" layoutX="586.0" layoutY="68.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="View Election Form" />
+                  <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="42.0" layoutY="26.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/back-arrow.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+            <Label layoutX="42.0" layoutY="392.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Select a Station ID" />
+            <Label layoutX="38.0" layoutY="164.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Election Date:">
                <font>
-                  <Font name="System Bold" size="7.0" />
+                  <Font size="18.0" />
                </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
+            </Label>
+            <Label fx:id="electionDate" layoutX="254.0" layoutY="164.0" style="-fx-font-size: 24px;" text="12-04-2024" />
+            <Label layoutX="38.0" layoutY="232.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="National / Provisional:" />
+            <ChoiceBox fx:id="electionType" layoutX="294.0" layoutY="232.0" minHeight="2.0" minWidth="2.0" prefHeight="27.0" prefWidth="199.0" style="-fx-font-size: 10px;" />
+            <Label layoutX="38.0" layoutY="311.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Area" />
+            <TextField fx:id="areaField" layoutX="98.0" layoutY="305.0" minHeight="2.0" minWidth="2.0" prefColumnCount="0" prefHeight="40.0" prefWidth="20.0" promptText="Enter Area" style="-fx-font-size: 20px;" />
+            <Label layoutX="676.0" layoutY="724.0" style="-fx-font-size: 24px;" text="Registered Voters:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="1076.0" layoutY="724.0" style="-fx-font-size: 24px;" text="Total Votes Casted:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="turnout" layoutX="1116.0" layoutY="774.0" style="-fx-font-size: 24px;" text="---">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="regvotes" layoutX="895.0" layoutY="724.0" style="-fx-font-size: 24px;" text="---">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="916.0" layoutY="774.0" style="-fx-font-size: 24px;" text="Voter Turnout:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="castedvotes" layoutX="1314.0" layoutY="724.0" style="-fx-font-size: 24px;" text="---">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="GenerateForm" layoutX="95.0" layoutY="738.0" minHeight="5.0" minWidth="5.0" onMouseClicked="#handleGenerateForm" prefHeight="54.0" prefWidth="350.0" style="-fx-background-color: #385b4f; -fx-text-fill: white;" styleClass="submit-button" stylesheets="@../../style/style.css" text="Generate Form">
+               <font>
+                  <Font size="9.0" />
+               </font>
             </Button>
+            <Button fx:id="searchArea" layoutX="316.0" layoutY="305.0" minHeight="5.0" minWidth="5.0" onMouseClicked="#handleSearchArea" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: #385b4f; -fx-text-fill: white;" styleClass="submit-button" stylesheets="@../../style/style.css" text="View Stations">
+               <font>
+                  <Font size="9.0" />
+               </font>
+            </Button>
+            <Label layoutX="907.0" layoutY="187.0" prefHeight="90.0" prefWidth="320.0" style="-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #2E4A3C;" text="Election Form">
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Label>
+            <TableView fx:id="stationTable1" layoutX="98.0" layoutY="429.0" prefHeight="250.0" prefWidth="350.0">
+               <columns>
+                  <TableColumn fx:id="stationIdColumn1" prefWidth="349.59999694824216" text="Station ID" />
+               </columns>
+            </TableView>
+            <TableView fx:id="FormTable" layoutX="619.0" layoutY="335.0" prefHeight="354.0" prefWidth="772.0">
+               <columns>
+                  <TableColumn fx:id="cand" prefWidth="251.20001220703125" text="Candidate Name" />
+                  <TableColumn fx:id="party" prefWidth="319.199951171875" text="Party Name" />
+                  <TableColumn fx:id="vote" prefWidth="177.5999755859375" text="Votes" />
+                  <TableColumn prefWidth="177.5999755859375" text="Votes" />
+               </columns>
+            </TableView>
          </children>
       </AnchorPane>
-      <VBox layoutX="654.0" layoutY="138.0" prefHeight="43.0" prefWidth="554.0">
-         <children>
-            <HBox prefHeight="32.0" prefWidth="542.0" style="-fx-background-color: #FFFF;">
-               <children>
-                  <Label styleClass="label" text="Area Number:                                       " />
-                  <Label text="0558" />
-               </children>
-            </HBox>
-            <HBox prefHeight="4.0" prefWidth="536.0" style="-fx-background-color: #385B4F;" />
-         </children>
-      </VBox>
-      <VBox layoutX="654.0" layoutY="206.0" prefHeight="43.0" prefWidth="554.0">
-         <children>
-            <HBox prefHeight="32.0" prefWidth="542.0" style="-fx-background-color: #FFFF;">
-               <children>
-                  <Label prefHeight="32.0" prefWidth="461.0" styleClass="label" text="Station Range:                  " />
-                  <Label prefHeight="32.0" prefWidth="298.0" text="NA-56 - NA103" />
-               </children>
-            </HBox>
-            <HBox prefHeight="4.0" prefWidth="536.0" style="-fx-background-color: #385B4F;" />
-         </children>
-      </VBox>
-      <HBox layoutX="654.0" layoutY="321.0" prefHeight="32.0" prefWidth="450.0" style="-fx-background-color: #FFFF;">
-         <children>
-            <Label prefHeight="32.0" prefWidth="461.0" styleClass="label" text="Total Registered Voters: " />
-            <Label prefHeight="32.0" prefWidth="202.0" text="11246" />
-         </children>
-      </HBox>
-      <HBox layoutX="654.0" layoutY="369.0" prefHeight="32.0" prefWidth="450.0" style="-fx-background-color: #FFFF;">
-         <children>
-            <Label prefHeight="32.0" prefWidth="461.0" styleClass="label" text="Voter Turnout:                    " />
-            <Label prefHeight="32.0" prefWidth="171.0" text="7680" />
-         </children>
-      </HBox>
-       <ScrollPane fitToWidth="true" layoutX="151.0" layoutY="449.0" prefHeight="451.0" prefWidth="1669.0" AnchorPane.bottomAnchor="180.00000000000006" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="449.0">
-           <VBox fx:id="candidateTable" spacing="10.0">
-               <!-- Table Headers -->
-               <HBox spacing="300.0" styleClass="table-header">
-                   <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Candidate Name" />
-                   <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Name" />
-                   <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Symbol" />
-                   <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Vote Count" />
-               </HBox>
-               <!-- Candidate rows will be dynamically added here by the controller -->
-           </VBox>
-       </ScrollPane>
-      <VBox layoutX="936.0" layoutY="788.0" prefHeight="43.0" prefWidth="290.0" />
-   </children>
-</AnchorPane>

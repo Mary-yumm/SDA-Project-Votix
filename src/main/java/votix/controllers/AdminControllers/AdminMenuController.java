@@ -51,9 +51,6 @@ public class AdminMenuController {
     private PersistenceHandler ph;
 
 
-
-
-
     public void setElectionManagementSystem(AdminElectionManagementSystem electionManagementSystem) {
         this.ems = electionManagementSystem;
         if (ems != null) {
@@ -62,7 +59,6 @@ public class AdminMenuController {
             System.out.println("ems set in admin menu: null");
         }
     }
-
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -177,31 +173,32 @@ public class AdminMenuController {
 
     public void viewElectionResult() throws IOException {
         viewresultBtn();
-
-        // Load the FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionResult.fxml"));
-        VBox root = null;
+// Load the FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionReport.fxml"));
+        Parent root = null;
 
         try {
             root = loader.load();
         } catch (IOException e) {
+            System.out.println("ElectionReportController root empty");
             e.printStackTrace();  // Handle the exception if the FXML loading fails
             return;  // Exit if loading fails
         }
 
-        ElectionResultController controller = loader.getController();
+        ElectionReportController controller = loader.getController();
 
         // Ensure that the controller is correctly initialized
         if (controller != null) {
-            System.out.println("ElectionResultController initialized successfully.");
+            System.out.println("ElectionReportController initialized successfully.");
             controller.set(this.ems, this.primaryStage);  // Pass the ems instance
         } else {
-            System.out.println("Error: ElectionResultController is null!");
+            System.out.println("Error: ElectionReportController is null!");
         }
 
         // Set the loaded VBox as the scene
         this.primaryStage.setScene(new Scene(root));  // Set the new scene
         this.primaryStage.show();  // Ensure that the primary stage is shown after the scene is set
+
     }
 
 
@@ -251,30 +248,30 @@ public class AdminMenuController {
     public void viewElectionReport() {
         viewReportBtn();
         // Load the FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionReport.fxml"));
-        Parent root = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionResult.fxml"));
+        VBox root = null;
 
         try {
             root = loader.load();
         } catch (IOException e) {
-            System.out.println("ElectionReportController root empty");
             e.printStackTrace();  // Handle the exception if the FXML loading fails
             return;  // Exit if loading fails
         }
 
-        ElectionReportController controller = loader.getController();
+        ElectionResultController controller = loader.getController();
 
         // Ensure that the controller is correctly initialized
         if (controller != null) {
-            System.out.println("ElectionReportController initialized successfully.");
+            System.out.println("ElectionResultController initialized successfully.");
             controller.set(this.ems, this.primaryStage);  // Pass the ems instance
         } else {
-            System.out.println("Error: ElectionReportController is null!");
+            System.out.println("Error: ElectionResultController is null!");
         }
 
         // Set the loaded VBox as the scene
         this.primaryStage.setScene(new Scene(root));  // Set the new scene
         this.primaryStage.show();  // Ensure that the primary stage is shown after the scene is set
+
     }
 
     @FXML
@@ -332,8 +329,25 @@ public class AdminMenuController {
 
 
     @FXML
-    public void viewElectionForm() {
+    public void viewElectionForm() throws IOException {
         viewFormBtn();
+        // Load the FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/electionForm.fxml"));
+        AnchorPane root = loader.load();
+
+        ElectionFormController controller = loader.getController();
+
+        // Ensure that the controller is correctly initialized
+        if (controller != null) {
+            System.out.println("Election Form Controller initialized successfully.");
+            controller.set(this.ems, this.primaryStage);  // Pass the ems instance
+        } else {
+            System.out.println("Error: Election Form Controller is null!");
+        }
+
+        // Set the loaded VBox as the scene
+        this.primaryStage.setScene(new Scene(root));  // Set the new scene
+        this.primaryStage.show();  // Ensure that the primary stage is shown after the scene is set
     }
 
     // Method to set the active button
@@ -356,11 +370,10 @@ public class AdminMenuController {
 
 
     public void logoutFtn(MouseEvent actionEvent) {
-
         try {
             // Load the previous screen (MainPage.fxml)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
-            Scene scene = new Scene(loader.load(), 1920, 1080);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/mainpage.fxml"));
+            Scene scene = new Scene(loader.load());
 
             // Get the controller of MainPage and set up necessary bindings again
             MainPageController mainPageController = loader.getController();
@@ -372,6 +385,5 @@ public class AdminMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

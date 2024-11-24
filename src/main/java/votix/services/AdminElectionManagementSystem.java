@@ -28,9 +28,9 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
     public void displayAllResults() {
     }
 
-    public ArrayList<ElectionResult> fetchElectionResults()
+    public ArrayList<ElectionResult> fetchElectionResults(String Napa)
     {
-        return ph.fetchElectionResults();
+        return ph.fetchElectionResults(Napa);
     }
     public ArrayList<ElectionResult> searchElectionResultsByArea(String areaName) {
         return ph.searchByArea(areaName);
@@ -190,12 +190,28 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
        return ph.getStaffAssignments();
     }
 
+    public void changeSystemStatus(int systemID,boolean status){
+        if(status){
+            ph.setSystemActive(systemID);
+        }
+        else{
+            ph.setSystemInactive(systemID);
+        }
 
-    public ArrayList<ElectionResult> WinnerByArea(String searchArea) {
-        return ph.WinnerByArea(searchArea);
+    }
+
+    public ArrayList<ElectionResult> WinnerByArea(String searchArea, String napa) {
+        return ph.WinnerByArea(searchArea,napa);
     }
     public int fetchTotalVotesByArea(String areaName){
         return ph.fetchTotalVotesByArea(areaName);
     }
 
+    public ArrayList<Integer> getStations(String searchArea) {
+        return ph.getStations(searchArea);
+    }
+    public ArrayList<ElectionResult> getForm(int stID, String searchArea,String Napa )
+    {
+        return ph.getForm(stID,searchArea, Napa);
+    }
 }

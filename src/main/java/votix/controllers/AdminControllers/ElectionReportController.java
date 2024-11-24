@@ -1,5 +1,7 @@
 package votix.controllers.AdminControllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -7,7 +9,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +18,7 @@ import votix.services.AdminElectionManagementSystem;
 import votix.services.PersistenceHandler;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ElectionReportController {
@@ -31,7 +33,7 @@ public class ElectionReportController {
     private Label electionDate;
 
     @FXML
-    private ChoiceBox<?> electionType;
+    private ChoiceBox<String> napa;
 
     @FXML
     private Label femaleVotes;
@@ -81,8 +83,15 @@ public class ElectionReportController {
     @FXML
     void handleSearch(MouseEvent event) {
         String searchArea = areaField.getText(); // Using AreaName as area search field
+        String Napa = (napa.getValue() != null) ? napa.getValue() : "Default Value";
+        System.out.println("Napa ChoiceBox: " + napa.getValue());
+        if (Napa.equals("National Assembly"))
+            Napa = "NA";
+        else if (Napa.equals("Provincial Assembly"))
+            Napa = "PA";
+
         if (!searchArea.isEmpty()) {
-            ArrayList<ElectionResult> winner = ems.WinnerByArea(searchArea);
+            ArrayList<ElectionResult> winner = ems.WinnerByArea(searchArea, Napa);
             System.out.println("Search by area successful");
             loadData(winner);
 
@@ -100,12 +109,21 @@ public class ElectionReportController {
 
     public void initialize() {
         backArrow.setCursor(Cursor.HAND);
+        // Initialize the choice box for National/Provincial
+        ObservableList<String> np = FXCollections.observableArrayList(
+                "National Assembly", "Provincial Assembly");
+        napa.setItems(np);
+        napa.setValue("National Assembly");
     }
     private void loadData(ArrayList<ElectionResult> results) {
+
+
         if (results != null && results.size() >= 2) {
             // Get the winner and loser data (assuming the first two results are winner and loser)
             ElectionResult winnerResult = results.get(0);
             ElectionResult loserResult = results.get(1);
+            // Example: Set the current date during initialization
+            displayDate(LocalDate.now());
 
             // Set the winner's information
             winnerName.setText(winnerResult.getCandidateName());
@@ -142,6 +160,9 @@ public class ElectionReportController {
         int femaleVotesCount = totalCastedVotes - maleVotesCount; // Remaining are female votes
         this.maleVotes.setText(String.valueOf(maleVotesCount));
         this.femaleVotes.setText(String.valueOf(femaleVotesCount));
+    }
+    public void displayDate(LocalDate date) {
+        electionDate.setText(date.toString()); // Display the date
     }
 
     private void clearData() {

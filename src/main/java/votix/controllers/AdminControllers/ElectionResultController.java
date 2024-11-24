@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -15,6 +16,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import votix.models.ElectionResult;
 import votix.services.AdminElectionManagementSystem;
@@ -51,7 +54,7 @@ public class ElectionResultController {
     @FXML
     private Label datee;
     @FXML
-    private ChoiceBox<?> napa;
+    private ChoiceBox<String> napa;
 
     @FXML
     public ImageView backArrow;
@@ -119,10 +122,7 @@ public class ElectionResultController {
 
     @FXML
     void hanlderdropdown(MouseEvent event) {
-        // Assuming this is for filtering National/Provincial
-        String selected = napa.getValue().toString();
-        // Add logic to filter based on national/provincial selection
-        // You'll need to modify your database queries to include this filter
+        loadTableData();
 
     }
     // Add this method to clear searches
@@ -135,6 +135,12 @@ public class ElectionResultController {
 
     @FXML
     public void initialize() {
+        // Initialize the choice box for National/Provincial
+        ObservableList<String> np = FXCollections.observableArrayList(
+                "National Assembly", "Provincial Assembly");
+        napa.setItems(np);
+        napa.setValue("National Assembly");
+
         backArrow.setCursor(Cursor.HAND);
         // Initialize the table columns
         areacol.setCellValueFactory(new PropertyValueFactory<>("areaName"));
@@ -161,9 +167,7 @@ public class ElectionResultController {
             }
         });
 
-        // Initialize the choice box for National/Provincial
-       // napa.getItems().addAll("National", "Provincial");
-        //napa.setValue("National"); // Set default value
+
 
     }
     // Add a method to handle combined search
@@ -178,18 +182,27 @@ public class ElectionResultController {
         updateTableData(results);
     }*/
     private void loadTableData() {
+
+        String Napa = (napa.getValue() != null) ? napa.getValue() : "Default Value";
+        System.out.println("Napa ChoiceBox: " + napa.getValue());
+        if (Napa.equals("National Assembly"))
+            Napa = "NA";
+        else if (Napa.equals("Provincial Assembly"))
+            Napa = "PA";
+
         if (ems == null) {
             System.out.println("EMS is null!");
             return;
         }
 
         try {
-            ArrayList<ElectionResult> results = ems.fetchElectionResults();
+            ArrayList<ElectionResult> results = ems.fetchElectionResults(Napa);
             if (results == null) {
                 System.out.println("No results returned!");
                 return;
             }
-
+            // Example: Set the current date during initialization
+            displayDate(LocalDate.now());
             ObservableList<ElectionResult> electionList = FXCollections.observableArrayList(results);
             Table.setItems(electionList);
 
