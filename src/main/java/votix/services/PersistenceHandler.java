@@ -7,13 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PersistenceHandler {
-    protected String connectionString;
     protected String username;
     protected String password;
-    protected String databaseName;
-    protected boolean isConnected = false;
-    protected int connectionTimeout;
-    protected int maxRetries;
 
     // Abstract methods to be implemented by subclasses
     public abstract void ShowPollingStation();
@@ -22,29 +17,13 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<ElectionResult> searchByCandidate(String candidateName);
     public abstract ArrayList<ElectionResult> searchByParty(String partyName);
 
-    public abstract boolean connect();
-    public abstract boolean disconnect();
-    public abstract void executeQuery(String query);
-    public abstract int executeUpdate(String query);
-    public abstract void beginTransaction();
-    public abstract void commit();
-    public abstract void rollback();
-    public abstract void biometricVerification();
-    public abstract void retrieveVotes();
-    public abstract void updateCount();
-    public abstract void saveReport();
     public abstract ArrayList<String> reportData();
     public abstract ArrayList<String> getElectionForm();
     public abstract ArrayList<String> electionReportData();
-    public abstract void log();
     public abstract void createLog(String message);
     public abstract List<Log> ViewLogs();
-    public abstract void updatePollingStaffAccount(PollingStaff staff);
     public abstract boolean addPollingStaffAccount(PollingStaff staff);
-    public abstract void deactivatePollingStaffAccount(PollingStaff staff);
     public abstract boolean addCandidate(Candidate candidate, String area);
-    //public abstract ArrayList<Candidate> loadCandidateData();
-    //public abstract ArrayList<PollingStaff> loadPollingStaffAssignments();
     public abstract int verifyStaff(String login, String password,String mac_address);
     public abstract int verifyAdmin(String login, String password);
     public abstract List<PollingStationPC> getPollingPCs();
