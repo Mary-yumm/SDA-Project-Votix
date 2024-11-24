@@ -208,12 +208,28 @@ public class AdminMenuController {
     @FXML
     public void update_DeactivaeStaff() {
         staffUpdationBtn();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/UpdateDeactiveStaff.fxml"));
+            AnchorPane addCandidatePane = loader.load();
+            UpdateDeactiveStaffController controller = loader.getController();
+
+            if (controller != null) {
+                System.out.println("setting UpdateDeactiveStaffController");
+                controller.setElectionManagementSystem(this.ems, this.primaryStage);
+            } else {
+                System.out.println("UpdateDeactiveStaffController is null!");
+            }
+            contentPane.getChildren().setAll(addCandidatePane);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void addPollingStaff() {
         pollingStaffBtn();
-        /*try {
+        try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/addPollingStaff.fxml"));
             AnchorPane addCandidatePane = loader.load();
             addPollingStaffController controller = loader.getController();
@@ -228,7 +244,7 @@ public class AdminMenuController {
         }
         catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     @FXML
@@ -264,7 +280,7 @@ public class AdminMenuController {
     @FXML
     public void monitorActiveSystems() {
         monitorSystemsBtn(); // Highlight the button
-        /*try {
+        try {
             // Load the MonitorActiveSystems.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/MonitorActiveSystems.fxml"));
             AnchorPane monitorSystemsPane = loader.load();
@@ -284,14 +300,14 @@ public class AdminMenuController {
             contentPane.getChildren().setAll(monitorSystemsPane);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
 
     @FXML
     public void viewLogs() {
         viewLogsBtn();
-        /*try {
+        try {
             // Load the ViewLogs.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ViewLog.fxml"));
             AnchorPane viewLogsPane = loader.load();
@@ -311,7 +327,7 @@ public class AdminMenuController {
             contentPane.getChildren().setAll(viewLogsPane);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
 

@@ -25,7 +25,6 @@ import java.util.List;
 
 public class addPollingStaffController {
     public AnchorPane contentPane;
-    public Button backbtn;
     public TextField staffid;
     public TextField staffname;
     public ComboBox<Integer> stationid;

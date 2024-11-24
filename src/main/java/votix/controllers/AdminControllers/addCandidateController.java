@@ -29,7 +29,6 @@ public class addCandidateController {
     public ImageView backArrow;
     private AdminElectionManagementSystem ems;
     private Stage stage;
-    private Scene scene;
     @FXML
     private AnchorPane contentPane;
 

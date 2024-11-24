@@ -9,7 +9,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #385B4F;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.MainPageController">
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" style="-fx-background-color: #385B4F;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.MainPageController">
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="684.0" layoutX="199.0" layoutY="198.0" stroke="BLACK" strokeType="INSIDE" width="1522.0" />
 
    <!-- Admin Button -->
@@ -63,4 +64,4 @@
       </image>
    </ImageView>
    <Line endX="1410.199951171875" layoutX="305.0" layoutY="198.0" startX="-100.0" stroke="#df2a2a" strokeWidth="10.0" />
-</Pane>
+</AnchorPane>

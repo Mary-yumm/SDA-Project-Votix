@@ -35,8 +35,8 @@ public class DEMO extends Application {
         double screenHeight = screen.getVisualBounds().getHeight();
 
         // Set the scene size to fit the screen (for example, 80% of the screen size)
-         stage.setWidth(screenWidth);   // Set 80% of screen width
-         stage.setHeight(screenHeight); // Set 80% of screen height
+        stage.setWidth(screenWidth);   // Set 80% of screen width
+        stage.setHeight(screenHeight); // Set 80% of screen height
 
         // Main Page Controller
         MainPageController controller = fxmlLoader.getController();
@@ -54,6 +54,7 @@ public class DEMO extends Application {
         // Show the stage
         stage.show();
     }
+
 
     public static void main(String[] args) throws ClassNotFoundException {
         // Launch the JavaFX application (already done in start)

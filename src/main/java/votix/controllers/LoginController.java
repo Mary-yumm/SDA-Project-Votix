@@ -1,10 +1,10 @@
-
 package votix.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import votix.controllers.AdminControllers.AdminMenuController;
 import votix.controllers.PollingPC.*;
@@ -26,6 +26,7 @@ public class LoginController {
 
     @FXML
     public Button LoginButton;
+    public AnchorPane contentPane;
 
     @FXML
     private TextField usernameField;
@@ -50,8 +51,12 @@ public class LoginController {
 
     @FXML
     private void handleLogin() {
+        System.out.println("Login button clicked!");
+
 
         if (Objects.equals(getRole(), "staff")) {
+            System.out.println("Login button for staff clicked!");
+
             staffLogin();
         }
         else if (Objects.equals(getRole(), "admin")) {
@@ -126,6 +131,8 @@ public class LoginController {
                 } else {
                     System.out.println("Primary stage is null.");
                 }
+                contentPane.getChildren().setAll(menu);
+
             } else {System.out.println("Invalid credentials");}
 
         } catch (IOException e) {
@@ -153,81 +160,43 @@ public class LoginController {
             e.printStackTrace();
         }
     }
-    /*  private String getCurrentMacAddress()
-    {
+    private String getCurrentMacAddress() {
         try {
-            // Get all network interfaces (returns Enumeration)
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
 
             while (networkInterfaces.hasMoreElements()) {
                 NetworkInterface networkInterface = networkInterfaces.nextElement();
 
-                // Skip non-physical interfaces (e.g., loop back, docker)
+                // Skip loopback and down interfaces
                 if (networkInterface.isLoopback() || !networkInterface.isUp()) {
                     continue;
                 }
 
-                // Ensure networkInterface has a MAC address
-                byte[] mac = networkInterface.getHardwareAddress();
-                if (mac != null) {
-                    StringBuilder macAddress = new StringBuilder();
-                    for (byte macByte : mac) {
-                        macAddress.append(String.format("%02X:", macByte));
-                    }
+                // Match Wi-Fi adapter by its name or description (Windows typically uses "Wi-Fi")
+                String displayName = networkInterface.getDisplayName().toLowerCase();
+                if (displayName.contains("wlan0") || displayName.contains("wi-fi") || displayName.contains("wireless")) {
+                    byte[] mac = networkInterface.getHardwareAddress();
 
-                    // Remove trailing colon
-                    if (!macAddress.isEmpty()) {
-                        macAddress.setLength(macAddress.length() - 1);
-                    }
+                    if (mac != null) {
+                        StringBuilder macAddress = new StringBuilder();
+                        for (byte macByte : mac) {
+                            macAddress.append(String.format("%02X:", macByte));
+                        }
+                        // Remove the trailing colon
+                        if (macAddress.length() > 0) {
+                            macAddress.setLength(macAddress.length() - 1);
+                        }
 
-                    System.out.println("Detected MAC Address: " + macAddress);
-                    return macAddress.toString();
+                        System.out.println("Wi-Fi MAC Address: " + macAddress);
+                        return macAddress.toString();
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Unable to retrieve MAC address.");
+        System.out.println("Unable to retrieve Wi-Fi MAC address.");
         return null;
-    }
-    */
-    private String getCurrentMacAddress() {
-      try {
-          Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-
-          while (networkInterfaces.hasMoreElements()) {
-              NetworkInterface networkInterface = networkInterfaces.nextElement();
-
-              // Skip loopback and down interfaces
-              if (networkInterface.isLoopback() || !networkInterface.isUp()) {
-                  continue;
-              }
-
-              // Match Wi-Fi adapter by its name or description (Windows typically uses "Wi-Fi")
-              String displayName = networkInterface.getDisplayName().toLowerCase();
-              if (displayName.contains("wi-fi") || displayName.contains("wireless")) {
-                  byte[] mac = networkInterface.getHardwareAddress();
-
-                  if (mac != null) {
-                      StringBuilder macAddress = new StringBuilder();
-                      for (byte macByte : mac) {
-                          macAddress.append(String.format("%02X:", macByte));
-                      }
-                      // Remove the trailing colon
-                      if (macAddress.length() > 0) {
-                          macAddress.setLength(macAddress.length() - 1);
-                      }
-
-                      System.out.println("Wi-Fi MAC Address: " + macAddress);
-                      return macAddress.toString();
-                  }
-              }
-          }
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
-      System.out.println("Unable to retrieve Wi-Fi MAC address.");
-      return null;
     }
 
 
