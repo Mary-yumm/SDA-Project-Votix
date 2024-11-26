@@ -1,205 +1,206 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ElectionReportController">
-   <children>
-      <!-- Header Section -->
-      <Pane prefHeight="1314.0" prefWidth="1920.0" style="-fx-background-color: #385b4f;">
-         <!-- Back Arrow on the Left -->
-         <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="70.0" layoutY="38.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@../../assets/back-arrow.png" />
-            </image>
-         </ImageView>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" styleClass="root" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ElectionReportController">
 
-         <!-- Heading Text in the Center -->
-         <Text fill="#e4e4e4" fontSmoothingType="LCD" layoutX="785.0" layoutY="80.0" style="-fx-font-size: 36px;" text="Election Area Report" textAlignment="CENTER">
+   <!-- Title Bar -->
+   <AnchorPane prefHeight="100.0" prefWidth="1500.0" styleClass="title-bar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Label styleClass="title-bar-text" text="Election Area Report" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0" />
+      <!-- ImageView with hand cursor on hover -->
+      <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="50.0" layoutY="23.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+         <Image url="@../../assets/back-arrow.png" />
+      </ImageView>
+   </AnchorPane>
+
+   <!-- Content Section -->
+   <Pane layoutY="97.0" prefHeight="741.0" prefWidth="1500.0">
+
+      <!-- Election Info -->
+      <Label layoutX="88.0" layoutY="29.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Election Date:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="electionDate" layoutX="286.0" layoutY="29.0" style="-fx-font-size: 24px;" text="12-04-2024" />
+
+      <Label layoutX="85.0" layoutY="97.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="National / Provisional:" />
+      <ChoiceBox fx:id="napa" layoutX="369.0" layoutY="83.0" prefHeight="35.0" prefWidth="253.0" styleClass="combo-box" />
+
+      <Label layoutX="88.0" layoutY="169.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Enter Area:" />
+      <TextField fx:id="areaField" layoutX="250.0" layoutY="161.0" prefHeight="47.0" prefWidth="176.0" promptText="Enter Area" style="-fx-font-size: 20px;" />
+
+      <Button fx:id="searchButton" layoutX="619.0" layoutY="161.0" minHeight="5.0" minWidth="5.0" onMouseClicked="#handleSearch" prefHeight="48.0" prefWidth="124.0" style="-fx-background-color: #385b4f; -fx-text-fill: white;" styleClass="submit-button" stylesheets="@../../style/style.css" text="Search">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
+
+      <!-- Candidate Info Section -->
+      <VBox layoutX="85.0" layoutY="230.0" prefHeight="424.0" prefWidth="401.0" spacing="20.0" styleClass="form-section" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="230.0">
+
+      <Text layoutX="230.0" layoutY="311.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Winning Candidate" />
+      <Label layoutX="64.0" layoutY="368.0" text="Name:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="winnerName" layoutX="192.0" layoutY="359.0" promptText="Winner Name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="68.0" layoutY="467.0" text="Party:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="winnerParty" layoutX="192.0" layoutY="459.0" promptText="Winner Party">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="32.0" layoutY="572.0" text="Total Votes:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="winnerVotes" layoutX="192.0" layoutY="563.0" promptText="Winner Total Votes">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      </VBox>
+
+      <VBox layoutX="500.0" layoutY="230.0" prefHeight="424.0" prefWidth="401.0" spacing="20.0" styleClass="form-section" AnchorPane.leftAnchor="85.0" AnchorPane.topAnchor="230.0">
+
+      <Text layoutX="760.0" layoutY="310.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Losing Candidate" />
+      <Label layoutX="599.0" layoutY="368.0" text="Name:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="loserName" layoutX="731.0" layoutY="360.0" promptText="Loser Name">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="598.0" layoutY="468.0" text="Party:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="loserParty" layoutX="731.0" layoutY="459.0" promptText="Loser Party">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      <Label layoutX="578.0" layoutY="572.0" text="Total Votes:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="loserVotes" layoutX="731.0" layoutY="563.0" prefHeight="47.0" prefWidth="262.0" promptText="Loser Total Votes">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextField>
+      </VBox>
+
+      <!-- Summary Section -->
+      <VBox layoutX="960.0" layoutY="148.0" prefHeight="424.0" prefWidth="494.0" spacing="20.0" styleClass="form-section" AnchorPane.leftAnchor="988.0" AnchorPane.topAnchor="148.0">
+         <Text fill="#385b4f" layoutX="270.0" layoutY="311.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Summary">
             <font>
-               <Font size="42.0" />
+               <Font size="24.0" />
             </font></Text>
-         <Line endX="2236.0" endY="1.52587890625E-5" layoutX="-316.0" layoutY="130.0" startX="-104.00001525878906" startY="1.33514404296875E-5" stroke="RED" strokeWidth="5.0" />
-      </Pane>
 
-      <!-- Content Section -->
-      <Pane layoutY="134.0">
-         <children>
-            <!-- Background -->
-            <Rectangle fill="#ffffff" height="1080.0" layoutY="-6.0" style="-fx-font-size: 24px;" width="1920.0" />
+         <VBox alignment="CENTER_LEFT" layoutX="1093.0" layoutY="229.0" prefHeight="344.0" prefWidth="406.0" spacing="15.0">
 
-            <!-- Election Info -->
-            <Label layoutX="72.0" layoutY="111.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Election Date:">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <Label fx:id="electionDate" layoutX="259.0" layoutY="111.0" style="-fx-font-size: 24px;" text="12-04-2024" />
+            <HBox spacing="10.0">
+               <Label style="-fx-font-size: 24px;" text="Area Name:" textFill="#5e5a5a">
+                  <font>
+                     <Font name="System Bold" size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="areaNameDisplay" prefHeight="30.0" prefWidth="239.0" style="-fx-font-size: 24px;" text="---">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+            </HBox>
+            <HBox spacing="10.0">
+               <Label prefHeight="30.0" prefWidth="308.0" style="-fx-font-size: 24px;" text="Total Registered Voters:" textFill="#5e5a5a">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="totalVotes" prefHeight="30.0" prefWidth="119.0" style="-fx-font-size: 24px;" text="---">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+            </HBox>
+            <HBox spacing="10.0">
+               <Label style="-fx-font-size: 24px;" text="Total Votes Cast:" textFill="#5e5a5a">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="votesCasted" prefHeight="30.0" prefWidth="177.0" style="-fx-font-size: 24px;" text="---">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+            </HBox>
+            <HBox spacing="10.0">
+               <Label style="-fx-font-size: 24px;" text="Male Votes Cast:" textFill="#5e5a5a">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="maleVotes" prefHeight="30.0" prefWidth="183.0" style="-fx-font-size: 24px;" text="---">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+            </HBox>
+            <HBox spacing="10.0">
+               <Label style="-fx-font-size: 24px;" text="Female Votes Cast:" textFill="#5e5a5a">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="femaleVotes" prefHeight="30.0" prefWidth="157.0" style="-fx-font-size: 24px;" text="---">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+            </HBox>
+            <HBox spacing="10.0">
+               <Label style="-fx-font-size: 24px;" text="Voter Turnout:" textFill="#5e5a5a">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+               <Label fx:id="voterPercentage" prefHeight="30.0" prefWidth="187.0" style="-fx-font-size: 24px;" text="---">
+                  <font>
+                     <Font size="18.0" />
+                  </font>
+               </Label>
+            </HBox>
+         </VBox>
+      </VBox>
 
-            <Label layoutX="72.0" layoutY="187.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="National / Provisional:" />
-            <ChoiceBox fx:id="napa" layoutX="311.0" layoutY="187.0" prefHeight="35.0" prefWidth="253.0" style="-fx-font-size: 10px;" />
-
-            <Label layoutX="72.0" layoutY="271.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Enter Area:" />
-            <TextField fx:id="areaField" layoutX="200.0" layoutY="271.0" prefHeight="32.0" prefWidth="223.0" promptText="Enter Area" style="-fx-font-size: 20px;" />
-
-            <Button fx:id="searchButton" layoutX="438.0" layoutY="268.0" minHeight="5.0" minWidth="5.0" onMouseClicked="#handleSearch" prefHeight="48.0" prefWidth="124.0" style="-fx-background-color: #385b4f; -fx-text-fill: white;" styleClass="submit-button" stylesheets="@../../style/style.css" text="Search">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Button>
-
-            <!-- Candidate Info Section -->
-            <Text layoutX="199.0" layoutY="426.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Wining Candidate" />
-            <Label layoutX="137.0" layoutY="494.0" text="Name:">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <TextField fx:id="winnerName" layoutX="237.0" layoutY="494.0" promptText="Winner Name">
-               <font>
-                  <Font size="18.0" />
-               </font></TextField>
-            <Label layoutX="137.0" layoutY="594.0" text="Party:">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <TextField fx:id="winnerParty" layoutX="237.0" layoutY="594.0" promptText="Winner Party">
-               <font>
-                  <Font size="18.0" />
-               </font></TextField>
-            <Label layoutX="137.0" layoutY="698.0" text="Total Votes:">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <TextField fx:id="winnerVotes" layoutX="237.0" layoutY="698.0" promptText="Winner Total Votes">
-               <font>
-                  <Font size="18.0" />
-               </font></TextField>
-
-            <Text layoutX="683.0" layoutY="427.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Losing Candidate" />
-            <Label layoutX="653.0" layoutY="494.0" text="Name:">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <TextField fx:id="loserName" layoutX="766.0" layoutY="488.0" promptText="Loser Name">
-               <font>
-                  <Font size="18.0" />
-               </font></TextField>
-            <Label layoutX="660.0" layoutY="594.0" text="Party:">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <TextField fx:id="loserParty" layoutX="766.0" layoutY="588.0" promptText="Loser Party">
-               <font>
-                  <Font size="18.0" />
-               </font></TextField>
-            <Label layoutX="636.0" layoutY="704.0" text="Total Votes:">
-               <font>
-                  <Font size="18.0" />
-               </font></Label>
-            <TextField fx:id="loserVotes" layoutX="766.0" layoutY="698.0" promptText="Loser Total Votes">
-               <font>
-                  <Font size="18.0" />
-               </font></TextField>
-            <Rectangle arcHeight="30" arcWidth="30" fill="#f1f7f1" height="606.0" layoutX="1140.0" layoutY="251.0" stroke="#166145bf" strokeWidth="2" width="528.0" />
-            <VBox alignment="CENTER_LEFT" layoutX="1210.0" layoutY="403.0" prefHeight="382.0" prefWidth="361.0" spacing="15.0">
-               <children>
-                  <HBox spacing="10.0">
-                     <Label style="-fx-font-size: 24px;" text="Area Name:">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="areaNameDisplay" style="-fx-font-size: 24px;" text="---">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                  </HBox>
-                  <HBox spacing="10.0">
-                     <Label style="-fx-font-size: 24px;" text="Total Registered Voters:">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="totalVotes" style="-fx-font-size: 24px;" text="---">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                  </HBox>
-                  <HBox spacing="10.0">
-                     <Label style="-fx-font-size: 24px;" text="Total Votes Cast:">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="votesCasted" style="-fx-font-size: 24px;" text="---">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                  </HBox>
-                  <HBox spacing="10.0">
-                     <Label style="-fx-font-size: 24px;" text="Male Votes Cast:">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="maleVotes" style="-fx-font-size: 24px;" text="---">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                  </HBox>
-                  <HBox spacing="10.0">
-                     <Label style="-fx-font-size: 24px;" text="Female Votes Cast:">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="femaleVotes" style="-fx-font-size: 24px;" text="---">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                  </HBox>
-                  <HBox spacing="10.0">
-                     <Label style="-fx-font-size: 24px;" text="Voter Turnout:">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                     <Label fx:id="voterPercentage" style="-fx-font-size: 24px;" text="---">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                     </Label>
-                  </HBox>
-               </children>
-            </VBox>
-            <Label layoutX="1307.0" layoutY="269.0" prefHeight="90.0" prefWidth="195.0" style="-fx-font-size: 40px; -fx-font-weight: bold; -fx-text-fill: #2E4A3C;" text="Summary">
-               <font>
-                  <Font size="10.0" />
-               </font></Label>
-
-            <!-- Summary Box -->
-            <Group layoutX="1175.0" layoutY="353.0">
-               <children>
-                  <Line endX="220.4644775390625" endY="-60.79998779296875" layoutX="233.0" layoutY="63.0" startX="-225.0426025390625" startY="-60.092864990234375" />
-               </children>
-            </Group>
-         </children>
-      </Pane>
-   </children>
+   </Pane>
 </Pane>

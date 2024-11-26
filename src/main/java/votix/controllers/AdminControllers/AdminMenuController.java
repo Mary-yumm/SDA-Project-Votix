@@ -241,7 +241,7 @@ public class AdminMenuController {
         // Load the FXML file
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionReport.fxml"));
-            VBox electionreport = loader.load();
+            Pane electionreport = loader.load();
             ElectionReportController controller = loader.getController();
             // Ensure that the controller is correctly initialized
             if (controller != null) {
