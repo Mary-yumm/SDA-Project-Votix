@@ -943,12 +943,6 @@ public ArrayList<Integer> getStations(){
     }
 
 
-    @Override
-    public void ShowPollingStation() {
-
-    }
-
-
     public ArrayList<String> fetchResult()
     {
         ArrayList<String> partyNames = new ArrayList<>();

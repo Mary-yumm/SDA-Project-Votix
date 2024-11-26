@@ -58,7 +58,7 @@
             </Label>
             <Label fx:id="electionDate" layoutX="254.0" layoutY="164.0" style="-fx-font-size: 24px;" text="12-04-2024" />
             <Label layoutX="38.0" layoutY="232.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="National / Provisional:" />
-            <ChoiceBox fx:id="electionType" layoutX="294.0" layoutY="232.0" minHeight="2.0" minWidth="2.0" prefHeight="27.0" prefWidth="199.0" style="-fx-font-size: 10px;" />
+            <ChoiceBox fx:id="napa" layoutX="294.0" layoutY="232.0" minHeight="2.0" minWidth="2.0" prefHeight="27.0" prefWidth="199.0" style="-fx-font-size: 10px;" />
             <Label layoutX="38.0" layoutY="311.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Area" />
             <TextField fx:id="areaField" layoutX="98.0" layoutY="305.0" minHeight="2.0" minWidth="2.0" prefColumnCount="0" prefHeight="40.0" prefWidth="20.0" promptText="Enter Area" style="-fx-font-size: 20px;" />
             <Label layoutX="676.0" layoutY="724.0" style="-fx-font-size: 24px;" text="Registered Voters:">
@@ -111,7 +111,7 @@
                   <TableColumn fx:id="stationIdColumn1" prefWidth="349.59999694824216" text="Station ID" />
                </columns>
             </TableView>
-            <TableView fx:id="FormTable" layoutX="619.0" layoutY="335.0" prefHeight="354.0" prefWidth="772.0">
+            <TableView fx:id="formTable" layoutX="619.0" layoutY="335.0" prefHeight="354.0" prefWidth="772.0">
                <columns>
                   <TableColumn fx:id="cand" prefWidth="251.20001220703125" text="Candidate Name" />
                   <TableColumn fx:id="party" prefWidth="319.199951171875" text="Party Name" />

@@ -170,10 +170,6 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
         // Implementation to create a log entry
     }
 
-    @Override
-    public List<Log> viewLogs() {
-        return List.of();
-    }
 
     public void searchStaffByStaffName() {
       //  return ph.getStaffByName();

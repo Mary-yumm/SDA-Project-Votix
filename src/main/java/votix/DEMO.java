@@ -17,7 +17,6 @@ public class DEMO extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
 
-        PersistenceHandler handler = new mysql("jdbc:mysql://100.91.228.86/votix", "username", "password");
 
         // Load the FXML file
         FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/mainpage.fxml"));
