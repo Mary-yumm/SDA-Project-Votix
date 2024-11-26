@@ -17,21 +17,22 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="contentPane" alignment="CENTER" prefHeight="451.0" prefWidth="573.0" spacing="20" style="-fx-background-color: #385B4F;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ElectionResultController">
-   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="835.0" prefWidth="1500.0" style="-fx-background-color: #FFFFFF;">
+<VBox alignment="CENTER" prefHeight="451.0" prefWidth="573.0" spacing="20" style="-fx-background-color: #385B4F;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="votix.controllers.AdminControllers.ElectionResultController">
+   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="1920.0" style="-fx-background-color: #FFFFFF;">
       <children>
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="112.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="1500.0" />
+         <Rectangle arcHeight="30" arcWidth="30" fill="#dce5dc47" height="186.0" layoutX="229.0" layoutY="136.0" stroke="#f4f7f6bf" strokeWidth="2" width="1448.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#385b4f" height="112.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="1920.0" />
          <Text fill="#e4e4e4" layoutX="598.0" layoutY="66.0" style="-fx-font-size: 48px;" styleClass="title-bar-text" text="Election Result" />
-         <ChoiceBox fx:id="napa" layoutX="1237.0" layoutY="159.0" onMouseClicked="#hanlderdropdown" prefHeight="25.0" prefWidth="190.0" />
-         <Label layoutX="38.0" layoutY="167.0" prefHeight="27.0" prefWidth="140.0" text="Election Date:" textAlignment="CENTER">
+         <ChoiceBox fx:id="napa" layoutX="1508.0" layoutY="157.0" onMouseClicked="#hanlderdropdown" prefHeight="28.0" prefWidth="117.0" />
+         <Label layoutX="262.0" layoutY="158.0" prefHeight="27.0" prefWidth="140.0" text="Election Date:" textAlignment="CENTER">
             <font>
                <Font name="System Bold" size="18.0" />
             </font>
          </Label>
          <Text layoutX="57.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-         <AnchorPane layoutX="75.0" layoutY="316.0" prefHeight="511.0" prefWidth="1361.0">
+         <AnchorPane layoutX="60.0" layoutY="350.0" prefHeight="554.0" prefWidth="1799.0">
             <children>
-               <TableView fx:id="Table" layoutX="-2.0" layoutY="29.0" prefHeight="505.0" prefWidth="1363.0">
+               <TableView fx:id="Table" layoutX="-7.0" layoutY="-4.8" prefHeight="562.0" prefWidth="1799.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-5.0">
                   <columns>
                      <TableColumn fx:id="areacol" prefWidth="362.3999481201172" text="Area Name" />
                      <TableColumn fx:id="candcol" prefWidth="425.5999755859375" text="Candidate Name" />
@@ -41,16 +42,16 @@
                </TableView>
             </children>
          </AnchorPane>
-         <Label layoutX="1110.0" layoutY="163.0" text="National / Provisional" />
-         <Button fx:id="AreaSearch" layoutX="357.0" layoutY="239.0" mnemonicParsing="false" onMouseClicked="#handleAreaSearch" prefHeight="28.0" prefWidth="62.0" text="Search" />
-         <Button fx:id="CandSearch" layoutX="770.0" layoutY="239.0" mnemonicParsing="false" onMouseClicked="#handleCandSearch" prefHeight="28.0" prefWidth="62.0" text="Search" />
-         <Button fx:id="PartySearch" layoutX="1156.0" layoutY="241.0" mnemonicParsing="false" onMouseClicked="#handlePartySearch" prefHeight="27.0" prefWidth="62.0" text="Search" />
-         <Line endX="1426.0" endY="7.62939453125E-6" layoutX="74.0" layoutY="109.0" startX="-100.0" stroke="RED" strokeWidth="5.0" />
-         <TextField fx:id="PartyName" layoutX="999.0" layoutY="242.0" promptText="Party Name" />
-         <TextField fx:id="CandName" layoutX="618.0" layoutY="242.0" promptText="Candidate Name" />
-         <TextField fx:id="AreaName" layoutX="196.0" layoutY="242.0" promptText="Area Name" />
-         <Label fx:id="datee" layoutX="244.0" layoutY="171.0" text="Datee" />
-         <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="57.0" layoutY="25.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
+         <Label layoutX="1369.0" layoutY="161.0" text="National / Provisional" />
+         <Button fx:id="AreaSearch" layoutX="426.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handleAreaSearch" prefHeight="28.0" prefWidth="264.0" style="-fx-background-color: #385b4f;" styleClass="submit-button" text="Search By Area" />
+         <Button fx:id="CandSearch" layoutX="812.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handleCandSearch" prefHeight="28.0" prefWidth="264.0" style="-fx-background-color: #385b4f;" styleClass="submit-button" text="Search By Candidate" />
+         <Button fx:id="PartySearch" layoutX="1214.0" layoutY="269.0" mnemonicParsing="false" onMouseClicked="#handlePartySearch" prefHeight="27.0" prefWidth="264.0" style="-fx-background-color: #385b4f;" styleClass="submit-button" text="Search By Party" />
+         <Line endX="1846.0" endY="7.62939453125E-6" layoutX="74.0" layoutY="109.0" startX="-100.0" stroke="RED" strokeWidth="5.0" />
+         <TextField fx:id="PartyName" layoutX="1215.0" layoutY="229.0" prefHeight="26.0" prefWidth="264.0" promptText="Party Name" />
+         <TextField fx:id="CandName" layoutX="812.0" layoutY="229.0" prefHeight="26.0" prefWidth="264.0" promptText="Candidate Name" />
+         <TextField fx:id="AreaName" layoutX="426.0" layoutY="229.0" prefHeight="26.0" prefWidth="264.0" promptText="Area Name" />
+         <Label fx:id="datee" layoutX="408.0" layoutY="162.0" text="Datee" />
+         <ImageView fx:id="backArrow" fitHeight="56.0" fitWidth="56.0" layoutX="50.0" layoutY="23.0" onMouseClicked="#returnToMenu" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../assets/back-arrow.png" />
             </image>

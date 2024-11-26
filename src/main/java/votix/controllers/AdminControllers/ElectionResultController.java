@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -13,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,8 +28,6 @@ import java.util.ArrayList;
 
 public class ElectionResultController {
 
-    public ImageView backArrow;
-    public VBox contentPane;
     @FXML
     private Button AreaSearch;
     @FXML
@@ -53,7 +54,11 @@ public class ElectionResultController {
     @FXML
     private Label datee;
     @FXML
-    private ChoiceBox<?> napa;
+    private ChoiceBox<String> napa;
+
+    @FXML
+    public ImageView backArrow;
+
 
     private AdminElectionManagementSystem ems;
     private Stage Primarystage;
@@ -117,10 +122,7 @@ public class ElectionResultController {
 
     @FXML
     void hanlderdropdown(MouseEvent event) {
-        // Assuming this is for filtering National/Provincial
-        String selected = napa.getValue().toString();
-        // Add logic to filter based on national/provincial selection
-        // You'll need to modify your database queries to include this filter
+        loadTableData();
 
     }
     // Add this method to clear searches
@@ -133,6 +135,13 @@ public class ElectionResultController {
 
     @FXML
     public void initialize() {
+        // Initialize the choice box for National/Provincial
+        ObservableList<String> np = FXCollections.observableArrayList(
+                "National Assembly", "Provincial Assembly");
+        napa.setItems(np);
+        napa.setValue("National Assembly");
+
+        backArrow.setCursor(Cursor.HAND);
         // Initialize the table columns
         areacol.setCellValueFactory(new PropertyValueFactory<>("areaName"));
         candcol.setCellValueFactory(new PropertyValueFactory<>("candidateName"));
@@ -158,9 +167,7 @@ public class ElectionResultController {
             }
         });
 
-        // Initialize the choice box for National/Provincial
-       // napa.getItems().addAll("National", "Provincial");
-        //napa.setValue("National"); // Set default value
+
 
     }
     // Add a method to handle combined search
@@ -175,18 +182,27 @@ public class ElectionResultController {
         updateTableData(results);
     }*/
     private void loadTableData() {
+
+        String Napa = (napa.getValue() != null) ? napa.getValue() : "Default Value";
+        System.out.println("Napa ChoiceBox: " + napa.getValue());
+        if (Napa.equals("National Assembly"))
+            Napa = "NA";
+        else if (Napa.equals("Provincial Assembly"))
+            Napa = "PA";
+
         if (ems == null) {
             System.out.println("EMS is null!");
             return;
         }
 
         try {
-            ArrayList<ElectionResult> results = ems.fetchElectionResults();
+            ArrayList<ElectionResult> results = ems.fetchElectionResults(Napa);
             if (results == null) {
                 System.out.println("No results returned!");
                 return;
             }
-
+            // Example: Set the current date during initialization
+            displayDate(LocalDate.now());
             ObservableList<ElectionResult> electionList = FXCollections.observableArrayList(results);
             Table.setItems(electionList);
 
@@ -196,6 +212,32 @@ public class ElectionResultController {
                 //System.out.println(result);
             //}
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void returnToMenu(MouseEvent actionEvent) {
+        try {
+            System.out.println("Returning to the Admin Menu...");
+
+            // Load the FXML file for the Admin Menu
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
+            AnchorPane adminMenuPane = loader.load();
+
+            // Get the controller for the Admin Menu
+            AdminMenuController controller = loader.getController();
+
+            if (controller != null) {
+                System.out.println("Admin Menu Controller set.");
+                // Pass required data to the Admin Menu controller
+                controller.setElectionManagementSystem(this.ems);
+                controller.setPrimaryStage(this.Primarystage);
+            }
+
+            // Set the new pane as the scene's root
+            Primarystage.getScene().setRoot(adminMenuPane);
+        } catch (IOException e) {
+            System.out.println("Error loading Admin Menu.");
             e.printStackTrace();
         }
     }
@@ -218,33 +260,5 @@ public class ElectionResultController {
 
     public void setPrimarystage(Stage primarystage) {
         this.Primarystage = primarystage;
-    }
-
-    public void returnToMenu(MouseEvent mouseEvent) {
-
-       try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
-            AnchorPane addCandidatePane = loader.load();
-            AdminMenuController controller = loader.getController();
-
-            // Check if controller is not null and set EMS and primaryStage
-            if (controller != null) {
-                System.out.println("setting admin");
-                controller.setElectionManagementSystem(this.ems);  // Pass the ems instance
-                controller.setPrimaryStage(this.Primarystage);      // Pass the primaryStage instance
-            }
-
-            // Update contentPane
-            contentPane.getChildren().setAll(addCandidatePane);
-            contentPane.requestLayout();  // Request a layout refresh
-
-
-            System.out.println(contentPane);
-            System.out.println("contentPane visible: " + contentPane.isVisible());
-            System.out.println("contentPane parent: " + contentPane.getParent());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

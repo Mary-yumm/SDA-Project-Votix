@@ -104,23 +104,23 @@ public class addCandidateController {
                         boolean addstatus = ems.addCandidate(cand, area.getValue());
                         if (addstatus) {
                             //added successfully
-                            showPopUPAddedCand(this.stage);
+                            showPopUPAddedCand();
                         }
                     } else {
                         System.out.println("Candidate is not eligible");
-                        showErrorMessage(this.stage, "Candidate is not eligible");
+                        showErrorMessage("Candidate is not eligible");
                     }
                 }else{
-                    showErrorMessage(this.stage, "Duplicate ID");
+                    showErrorMessage("Duplicate ID");
                 }
             }else{
                 //incorrect data types
-                showErrorMessage(this.stage, "Incorrect Datatype");
+                showErrorMessage("Incorrect Datatype");
             }
         }
         else{
             System.out.println("Empty data fields");
-            showErrorMessage(this.stage, "Empty Fields!");
+            showErrorMessage("Empty Fields!");
         }
     }
 
@@ -185,7 +185,7 @@ public class addCandidateController {
         return true;
     }
 
-    void showPopUPAddedCand(Stage st) throws IOException {
+    void showPopUPAddedCand() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/NewCandidateAdded.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 460, 230);
         Stage stage = new Stage();
@@ -201,7 +201,7 @@ public class addCandidateController {
 
 
 
-    void showErrorMessage(Stage st, String msg) throws IOException {
+    void showErrorMessage(String msg) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/PopUps/ErrorMessage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 404, 180);
         Stage stage = new Stage();
@@ -236,30 +236,24 @@ public class addCandidateController {
             AnchorPane addCandidatePane = loader.load();
             AdminMenuController controller = loader.getController();
 
-            // Check if controller is not null and set EMS and primaryStage
             if (controller != null) {
-                System.out.println("setting admin");
-                controller.setElectionManagementSystem(this.ems);  // Pass the ems instance
-                controller.setPrimaryStage(this.stage);      // Pass the primaryStage instance
+                controller.setElectionManagementSystem(this.ems);
+                controller.setPrimaryStage(this.stage);
+            }
+            if (this.stage.getScene() == null) {
+                Scene scene = new Scene(addCandidatePane);
+                this.stage.setScene(scene);
+            } else {
+                this.stage.getScene().setRoot(addCandidatePane);
             }
 
-            // Update contentPane
-            contentPane.getChildren().setAll(addCandidatePane);
-            contentPane.requestLayout();  // Request a layout refresh
-
-            // Optionally reset the scene if necessary
-            Scene currentScene = this.stage.getScene();
-            if (currentScene != null) {
-                currentScene.setRoot(contentPane);  // Ensure contentPane is the root
-            }
-
-            System.out.println(contentPane);
-            System.out.println("contentPane visible: " + contentPane.isVisible());
-            System.out.println("contentPane parent: " + contentPane.getParent());
+            this.stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
 }

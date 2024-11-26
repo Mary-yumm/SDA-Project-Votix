@@ -12,40 +12,41 @@ import java.io.IOException;
 
 public class AboutController {
 
-    public Button backButton;
-    public AnchorPane contentPane;
-    private Stage primaryStage;
+    public Button BackButton;
+    public AnchorPane contentpane;
     private PersistenceHandler ph;
+    private Stage primaryStage;
 
     @FXML
-    public void handleBackButtonAction(MouseEvent actionEvent) {
-//        try {
-//            // Load the previous screen (MainPage.fxml)
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
-//            AnchorPane menu = loader.load();
-//
-//            // Get the controller of MainPage and set up necessary bindings again
-//            MainPageController mainPageController = loader.getController();
-//            mainPageController.setph(ph);
-//            mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
-//
-//            contentPane.getChildren().setAll(menu);
-//            contentPane.requestLayout();  // Request a layout refresh
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
+    public void HandleBackButtonAction(MouseEvent actionEvent) {
+        try {
+            // Load the previous screen (MainPage.fxml)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
+            AnchorPane menu = loader.load();
 
-    public void setPh(PersistenceHandler ph){
-        this.ph=ph;
+            //Get the controller of MainPage and set up necessary bindings again
+            MainPageController mainPageController = loader.getController();
+            mainPageController.setph(ph);
+            mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
+
+            contentpane.getChildren().setAll(menu);
+            contentpane.requestLayout();  // Request a layout refresh
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     // Set the primary stage so we can use it later for scene switching
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        System.out.println("stage");
     }
+    public PersistenceHandler getPh() {
+        return ph;
+    }
+
+    public void setPh(PersistenceHandler ph) {
+        this.ph = ph;
+    }
+
 }

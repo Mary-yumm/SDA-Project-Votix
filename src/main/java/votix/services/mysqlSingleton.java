@@ -50,18 +50,151 @@ public class mysqlSingleton extends PersistenceHandler {
 
 
     @Override
-    public ArrayList<ElectionResult> fetchElectionResults() {
-            ArrayList<ElectionResult> electionResults = new ArrayList<>();
+    public ArrayList<ElectionResult> getForm(int sID , String areaName, String Napa) {
 
-            try {
+        ArrayList<ElectionResult> temp = new ArrayList<>();
+        String query = "SELECT " +
+                "    CANDIDATE.name, " +
+                "    CANDIDATE.partyName, " +
+                "    ELECTIONRESULT.voteCount " +
+                "FROM " +
+                "    votix.ELECTIONRESULT " +
+                "JOIN " +
+                "    AREA ON ELECTIONRESULT.areaId = AREA.areaId " +
+                "JOIN " +
+                "    CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId " +
+                "JOIN " +
+                "    POLLINGSTATION ON AREA.areaId = POLLINGSTATION.areaId " +
+                "WHERE " +
+                "    AREA.areaName LIKE ? " +
+                "    AND CANDIDATE.naPa LIKE ? " +
+                "    AND POLLINGSTATION.stationId = ? ;";
+
+    try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        stmt.setString(1, "%" + areaName + "%");
+        stmt.setString(2, "%" + Napa + "%");
+        stmt.setInt(3, sID);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            temp.add(new ElectionResult(
+                    areaName,
+                    rs.getString("name"),
+                    rs.getString("partyName"),
+                    rs.getInt("voteCount")
+            ));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return temp;
+
+    }
+
+    @Override
+    public ArrayList<Integer> getStations(String areaName){
+        ArrayList<Integer> temp = new ArrayList<>();
+
+        // Query to fetch election results, joining AREA and CANDIDATE tables
+        String query = "SELECT stationId "
+                + "FROM votix.POLLINGSTATION "
+                + "JOIN AREA ON POLLINGSTATION.areaId = AREA.areaId "
+                + "WHERE areaName LIKE ? ";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, "%" + areaName + "%");
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                temp.add(rs.getInt("stationId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return temp;
+    }
+
+    @Override
+    public ArrayList<ElectionResult> WinnerByArea(String areaName, String napa)
+    {
+        ArrayList<ElectionResult> temp = new ArrayList<>();
+
+        // Query to fetch election results, joining AREA and CANDIDATE tables
+        String query = "SELECT AREA.areaName, CANDIDATE.name, CANDIDATE.partyName, ELECTIONRESULT.voteCount "
+                + "FROM votix.ELECTIONRESULT "
+                + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
+                + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                + "WHERE areaName LIKE ? "
+                + "AND CANDIDATE.naPa LIKE ? "
+                + "ORDER BY ELECTIONRESULT.voteCount DESC "
+                + "LIMIT 2";
+
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setString(1, "%" + areaName + "%");
+                stmt.setString(2, "%" + napa + "%");
+
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    temp.add(new ElectionResult(
+                            rs.getString("areaName"),
+                            rs.getString("name"),
+                            rs.getString("partyName"),
+                            rs.getInt("voteCount")
+                    ));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return temp;
+    }
+
+    public int fetchTotalVotesByArea(String areaName) {
+
+        int totalVotes = 0; // Initialize total votes to 0
+        try {
+            // SQL query to fetch the total votes for areas matching 'Islamabad'
+            String query = "SELECT SUM(ELECTIONRESULT.voteCount) AS totalVotes " +
+                    "FROM votix.ELECTIONRESULT " +
+                    "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId " +
+                    "WHERE AREA.areaName LIKE ? " +
+                    "GROUP BY ELECTIONRESULT.areaId";
+
+            // Prepare the statement
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + areaName + "%");
+
+            // Execute the query and retrieve results
+            ResultSet rs = ps.executeQuery();
+
+            // Check if the result set has at least one row
+            if (rs.next()) {
+                // Retrieve the total votes from the result set
+                totalVotes = rs.getInt("totalVotes");
+            }
+        } catch (SQLException e) {
+            // Print the exception for debugging
+            e.printStackTrace();
+        }
+        return totalVotes; // Return the total votes
+    }
+
+    @Override
+    public ArrayList<ElectionResult> fetchElectionResults(String napa) {
+            ArrayList<ElectionResult> electionResults = new ArrayList<>();
+        System.out.println("In mysql Input napa: " + napa);
+
+        try {
                 // Query to fetch election results, joining AREA and CANDIDATE tables
                 String electionQuery = "SELECT AREA.areaName, CANDIDATE.name, CANDIDATE.partyName, ELECTIONRESULT.voteCount "
                         + "FROM votix.ELECTIONRESULT "
                         + "JOIN AREA ON ELECTIONRESULT.areaId = AREA.areaId "
-                        + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId";
+                        + "JOIN CANDIDATE ON ELECTIONRESULT.candidateId = CANDIDATE.candidateId "
+                        + "WHERE CANDIDATE.naPa LIKE ? ";
 
                 // Prepare the SQL statement
                 PreparedStatement electionPs = conn.prepareStatement(electionQuery);
+                electionPs.setString(1, "%" + napa + "%");
 
                 // Execute the query
                 ResultSet electionRs = electionPs.executeQuery();
@@ -219,6 +352,38 @@ public class mysqlSingleton extends PersistenceHandler {
         return candidates;
     }
 
+    @Override
+    public List<Object[]> getCandidateVotes() {
+        String query = " SELECT candidateId, voteCount FROM ELECTIONRESULT";
+
+        List<Object[]> resultList = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int candidateId = rs.getInt("candidateId");
+                int voteCount = rs.getInt("voteCount");
+
+                // Check if candidate already exists in the list
+                boolean found = false;
+                for (Object[] entry : resultList) {
+                    if ((int) entry[0] == candidateId) {
+                        entry[1] = (int) entry[1] + voteCount;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    resultList.add(new Object[] { candidateId, voteCount });
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resultList;  // Return the list of distinct candidates with total votes
+    }
 
     @Override
         public ArrayList<Object> getStaffAssignments() {
@@ -700,7 +865,7 @@ public class mysqlSingleton extends PersistenceHandler {
         }
     }
 
-
+    // Helper method to fetch PollingStaff by stationId
     private ArrayList<PollingStaff> fetchPollingStaff(int stationId) throws SQLException {
         ArrayList<PollingStaff> staffList = new ArrayList<>();
 
@@ -723,7 +888,7 @@ public class mysqlSingleton extends PersistenceHandler {
         return staffList;
     }
 
-
+    // Helper method to fetch PollingStationPCs by stationId
     private ArrayList<PollingStationPC> fetchPollingStationPCs(int stationId) throws SQLException {
         ArrayList<PollingStationPC> pcList = new ArrayList<>();
 
@@ -744,7 +909,7 @@ public class mysqlSingleton extends PersistenceHandler {
         return pcList;
     }
 
-
+    // Method to fetch voters for a specific polling station
     private ArrayList<Voter> fetchVoters(int stationID) {
         ArrayList<Voter> votersList = new ArrayList<>();
         String voterQuery = "SELECT * FROM VOTER WHERE stationId = ?";
@@ -821,12 +986,6 @@ public ArrayList<Integer> getStations(){
         }
 
         return voter; // Return the found voter or null if not found
-    }
-
-
-    @Override
-    public void ShowPollingStation() {
-
     }
 
 

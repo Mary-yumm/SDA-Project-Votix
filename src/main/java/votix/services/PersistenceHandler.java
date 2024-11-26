@@ -1,6 +1,10 @@
 package votix.services;
 
 
+import votix.models.Candidate;
+import votix.models.ElectionResult;
+import votix.models.PollingStaff;
+import votix.models.PollingStation;
 import votix.models.*;
 
 import java.util.ArrayList;
@@ -49,7 +53,11 @@ public abstract class PersistenceHandler {
     public abstract void activatePollingStaffAccount(int id);
     public abstract void setSystemInactive(int systemID);
     public abstract void setSystemActive(int systemID);
+    public abstract ArrayList<ElectionResult> WinnerByArea(String areaName, String napa);
+    public abstract int fetchTotalVotesByArea(String areaName);
 
+    public abstract ArrayList<ElectionResult> getForm(int sID, String areaName, String Napa);
+    public abstract List<Object[]> getCandidateVotes();
     public abstract String fetchAreaName(int areaID);
 }
 

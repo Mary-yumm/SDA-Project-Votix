@@ -1,11 +1,9 @@
 package votix.services;
 
-import votix.models.Area;
-import votix.models.Candidate;
-import votix.models.PollingStation;
-import votix.models.Voter;
+import votix.models.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PollingPCElectionManagementSystem implements ElectionManagementSystem {
     private PersistenceHandler ph;
@@ -91,6 +89,11 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     }
 
     @Override
+    public ArrayList<Integer> getStations(String searchArea) {
+        return null;
+    }
+
+    @Override
     public ArrayList<Integer> getStations() {
         return null;
     }
@@ -113,6 +116,16 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     @Override
     public void createLogEntry(String entry) {
         ph.createLog(entry);
+    }
+
+    @Override
+    public List<Log> viewLogs() {
+        return List.of();
+    }
+
+    @Override
+    public ArrayList<ElectionResult> getForm(int stID, String searchArea, String napa) {
+        return null;
     }
 
     public Voter getVoterByCnic(String cnic){

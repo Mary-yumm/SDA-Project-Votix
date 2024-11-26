@@ -9,6 +9,16 @@ public class PollingStation {
     private ArrayList<PollingStationPC> pollingPCs = new ArrayList<>();
     private ArrayList<Voter> voters = new ArrayList<>();
 
+    public PollingStation(int sid) {
+        this.stationID = sid;
+        this.pollingPCs = null;
+        this.assignedPollingStaff = null;
+        this.voters = null;
+    }
+    public PollingStation() {
+    }
+
+
 
     // Getters and Setters
     public int getStationID() {

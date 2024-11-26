@@ -1,3 +1,4 @@
+
 package votix;
 
 import javafx.application.Application;
@@ -5,14 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import votix.controllers.AdminControllers.AdminMenuController;
 import votix.controllers.MainPageController;
+import votix.services.AdminElectionManagementSystem;
 import votix.services.PersistenceHandler;
 import votix.services.mysqlSingleton;
 import votix.services.persistenceFactory;
 
 import java.io.IOException;
 
-public class DEMO extends Application {
+public class temp extends Application {
 
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
@@ -44,11 +47,11 @@ public class DEMO extends Application {
         PersistenceHandler handler = null;
         handler = factoryHandler.createDB("mySql","jdbc:mysql://100.91.228.86/votix", "username", "password");
 
-       // mysqlSingleton handler = null;
-       // handler = mysqlSingleton.getInstance("jdbc:mysql://100.91.228.86/votix", "username", "password");
+        // mysqlSingleton handler = null;
+        // handler = mysqlSingleton.getInstance("jdbc:mysql://100.91.228.86/votix", "username", "password");
 
         MainPageController controller = fxmlLoader.getController();
-       // PersistenceHandler handler = ("jdbc:mysqlSingleton://100.91.228.86/votix", "username", "password");
+        // PersistenceHandler handler = ("jdbc:mysqlSingleton://100.91.228.86/votix", "username", "password");
 
         // Set the primary stage in the controller
         controller.setPrimaryStage(stage);
@@ -62,9 +65,10 @@ public class DEMO extends Application {
         stage.show();
     }
 
-
     public static void main(String[] args) throws ClassNotFoundException {
         // Launch the JavaFX application (already done in start)
         launch();
     }
 }
+
+
