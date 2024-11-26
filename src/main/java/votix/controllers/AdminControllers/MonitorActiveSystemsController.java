@@ -1,5 +1,6 @@
 package votix.controllers.AdminControllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
@@ -14,7 +15,11 @@ import javafx.stage.Stage;
 import votix.models.PollingStationPC;
 import votix.services.AdminElectionManagementSystem;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 public class MonitorActiveSystemsController {
@@ -28,6 +33,8 @@ public class MonitorActiveSystemsController {
     @FXML
     private VBox systemTable; // VBox to dynamically add system rows
     private AdminElectionManagementSystem ems;
+    private Thread sseListenerThread;
+
 
     public void initialize() {
         // Initialization
@@ -39,6 +46,54 @@ public class MonitorActiveSystemsController {
 
         // Add listener to handle ComboBox changes
         status.valueProperty().addListener((observable, oldValue, newValue) -> filterSystems((String) newValue));
+        // Start listening for SSE events
+        listenToSSE();
+    }
+
+    private void listenToSSE() {
+        sseListenerThread = new Thread(() -> {
+            try {
+                URL url = new URL("http://100.91.228.86:8080/events"); // SSE URL
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!line.isEmpty()) {
+                        String finalLine = line;
+                        Platform.runLater(() -> {
+                            System.out.println("Monitor SSE Event: " + finalLine);
+
+                            if (finalLine.equalsIgnoreCase("closed")) {
+                                System.out.println("closeddddddd");
+                                populateSystemTable();
+                            }
+                            else {
+                                System.out.println("Event did not match the condition: '" + finalLine + "'");
+                            }
+                        });
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        sseListenerThread.setDaemon(true);
+        sseListenerThread.start();
+    }
+
+    public void setElectionManagementSystem(AdminElectionManagementSystem system, Stage st) {
+        this.ems = system;
+        this.stage = st;
+        populateSystemTable();
+    }
+
+    private void populateSystemTable() {
+        List<PollingStationPC> systems = ems.getPollingPCs();
+        for (PollingStationPC system : systems) {
+            addSystemRow(system);
+        }
     }
 
     @FXML
@@ -61,21 +116,6 @@ public class MonitorActiveSystemsController {
         systemTable.getChildren().retainAll(systemTable.getChildren().get(0)); // Retain the header row only
         for (PollingStationPC system : filteredSystems) {
             addSystemRow(system);  // Add matching rows
-        }
-    }
-
-
-
-    public void setElectionManagementSystem(AdminElectionManagementSystem system, Stage st) {
-        this.ems = system;
-        this.stage = st;
-        populateSystemTable();
-    }
-
-    private void populateSystemTable() {
-        List<PollingStationPC> systems = ems.getPollingPCs();
-        for (PollingStationPC system : systems) {
-            addSystemRow(system);
         }
     }
 

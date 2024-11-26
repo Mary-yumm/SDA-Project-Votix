@@ -8,6 +8,7 @@ public class Area {
     private ArrayList<PollingStation> stations;
     private ElectionResult result;
     private int areaID;
+    private String areaName;
 
     // Constructor
     public Area() {
@@ -35,6 +36,12 @@ public class Area {
     }
     public int getAreaID(){
         return areaID;
+    }
+    public String getAreaName(){
+        return areaName;
+    }
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
     }
     public void monitorSystemStatus() {
         // Logic to monitor system status

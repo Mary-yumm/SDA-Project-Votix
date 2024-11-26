@@ -25,6 +25,9 @@ public abstract class PersistenceHandler {
     public abstract boolean addPollingStaffAccount(PollingStaff staff);
     public abstract boolean addCandidate(Candidate candidate, String area);
     public abstract int verifyStaff(String login, String password,String mac_address);
+
+    public abstract int verifyMacAddress(int stationId, String currentMac);
+
     public abstract int verifyAdmin(String login, String password);
     public abstract List<PollingStationPC> getPollingPCs();
     public abstract ArrayList<Candidate> fetchCandidates(int areaid);
@@ -47,6 +50,7 @@ public abstract class PersistenceHandler {
     public abstract void setSystemInactive(int systemID);
     public abstract void setSystemActive(int systemID);
 
+    public abstract String fetchAreaName(int areaID);
 }
 
 

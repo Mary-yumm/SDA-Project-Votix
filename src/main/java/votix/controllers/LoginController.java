@@ -96,6 +96,7 @@ public class LoginController {
             PEMS.setPersistenceHandler(ph);
             // Use the dbHandler to verify staff credentials and MAC address
             if (PEMS.authorizePollingStaff(username, password,mac_address)) {
+                PEMS.setSystemActive(PEMS.getSystemID());
                 PEMS.initializeArrays();
 
                 // Load PollingPc.fxml and switch to it on successful login
@@ -105,8 +106,8 @@ public class LoginController {
                 PollingPcController pollingController = fxmlLoader.getController();
                 pollingController.setElectionManagementSystem(PEMS);
 
-                 Screen screen = Screen.getPrimary();
-                 double screenWidth = screen.getVisualBounds().getWidth();
+                Screen screen = Screen.getPrimary();
+                double screenWidth = screen.getVisualBounds().getWidth();
                 double screenHeight = screen.getVisualBounds().getHeight();
                 primaryStage.setWidth(screenWidth);   // Set 80% of screen width
                 primaryStage.setHeight(screenHeight); // Set 80% of screen height

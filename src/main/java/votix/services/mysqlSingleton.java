@@ -317,9 +317,8 @@ public class mysqlSingleton extends PersistenceHandler {
         return pollingPCs;
     }
 
-
     @Override
-    public int verifyStaff(String username, String password,String currentMac) {
+    public int verifyStaff(String username, String password, String currentMac) {
         try {
             // Step 1: Verify staff credentials in the POLLINGSTAFF table
             String query = "SELECT stationId FROM POLLINGSTAFF WHERE username = ? AND password = ?";
@@ -328,7 +327,7 @@ public class mysqlSingleton extends PersistenceHandler {
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
 
-            // If no matching staff is found, return false
+            // If no matching staff is found, return 0
             if (!rs.next()) {
                 System.out.println("Invalid credentials.");
                 return 0;
@@ -337,38 +336,60 @@ public class mysqlSingleton extends PersistenceHandler {
             // Get the stationId from the POLLINGSTAFF table
             int stationId = rs.getInt("stationId");
 
-            System.out.println("Current PC MAC Address: " + currentMac);
-
-            if (currentMac == null) {
-                System.out.println("Unable to retrieve MAC address.");
-                return 0;
-            }
-
-            // Convert MAC addresses to lowercase for case-insensitive comparison
-            currentMac = currentMac.toLowerCase();
-
-            // Step 3: Verify if the stationId's MAC address matches in the POLLINGSTATIONPC table
-            query = "SELECT config FROM POLLINGSTATIONPC WHERE stationId = ?";
-            ps = conn.prepareStatement(query);
-            ps.setInt(1, stationId);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-                String configMac = rs.getString("config");
-
-                // Convert config MAC address from the database to lowercase
-                if (configMac != null && configMac.toLowerCase().equals(currentMac)) {
-                    // MAC address matches, verification is successful
-                    return stationId;
-                }
+            // Step 2: Verify the MAC address and return the system ID if successful
+            int systemId = verifyMacAddress(stationId, currentMac);
+            if (systemId > 0) {
+                return stationId; // Return system ID if MAC address verification succeeds
             }
 
             System.out.println("MAC address mismatch or station unauthorized.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0; // Return false if verification fails
+        return 0; // Return 0 if verification fails
     }
+
+    /**
+     * Verifies if the provided MAC address matches the configuration for the given stationId.
+     *
+     * @param stationId  The ID of the station to verify.
+     * @param currentMac The MAC address of the current PC.
+     * @return The system ID if the MAC address matches; 0 otherwise.
+     */
+    @Override
+    public int verifyMacAddress(int stationId, String currentMac) {
+        try {
+            if (currentMac == null) {
+                System.out.println("Unable to retrieve MAC address.");
+                return 0;
+            }
+
+            // Convert the current MAC address to lowercase for case-insensitive comparison
+            currentMac = currentMac.toLowerCase();
+
+            // Query the POLLINGSTATIONPC table for the stationId's MAC address configuration
+            String query = "SELECT systemId, config FROM POLLINGSTATIONPC WHERE stationId = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, stationId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String configMac = rs.getString("config");
+
+                // Convert the config MAC address to lowercase for comparison
+                if (configMac != null && configMac.toLowerCase().equals(currentMac)) {
+                    return rs.getInt("systemId"); // Return the system ID if MAC address matches
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0; // Return 0 if MAC address verification fails
+    }
+
+
+
+
     @Override
     public int verifyAdmin(String username, String password) {
         String query = "SELECT adminID FROM ADMIN WHERE username = ? AND password = ?";
@@ -514,6 +535,31 @@ public class mysqlSingleton extends PersistenceHandler {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String fetchAreaName(int areaID) {
+        // SQL query to fetch areaName using areaID
+        String query = "SELECT areaName FROM AREA WHERE areaId = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, areaID); // Set the areaID parameter
+
+            // Execute the query and retrieve the result
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                // Return the areaName if found
+                return rs.getString("areaName");
+            } else {
+                // Return a value indicating no area found
+                return "Area not found";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the error or return a default value
+            return "Error fetching area name";
         }
     }
 

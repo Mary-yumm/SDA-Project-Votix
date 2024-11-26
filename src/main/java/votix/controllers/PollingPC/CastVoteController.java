@@ -65,7 +65,7 @@ public class CastVoteController {
 
                 ems.castVote(candidateId);
                 ems.updateVoterStatus(cnic);
-                ems.createLogEntry("Vote Cast for CNIC: " + cnic);
+                ems.createLogEntry("A vote was cast for CNIC: " + cnic + " at polling pc " + ems.getSystemID()+", Station "+ems.getStationId() + ", Area " + ems.getAreaId() + ", " + ems.getAreaName());
                 // Notify ViewLogsController via SSE
                 notifyViewLogs("Vote cast for candidate ID: " + candidateId);
                 System.out.println("voteddd");

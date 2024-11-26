@@ -11,6 +11,8 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     private PersistenceHandler ph;
     private Area area;
     private int stationId;
+    private int systemId;
+    private String mac;
 
     public PollingPCElectionManagementSystem() {
         area = new Area();
@@ -19,17 +21,20 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     public boolean authorizePollingStaff(String username, String password,String mac_address) {
         // Implementation to authorize polling staff
         int is_verified = ph.verifyStaff(username,password,mac_address);
-
+        this.mac = mac_address;
         if(is_verified == 0) {
             return false;
         }
         else{
             stationId = is_verified;
             int areaID = ph.fetchArea(is_verified);
+            String areaName = ph.fetchAreaName(areaID);
+            systemId = ph.verifyMacAddress(stationId,mac);
             area.setAreaID(areaID);
+            area.setAreaName(areaName);
+
             return true;
         }
-
     }
 
     public void initializeArrays(){
@@ -38,6 +43,13 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
 
     }
 
+    public void setMac(String mac){
+        this.mac = mac;
+    }
+
+    public String getMac(){
+        return mac;
+    }
     public boolean isVoterRegistered(String name,String cnic) {
         // Implementation to check if a voter is registered
         return ph.isVoterRegistered(name,cnic,getAreaId());
@@ -45,6 +57,9 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
 
     public int getAreaId(){
         return area.getAreaID();
+    }
+    public String getAreaName(){
+        return area.getAreaName();
     }
 
     public int getStationId(){
@@ -68,11 +83,6 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
 
     public boolean getVoterStatus(String cnic,int stationid){
         return area.getVoterStatus(cnic,stationid);
-    }
-
-    public boolean validateVote() {
-        // Implementation to validate a vote
-        return false;
     }
 
     @Override
@@ -108,5 +118,18 @@ public class PollingPCElectionManagementSystem implements ElectionManagementSyst
     public Voter getVoterByCnic(String cnic){
         return ph.getVoterByCnic(cnic);
     }
+
+    public void setSystemInactive(int systemID) {
+        ph.setSystemInactive(systemID);
+    }
+
+    public void setSystemActive(int systemID) {
+        ph.setSystemActive(systemID);
+    }
+    public int getSystemID(){
+        return systemId;
+    }
+
+
 
 }

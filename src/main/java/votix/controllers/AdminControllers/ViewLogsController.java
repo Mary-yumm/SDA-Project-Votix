@@ -84,6 +84,8 @@ public class ViewLogsController {
         setupTextFieldValidator(areaFilterTextField);
         setupFocusListeners();
         backArrow.setCursor(Cursor.HAND);
+        // Start listening for SSE updates
+        listenToSSE();
     }
 
     // Method to set up focus listeners for text fields
@@ -133,8 +135,7 @@ public class ViewLogsController {
             System.out.println("EMS set in ViewLogsController");
             populateLogTable(); // Populate logs immediately after EMS is set
 
-            // Start listening for SSE updates
-            listenToSSE();
+
         }
     }
 
@@ -178,8 +179,8 @@ public class ViewLogsController {
         Label actionLabel = new Label();
         actionLabel.getStyleClass().add("table-cell");
         actionLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
-        AnchorPane.setLeftAnchor(actionLabel, 300.0);  // Adjust for column position
-        AnchorPane.setRightAnchor(actionLabel, 400.0); // Make it symmetric for centering
+        AnchorPane.setLeftAnchor(actionLabel, 200.0);  // Adjust for column position
+        AnchorPane.setRightAnchor(actionLabel, 300.0); // Make it symmetric for centering
         AnchorPane.setTopAnchor(actionLabel, 0.0);    // Center vertically
         AnchorPane.setBottomAnchor(actionLabel, 0.0); // Center vertically
 
@@ -243,9 +244,9 @@ public class ViewLogsController {
         Label highlightLabel = new Label(highlighted);
         Label afterLabel = new Label(after);
 
-        String commonStyle = "-fx-font-size: 18px;"; // Ensure consistent font size
+        String commonStyle = "-fx-font-size: 16px;"; // Ensure consistent font size
         beforeLabel.setStyle(commonStyle);
-        highlightLabel.setStyle(commonStyle + " -fx-background-color: yellow; -fx-font-weight: bold;");
+        highlightLabel.setStyle(commonStyle + " -fx-background-color: yellow; -fx-font-weight: bold");
         afterLabel.setStyle(commonStyle);
 
         return new HBox(beforeLabel, highlightLabel, afterLabel);
@@ -355,11 +356,18 @@ public class ViewLogsController {
         areaFilterTextField.clear();
         pollingStationFilterTextField.clear();
 
-        // Reload all logs
+        // Retrieve logs and sort them in descending order by timestamp
+        List<Log> logs = ems.viewLogs();
+        logs.sort((log1, log2) -> log2.getTimeStamp().compareTo(log1.getTimeStamp()));
+
+        // Clear the log table content while retaining the header row
         logTable.getChildren().retainAll(logTable.getChildren().get(0));
-        for (Log log : ems.viewLogs()) {
+
+        // Populate the table with sorted logs
+        for (Log log : logs) {
             addLogRow(log, null, null);
         }
     }
+
 
 }

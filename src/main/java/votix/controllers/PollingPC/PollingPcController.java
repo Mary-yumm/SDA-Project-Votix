@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 import votix.services.PollingPCElectionManagementSystem;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class PollingPcController {
     @FXML
@@ -26,6 +29,7 @@ public class PollingPcController {
     // Setter to receive ElectionManagementSystem from the MainApp
     public void setElectionManagementSystem(PollingPCElectionManagementSystem electionManagementSystem) {
         this.ems = electionManagementSystem;
+        ems.createLogEntry("System " + ems.getSystemID() + " initialized");
         if(ems!=null) {
             System.out.println("ems set in PollingPcController: " + (ems != null));  // Debugging line
             selectTab1();
@@ -33,21 +37,48 @@ public class PollingPcController {
         else{
             System.out.println("ems set in PollingPcController: null");
         }
+    }
+    private void notifyPollingPcClosed() {
+        try {
+            URL url = new URL("http://100.91.228.86:8080/notify"); // Change to your actual endpoint
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 
+            //String message = "Polling PC closed for station ID: " + ems.getStationId();
+            String message = "closed";
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(("message=" + message).getBytes());
+                os.flush();
+            }
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                System.out.println("Polling PC close event successfully notified.");
+            } else {
+                System.out.println("Failed to notify polling PC close event. Response code: " + responseCode);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void setPrimaryStage(Stage primaryStage) {
         System.out.println("in pc primary stage");
 
         this.primaryStage = primaryStage;
+        // Add a close event listener
+        primaryStage.setOnCloseRequest(event -> {
+            ems.createLogEntry("Polling PC " + ems.getSystemID() + " was closed at station " + ems.getStationId() + " in area: " + ems.getAreaId() + " "+ems.getAreaName());
+            ems.setSystemInactive(ems.getSystemID());
+            notifyPollingPcClosed();
+        });
     }
 
-//    @FXML
-//    private void initialize() {
-//       // loadCaptureVoterInfo();
-//        setActiveButton(tab1Button); // Set the initial active tab
-//        loadCaptureVoterInfo();
-//
-//    }
+    @FXML
+    private void initialize() {
+
+    }
 
     // Change content based on button clicked
     public void selectTab1() {
