@@ -32,7 +32,7 @@ public class PollingPcController {
         ems.createLogEntry("System " + ems.getSystemID() + " initialized");
         if(ems!=null) {
             System.out.println("ems set in PollingPcController: " + (ems != null));  // Debugging line
-            selectTab1();
+            loadInitiateScreen(); // Load the initiate screen by default
         }
         else{
             System.out.println("ems set in PollingPcController: null");
@@ -78,6 +78,27 @@ public class PollingPcController {
     @FXML
     private void initialize() {
 
+    }
+    // Load the Initiate System screen
+    private void loadInitiateScreen() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/PollingPC/InitiateSystem.fxml"));
+            AnchorPane initiatePane = loader.load();
+
+            // Get the controller and set the callback for when the countdown completes
+            InitiateSystemController controller = loader.getController();
+            if (controller != null) {
+                System.out.println("Setting InitiateSystemController...");
+                controller.setOnCountdownComplete(this::loadCaptureVoterInfo); // Switch to Capture Voter Info after countdown
+            } else {
+                System.out.println("InitiateSystemController is null!");
+            }
+
+            // Load the Initiate Screen into the content pane
+            contentPane.getChildren().setAll(initiatePane);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Change content based on button clicked
