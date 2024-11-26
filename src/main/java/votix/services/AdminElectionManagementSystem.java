@@ -195,4 +195,7 @@ public class AdminElectionManagementSystem implements ElectionManagementSystem{
 
     }
 
+    public List<Object[]> getCandidateVotes() {
+        return ph.getCandidateVotes();
+    }
 }

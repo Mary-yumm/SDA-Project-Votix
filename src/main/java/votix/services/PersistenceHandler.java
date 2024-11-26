@@ -46,7 +46,7 @@ public abstract class PersistenceHandler {
     public abstract void activatePollingStaffAccount(int id);
     public abstract void setSystemInactive(int systemID);
     public abstract void setSystemActive(int systemID);
-
+    public abstract List<Object[]> getCandidateVotes();
 }
 
 

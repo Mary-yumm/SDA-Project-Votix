@@ -219,6 +219,38 @@ public class mysqlSingleton extends PersistenceHandler {
         return candidates;
     }
 
+    @Override
+    public List<Object[]> getCandidateVotes() {
+        String query = " SELECT candidateId, voteCount FROM ELECTIONRESULT";
+
+        List<Object[]> resultList = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int candidateId = rs.getInt("candidateId");
+                int voteCount = rs.getInt("voteCount");
+
+                // Check if candidate already exists in the list
+                boolean found = false;
+                for (Object[] entry : resultList) {
+                    if ((int) entry[0] == candidateId) {
+                        entry[1] = (int) entry[1] + voteCount;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    resultList.add(new Object[] { candidateId, voteCount });
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resultList;  // Return the list of distinct candidates with total votes
+    }
 
     @Override
         public ArrayList<Object> getStaffAssignments() {

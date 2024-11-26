@@ -53,13 +53,22 @@ public class candidateListController {
         if (ems != null) {
             System.out.println("EMS is not null, loading candidates...");
             List<Candidate> candidates = ems.getAllCand();
-
+            List<Object[]> voteCountperCand = ems.getCandidateVotes();
             if (candidates == null || candidates.isEmpty()) {
                 System.out.println("No candidates found!");
             } else {
                 System.out.println("Found " + candidates.size() + " candidates.");
+
                 for (Candidate candidate : candidates) {
-                    addCandidateRow(candidate);
+                    int candidateId = candidate.getCid();
+                    int voteCount = 0;
+                    for (Object[] entry : voteCountperCand) {
+                        if ((int) entry[0] == candidateId) {
+                            voteCount = (int) entry[1];
+                            break;
+                        }
+                    }
+                    addCandidateRow(candidate, voteCount);
                 }
             }
         } else {
@@ -68,7 +77,7 @@ public class candidateListController {
     }
 
     // Method to add a row to the candidate table for each candidate
-    private void addCandidateRow(Candidate candidate) {
+    private void addCandidateRow(Candidate candidate, int voteCount) {
         HBox row = new HBox(200); // Create a row with spacing
         row.setPrefWidth(1300);
         row.setPrefHeight(44);
@@ -95,8 +104,7 @@ public class candidateListController {
 
         row.getChildren().add(partySymbolView);
 
-        // Placeholder for vote count or other candidate-specific details
-        Label voteCountLabel = new Label("0"); // Example placeholder, can be replaced with actual data
+        Label voteCountLabel = new Label(String.valueOf(voteCount));
         voteCountLabel.getStyleClass().add("table-cell");
         row.getChildren().add(voteCountLabel);
         voteCountLabel.setMinWidth(330);
