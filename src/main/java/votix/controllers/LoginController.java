@@ -57,10 +57,9 @@ public class LoginController {
         System.out.println("Primary stage set in login controller: " + primaryStage);
     }
 
-    public void setPh(PersistenceHandler ph){
+    public void setConnection(PersistenceHandler ph){
         this.ph = ph;
     }
-    public PersistenceHandler getPh() {return ph;}
 
 
     public void setRole(String role) {this.role = role;}
@@ -167,26 +166,6 @@ public class LoginController {
         }
 
     }
-    public void handleBackButtonAction(javafx.scene.input.MouseEvent mouseEvent)
-    {
-        try {
-            // Load the previous screen (MainPage.fxml)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
-            Scene scene = new Scene(loader.load());
-
-            // Get the controller of MainPage and set up necessary bindings again
-            MainPageController mainPageController = loader.getController();
-            mainPageController.setPrimaryStage(primaryStage);
-            mainPageController.setph(ph);
-
-            // Set the scene and show the primaryStage
-            primaryStage.setScene(scene);
-            primaryStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private String getCurrentMacAddress() {
         try {
@@ -227,6 +206,26 @@ public class LoginController {
         return null;
     }
 
+    public void setph(PersistenceHandler ph) {
+        System.out.println("in ph login");
+        this.ph=ph;
+    }
 
+    public void handleBackButtonAction(javafx.scene.input.MouseEvent mouseEvent) {
+        try {
+            // Load the previous screen (MainPage.fxml)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
+            Scene scene = new Scene(loader.load());
 
+            // Get the controller of MainPage and set up necessary bindings again
+            MainPageController mainPageController = loader.getController();
+            mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
+
+            // Set the scene and show the primaryStage
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

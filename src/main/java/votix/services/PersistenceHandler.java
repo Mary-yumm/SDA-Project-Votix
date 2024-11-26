@@ -15,8 +15,7 @@ public abstract class PersistenceHandler {
     protected String password;
 
     // Abstract methods to be implemented by subclasses
-    public abstract void ShowPollingStation();
-    public abstract ArrayList<ElectionResult> fetchElectionResults();
+    public abstract ArrayList<ElectionResult> fetchElectionResults(String res);
     public abstract ArrayList<ElectionResult> searchByArea(String areaName);
     public abstract ArrayList<ElectionResult> searchByCandidate(String candidateName);
     public abstract ArrayList<ElectionResult> searchByParty(String partyName);
@@ -45,6 +44,7 @@ public abstract class PersistenceHandler {
     public abstract ArrayList<Object> getStaffAssignments();
     public abstract ArrayList<PollingStaff> getStaffList();
     public abstract ArrayList<Integer> getStations();
+    public abstract ArrayList<Integer> getStations(String area);
     public abstract Voter getVoterByCnic(String cnic);
 
     public abstract ArrayList<Candidate> fetchAllCandidates();

@@ -15,6 +15,7 @@ import java.io.IOException;
 public class MainPageController {
 
     public Button about;
+    public AnchorPane contentPane;
     @FXML
     private Button admin;
 
@@ -25,60 +26,81 @@ public class MainPageController {
     private PersistenceHandler ph;
 
     public void setPrimaryStage(Stage stage) {
+
         this.primaryStage = stage;
+        System.out.println("Primary stage set in main page controller: " + primaryStage);
+
     }
 
     // This method handles the "ADMIN" button click
     @FXML
-    private void handleAdminLogin(MouseEvent event) {
+    private void handleAdminLogin(MouseEvent event) throws IOException {
         System.out.println("Admin button clicked!");
         loadLoginScene("admin");
+        /*try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
+            Scene adminScene = new Scene(loader.load(), 600, 400);
+            primaryStage.setScene(adminScene);  // Set the new scene
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
 
     // This method handles the "STAFF" button click
     @FXML
-    private void handleStaffLogin(MouseEvent event) {
+    private void handleStaffLogin(MouseEvent event) throws IOException {
         System.out.println("Staff button clicked!");
         loadLoginScene("staff");
+       /* try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
+            Scene staffScene = new Scene(loader.load(), 600, 400);
+            primaryStage.setScene(staffScene);  // Set the new scene
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
     }
     @FXML
     private void handleAbout(MouseEvent event)  {
 
-        try{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/about.fxml"));
-        Scene Scene = new Scene(loader.load());
-
-        AboutController Controller = loader.getController();
-        Controller.setPrimaryStage(primaryStage);
-        Controller.setPh(ph);
-
-        // Set the new scene
-        primaryStage.setScene(Scene);
-        primaryStage.show();
-
-        }catch (IOException e) {
-            e.printStackTrace();
-            System.err.println("Failed to load about.fxml. Check the file path.");
-        }
-    }
-    private void loadLoginScene(String role) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
-            Scene loginScene = new Scene(loader.load());
 
-            // Get the LoginController and pass the role
-            LoginController loginController = loader.getController();
-            loginController.setRole(role);
-            loginController.setPh(ph);
-            loginController.setPrimaryStage(primaryStage);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/about.fxml"));
+            AnchorPane aboutt = loader.load();
+            AboutController Controller = loader.getController();
+            Controller.setPh(this.ph);
 
-            primaryStage.setScene(loginScene); // Set the new scene
-            primaryStage.show();
 
+            contentPane.getChildren().setAll(aboutt);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+
     }
+    private void loadLoginScene(String role) throws IOException {
+        System.out.println("Loading login scene for role: " + role);  // Debugging line
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/login.fxml"));
+        if (loader == null) {
+            System.out.println("Failed to find login.fxml at /fxmlFiles/login.fxml");
+        }
+        AnchorPane loginScreen = loader.load();
+
+
+
+        LoginController loginController = loader.getController();
+        if (loginController != null) {
+            System.out.println("Setting PersistenceHandler in login controller");
+            loginController.setRole(role);
+            loginController.setph(ph);
+            loginController.setPrimaryStage(this.primaryStage);
+        } else {
+            System.out.println("LoginController is null!");  // Debugging line
+        }
+
+        System.out.println("Setting the scene to primaryStage");
+        contentPane.getChildren().setAll(loginScreen);
+
+    }
+
 
     public void setph(PersistenceHandler p) {
         this.ph = p;

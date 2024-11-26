@@ -137,9 +137,9 @@ public class ElectionResultController {
     public void initialize() {
         // Initialize the choice box for National/Provincial
         ObservableList<String> np = FXCollections.observableArrayList(
-                "National Assembly", "Provincial Assembly");
+                "NA", "PA");
         napa.setItems(np);
-        napa.setValue("National Assembly");
+        napa.setValue("NA");
 
         backArrow.setCursor(Cursor.HAND);
         // Initialize the table columns
@@ -185,9 +185,9 @@ public class ElectionResultController {
 
         String Napa = (napa.getValue() != null) ? napa.getValue() : "Default Value";
         System.out.println("Napa ChoiceBox: " + napa.getValue());
-        if (Napa.equals("National Assembly"))
+        if (Napa.equals("NA"))
             Napa = "NA";
-        else if (Napa.equals("Provincial Assembly"))
+        else if (Napa.equals("PA"))
             Napa = "PA";
 
         if (ems == null) {
