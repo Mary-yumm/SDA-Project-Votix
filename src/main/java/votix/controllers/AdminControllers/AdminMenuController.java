@@ -48,6 +48,9 @@ public class AdminMenuController {
 
     private AdminElectionManagementSystem ems;
     private Stage primaryStage;
+
+
+
     private PersistenceHandler ph;
 
 
@@ -173,26 +176,25 @@ public class AdminMenuController {
 
     public void viewElectionResult() throws IOException {
         viewresultBtn();
-// Load the FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionReport.fxml"));
-        Parent root = null;
+        // Load the FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionResult.fxml"));
+        VBox root = null;
 
         try {
             root = loader.load();
         } catch (IOException e) {
-            System.out.println("ElectionReportController root empty");
             e.printStackTrace();  // Handle the exception if the FXML loading fails
             return;  // Exit if loading fails
         }
 
-        ElectionReportController controller = loader.getController();
+        ElectionResultController controller = loader.getController();
 
         // Ensure that the controller is correctly initialized
         if (controller != null) {
-            System.out.println("ElectionReportController initialized successfully.");
+            System.out.println("ElectionResultController initialized successfully.");
             controller.set(this.ems, this.primaryStage);  // Pass the ems instance
         } else {
-            System.out.println("Error: ElectionReportController is null!");
+            System.out.println("Error: ElectionResultController is null!");
         }
 
         // Set the loaded VBox as the scene
@@ -248,24 +250,25 @@ public class AdminMenuController {
     public void viewElectionReport() {
         viewReportBtn();
         // Load the FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionResult.fxml"));
-        VBox root = null;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/AdminControlled/ElectionReport.fxml"));
+        Parent root = null;
 
         try {
             root = loader.load();
         } catch (IOException e) {
+            System.out.println("ElectionReportController root empty");
             e.printStackTrace();  // Handle the exception if the FXML loading fails
             return;  // Exit if loading fails
         }
 
-        ElectionResultController controller = loader.getController();
+        ElectionReportController controller = loader.getController();
 
         // Ensure that the controller is correctly initialized
         if (controller != null) {
-            System.out.println("ElectionResultController initialized successfully.");
+            System.out.println("ElectionReportController initialized successfully.");
             controller.set(this.ems, this.primaryStage);  // Pass the ems instance
         } else {
-            System.out.println("Error: ElectionResultController is null!");
+            System.out.println("Error: ElectionReportController is null!");
         }
 
         // Set the loaded VBox as the scene
@@ -385,5 +388,13 @@ public class AdminMenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public PersistenceHandler getPh() {
+        return ph;
+    }
+
+    public void setPh(PersistenceHandler ph) {
+        this.ph = ph;
     }
 }

@@ -1,4 +1,3 @@
-
 package votix;
 
 import javafx.application.Application;
@@ -8,11 +7,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import votix.controllers.AdminControllers.AdminMenuController;
 import votix.controllers.MainPageController;
-import votix.services.AdminElectionManagementSystem;
 import votix.services.PersistenceHandler;
 import votix.services.mysqlSingleton;
 import votix.services.persistenceFactory;
-
 import java.io.IOException;
 
 public class temp extends Application {
@@ -22,7 +19,7 @@ public class temp extends Application {
 
 
         // Load the FXML file
-        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/mainpage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(DEMO.class.getResource("/fxmlFiles/AdminControlled/AdminMenu.fxml"));
 
         // Load the scene from the FXML file
         Scene scene = new Scene(fxmlLoader.load());
@@ -50,12 +47,12 @@ public class temp extends Application {
         // mysqlSingleton handler = null;
         // handler = mysqlSingleton.getInstance("jdbc:mysql://100.91.228.86/votix", "username", "password");
 
-        MainPageController controller = fxmlLoader.getController();
+        AdminMenuController controller = fxmlLoader.getController();
         // PersistenceHandler handler = ("jdbc:mysqlSingleton://100.91.228.86/votix", "username", "password");
 
         // Set the primary stage in the controller
         controller.setPrimaryStage(stage);
-        controller.setph(handler);
+        controller.setPh(handler);
 
         // Set the scene to the stage
         stage.setScene(scene);
