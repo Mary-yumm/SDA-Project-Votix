@@ -36,7 +36,7 @@
       <Label fx:id="electionDate" layoutX="286.0" layoutY="29.0" style="-fx-font-size: 24px;" text="12-04-2024" />
 
       <Label layoutX="85.0" layoutY="97.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="National / Provisional:" />
-      <ChoiceBox fx:id="napa" layoutX="369.0" layoutY="83.0" prefHeight="35.0" prefWidth="253.0" styleClass="combo-box" />
+      <ChoiceBox fx:id="napa" layoutX="369.0" layoutY="83.0" prefWidth="253.0" styleClass="combo-box" />
 
       <Label layoutX="88.0" layoutY="169.0" style="-fx-font-size: 24px; -fx-text-fill: #000000;" text="Enter Area:" />
       <TextField fx:id="areaField" layoutX="250.0" layoutY="161.0" prefHeight="47.0" prefWidth="176.0" promptText="Enter Area" style="-fx-font-size: 20px;" />
