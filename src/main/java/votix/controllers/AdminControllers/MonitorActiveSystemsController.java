@@ -30,6 +30,7 @@ public class MonitorActiveSystemsController {
     private Stage stage;
 
     public Button backbtn;
+
     @FXML
     private VBox systemTable; // VBox to dynamically add system rows
     private AdminElectionManagementSystem ems;
