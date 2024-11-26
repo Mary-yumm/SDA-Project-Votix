@@ -61,6 +61,9 @@ public abstract class PersistenceHandler {
     public abstract int fetchTotalVotesByArea(String areaName);
 
     public abstract ArrayList<ElectionResult> getForm(int sID, String areaName, String Napa);
+    public abstract void setSystemInactive(int systemID);
+    public abstract void setSystemActive(int systemID);
+    public abstract List<Object[]> getCandidateVotes();
 }
 
 

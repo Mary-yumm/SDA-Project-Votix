@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class mysql extends PersistenceHandler {
+public class mysqlSingleton extends PersistenceHandler {
 
     private Connection conn;
     private String dbUrl;
@@ -18,8 +18,9 @@ public class mysql extends PersistenceHandler {
     private int connectionTimeout;
     private int maxRetries;
 
+    private static mysqlSingleton instance = null;
 
-    public mysql(String dbUrl,String username,String password) throws ClassNotFoundException {
+    private mysqlSingleton(String dbUrl, String username, String password) throws ClassNotFoundException {
         // replace with your password
         try {
             // Optional: Load the SQL Server JDBC driver
@@ -33,9 +34,20 @@ public class mysql extends PersistenceHandler {
                 System.out.println("Failed to establish connection.");
             }
         } catch (SQLException e) {
+            System.out.println("Failed to establish connection.");
             e.printStackTrace();
         }
     }
+
+    public static mysqlSingleton getInstance(String dbUrl, String username, String password) throws ClassNotFoundException {
+        if(instance == null){
+            instance = new mysqlSingleton(dbUrl,username, password);
+            System.out.println(dbUrl+", "+username+", "+password);
+        }
+        return instance;
+    }
+
+
 
     @Override
     public ArrayList<ElectionResult> getForm(int sID , String areaName, String Napa) {
@@ -340,6 +352,38 @@ public class mysql extends PersistenceHandler {
         return candidates;
     }
 
+    @Override
+    public List<Object[]> getCandidateVotes() {
+        String query = " SELECT candidateId, voteCount FROM ELECTIONRESULT";
+
+        List<Object[]> resultList = new ArrayList<>();
+
+        try (PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int candidateId = rs.getInt("candidateId");
+                int voteCount = rs.getInt("voteCount");
+
+                // Check if candidate already exists in the list
+                boolean found = false;
+                for (Object[] entry : resultList) {
+                    if ((int) entry[0] == candidateId) {
+                        entry[1] = (int) entry[1] + voteCount;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    resultList.add(new Object[] { candidateId, voteCount });
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resultList;  // Return the list of distinct candidates with total votes
+    }
 
     @Override
         public ArrayList<Object> getStaffAssignments() {
@@ -511,7 +555,6 @@ public class mysql extends PersistenceHandler {
             return 0;
         }
     }
-
 
     @Override
     public boolean isVoterRegistered(String name, String cnic, int areaid) {
@@ -900,6 +943,11 @@ public ArrayList<Integer> getStations(){
     }
 
 
+    @Override
+    public void ShowPollingStation() {
+
+    }
+
 
     public ArrayList<String> fetchResult()
     {
@@ -952,8 +1000,6 @@ public ArrayList<Integer> getStations(){
         }
     }
 
-
-
     @Override
     public List<Log> ViewLogs() {
         List<Log> logs = new ArrayList<>();
@@ -976,7 +1022,6 @@ public ArrayList<Integer> getStations(){
         }
 
         return logs;
-
     }
 
 
