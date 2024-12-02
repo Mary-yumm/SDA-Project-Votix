@@ -2,6 +2,7 @@ package votix.controllers.PollingPC;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -94,12 +95,21 @@ public class PollingPcController {
                 System.out.println("InitiateSystemController is null!");
             }
 
-            // Load the Initiate Screen into the content pane
-            contentPane.getChildren().setAll(initiatePane);
+            // Create a new stage for the Initiate Screen
+            Stage stage = new Stage();
+            stage.setTitle("Initiate System");
+
+            // Create a Scene with the specified size and set it to the stage
+            Scene scene = new Scene(initiatePane, 1920, 1080);
+            stage.setScene(scene);
+
+            // Display the stage
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     // Change content based on button clicked
     public void selectTab1() {

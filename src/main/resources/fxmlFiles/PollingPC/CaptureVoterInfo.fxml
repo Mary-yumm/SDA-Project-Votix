@@ -2,11 +2,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<AnchorPane prefHeight="1020.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="votix.controllers.PollingPC.CaptureVoterInfoController"
             stylesheets="@../../style/style.css"
-            prefWidth="1920.0"
             styleClass="root">
 
     <!-- Title Bar -->

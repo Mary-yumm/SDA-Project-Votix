@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import java.io.IOException;
 public class InitiateSystemController {
 
     public ImageView logoImageView;
+    public AnchorPane pane;
 
     @FXML
     private Label timerLabel;
@@ -48,16 +50,20 @@ public class InitiateSystemController {
             if (seconds > 0) {
                 seconds--;
             } else {
-                // Perform actions when countdown reaches zero
+                // Stop the countdown
+                countdown.stop();
+
+                // Perform actions when the countdown reaches zero
                 loadingIndicator.setStyle("-fx-accent: #FF5733;");
                 loadingIndicator.setVisible(true);
                 messageLabel.setText("Loading Polling Station's data...");
                 timerLabel.setText("");
 
-                // Notify that the countdown has completed
+                // Transition to Polling PC
                 if (onCountdownComplete != null) {
-                    countdown.stop();
                     onCountdownComplete.run();
+                } else {
+                    transitionToPollingPC(); // Fallback
                 }
             }
             timerLabel.setText(getFormattedTime());
@@ -67,29 +73,37 @@ public class InitiateSystemController {
         countdown.play();
     }
 
+
     private String getFormattedTime() {
         return String.format("%02d hours : %02d minutes : %02d seconds", hours, minutes, seconds);
     }
 
     private void transitionToPollingPC() {
         try {
+            // Load the PollingPC.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/PollingPC/PollingPC.fxml"));
-            Scene pollingPCScene = new Scene(loader.load());
+          //  Scene pollingPCScene = new Scene(loader.load());
+            AnchorPane pollingpane=loader.load();
 
             PollingPcController pollingPcController = loader.getController();
 
-            // Pass the Stage or EMS instance if needed
+            System.out.println("here");
             if (pollingPcController != null) {
                 System.out.println("Transitioning to Polling PC...");
-                pollingPcController.setPrimaryStage(primaryStage); // Optional, if needed
+                // Optional: Pass the primaryStage to the PollingPcController
+                pollingPcController.setPrimaryStage(this.primaryStage);
             }
 
-            primaryStage.setScene(pollingPCScene);
-            primaryStage.show();
+            // Replace the current scene on the same stage
+            //primaryStage.setScene(pollingPCScene);
+            pane.getChildren().setAll(pollingpane);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public void setPrimaryStage(Stage stage) {
         this.primaryStage = stage;
