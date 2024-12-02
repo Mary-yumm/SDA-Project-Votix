@@ -33,6 +33,7 @@ public class PollingPcController {
         ems.createLogEntry("System " + ems.getSystemID() + " initialized");
         if(ems!=null) {
             System.out.println("ems set in PollingPcController: " + (ems != null));  // Debugging line
+            setActiveButton(tab1Button);
             loadInitiateScreen(); // Load the initiate screen by default
         }
         else{
