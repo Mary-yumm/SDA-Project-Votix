@@ -179,7 +179,7 @@ public class ViewLogsController {
         Label actionLabel = new Label();
         actionLabel.getStyleClass().add("table-cell");
         actionLabel.setStyle("-fx-alignment: center; -fx-font-size: 16px;");
-        AnchorPane.setLeftAnchor(actionLabel, 200.0);  // Adjust for column position
+        AnchorPane.setLeftAnchor(actionLabel, 140.0);  // Adjust for column position
         AnchorPane.setRightAnchor(actionLabel, 300.0); // Make it symmetric for centering
         AnchorPane.setTopAnchor(actionLabel, 0.0);    // Center vertically
         AnchorPane.setBottomAnchor(actionLabel, 0.0); // Center vertically
