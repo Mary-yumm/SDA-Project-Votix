@@ -68,6 +68,8 @@ public class MainPageController {
             AnchorPane aboutt = loader.load();
             AboutController Controller = loader.getController();
             Controller.setPh(this.ph);
+            Controller.setPrimaryStage(primaryStage);
+
 
 
             contentPane.getChildren().setAll(aboutt);
