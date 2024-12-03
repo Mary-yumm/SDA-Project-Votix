@@ -219,6 +219,7 @@ public class LoginController {
 
             // Get the controller of MainPage and set up necessary bindings again
             MainPageController mainPageController = loader.getController();
+            mainPageController.setph(ph);
             mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
 
             // Set the scene and show the primaryStage
