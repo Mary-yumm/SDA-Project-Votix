@@ -16,7 +16,10 @@ import javafx.scene.Scene;
 
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.NetworkInterface;
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.Objects;
 
@@ -55,6 +58,7 @@ public class LoginController {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
         System.out.println("Primary stage set in login controller: " + primaryStage);
+
     }
 
     public void setConnection(PersistenceHandler ph){
@@ -96,6 +100,8 @@ public class LoginController {
             PEMS.setPersistenceHandler(ph);
             // Use the dbHandler to verify staff credentials and MAC address
             if (PEMS.authorizePollingStaff(username, password,mac_address)) {
+                notifyPollingPcActive();
+
                 PEMS.setSystemActive(PEMS.getSystemID());
                 PEMS.initializeArrays();
 
@@ -127,6 +133,31 @@ public class LoginController {
 
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private void notifyPollingPcActive() {
+        try {
+            URL url = new URL("http://100.91.228.86:8080/notify"); // Change to your actual endpoint
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            //String message = "Polling PC closed for station ID: " + ems.getStationId();
+            String message = "active";
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(("message=" + message).getBytes());
+                os.flush();
+            }
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                System.out.println("Polling PC active event successfully notified.");
+            } else {
+                System.out.println("Failed to notify polling PC active event. Response code: " + responseCode);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -209,22 +240,27 @@ public class LoginController {
     public void setph(PersistenceHandler ph) {
         System.out.println("in ph login");
         this.ph=ph;
+        if(this.ph==null){
+            System.out.println("Its null in login");
+        }
     }
 
     public void handleBackButtonAction(javafx.scene.input.MouseEvent mouseEvent) {
         try {
             // Load the previous screen (MainPage.fxml)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
-            Scene scene = new Scene(loader.load());
-
-            // Get the controller of MainPage and set up necessary bindings again
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/mainpage.fxml"));
+            //Scene scene = new Scene(loader.load());
             MainPageController mainPageController = loader.getController();
-            mainPageController.setph(ph);
-            mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
 
-            // Set the scene and show the primaryStage
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            AnchorPane menu = loader.load();
+            if(mainPageController!=null){
+                // Get the controller of MainPage and set up necessary bindings again
+                mainPageController.setph(ph);
+                mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
+
+            }
+            contentPane.getChildren().setAll(menu);
+            contentPane.requestLayout();
         } catch (IOException e) {
             e.printStackTrace();
         }

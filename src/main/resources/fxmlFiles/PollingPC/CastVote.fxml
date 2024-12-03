@@ -24,22 +24,21 @@
 
 
     <!-- Candidate Table within a ScrollPane to prevent overlap -->
-    <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="250.0">
-        <ScrollPane fitToWidth="true" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" styleClass="custom-scroll-pane">
-            <VBox fx:id="candidateTable" spacing="10.0">
-                <!-- Table Headers -->
-                <HBox spacing="80.0" styleClass="table-header">
-                    <Label styleClass="table-header-cell" text="Candidate Name" />
-                    <Label style="-fx-padding: 0 0 0 80;" styleClass="table-header-cell" text="Party Name" />
-                    <Label style="-fx-padding: 0 0 0 80;" styleClass="table-header-cell" text="Party Symbol" />
-                    <Label style="-fx-padding: 0 0 0 10;" styleClass="table-header-cell" text="Select" />
-                </HBox>
-                <!-- Candidate rows will be dynamically added here by the controller -->
-            </VBox>
-        </ScrollPane>
-    </VBox>
+    <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.topAnchor="250.0" />
 
     <!-- Submit Button, positioned at the bottom of the screen near the table -->
-    <Button fx:id="submitButton" layoutX="602.0" layoutY="916.0" onAction="#handleSubmit" styleClass="submit-button" text="Submit" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="602.0" />
+    <Button fx:id="submitButton" layoutX="915.0" layoutY="925.0" onAction="#handleSubmit" styleClass="submit-button" text="Submit" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="915.0" />
+     <ScrollPane fitToWidth="true" layoutX="327.0" layoutY="270.0" minWidth="-Infinity" prefHeight="600.0" prefWidth="1232.0" styleClass="custom-scroll-pane">
+         <VBox fx:id="candidateTable" spacing="10.0">
+             <!-- Table Headers -->
+             <HBox spacing="80.0" styleClass="table-header">
+                 <Label styleClass="table-header-cell" text="Candidate Name" />
+                 <Label style="-fx-padding: 0 0 0 80;" styleClass="table-header-cell" text="Party Name" />
+                 <Label style="-fx-padding: 0 0 0 80;" styleClass="table-header-cell" text="Party Symbol" />
+                 <Label style="-fx-padding: 0 0 0 10;" styleClass="table-header-cell" text="Select" />
+             </HBox>
+             <!-- Candidate rows will be dynamically added here by the controller -->
+         </VBox>
+     </ScrollPane>
 
 </AnchorPane>

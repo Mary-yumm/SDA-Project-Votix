@@ -66,7 +66,7 @@ public class MonitorActiveSystemsController {
                         Platform.runLater(() -> {
                             System.out.println("Monitor SSE Event: " + finalLine);
 
-                            if (finalLine.equalsIgnoreCase("closed")) {
+                            if (finalLine.equalsIgnoreCase("data:closed") || finalLine.equalsIgnoreCase("data:active")) {
                                 System.out.println("closeddddddd");
                                 populateSystemTable();
                             }
@@ -92,6 +92,8 @@ public class MonitorActiveSystemsController {
 
     private void populateSystemTable() {
         List<PollingStationPC> systems = ems.getPollingPCs();
+        systemTable.getChildren().retainAll(systemTable.getChildren().get(0)); // Retain the first child (header)
+
         for (PollingStationPC system : systems) {
             addSystemRow(system);
         }

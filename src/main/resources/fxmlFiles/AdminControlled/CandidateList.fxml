@@ -21,14 +21,13 @@
 
     </AnchorPane>
 
-    <ScrollPane fitToWidth="true" layoutX="275.0" layoutY="227.0" prefHeight="465.0" prefWidth="958.0" styleClass="custom-scroll-pane" AnchorPane.bottomAnchor="145.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="269.0" AnchorPane.topAnchor="227.0">
-        <VBox fx:id="candidateTable" spacing="10">
+    <ScrollPane fitToWidth="true" layoutX="377.0" layoutY="235.0" prefHeight="463.0" prefWidth="799.0" styleClass="custom-scroll-pane" AnchorPane.bottomAnchor="137.0" AnchorPane.leftAnchor="377.0" AnchorPane.rightAnchor="324.0" AnchorPane.topAnchor="235.0">
+        <VBox fx:id="candidateTable" spacing="20">
             <!-- Table Headers -->
-            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="955.0" spacing="65.0" styleClass="table-header">
+            <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="44.0" prefWidth="800.0" spacing="65.0" styleClass="table-header">
                 <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="216.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Candidate Name" />
                 <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="23.0" prefWidth="166.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Name" />
                 <Label maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Party Symbol" />
-                <Label minWidth="-Infinity" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="table-header-cell" text="Vote Count" />
             </HBox>
             <!-- Candidate rows will be dynamically added here by the controller -->
         </VBox>

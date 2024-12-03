@@ -34,7 +34,8 @@ public class PollingPcController {
         if(ems!=null) {
             System.out.println("ems set in PollingPcController: " + (ems != null));  // Debugging line
             setActiveButton(tab1Button);
-            loadInitiateScreen(); // Load the initiate screen by default
+            //loadInitiateScreen(); // Load the initiate screen by default
+            loadCaptureVoterInfo();
         }
         else{
             System.out.println("ems set in PollingPcController: null");

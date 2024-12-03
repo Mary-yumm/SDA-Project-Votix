@@ -359,15 +359,17 @@ public class AdminMenuController {
         try {
             // Load the previous screen (MainPage.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/mainpage.fxml"));
-            Scene scene = new Scene(loader.load());
-
+            AnchorPane menu = loader.load();
             // Get the controller of MainPage and set up necessary bindings again
             MainPageController mainPageController = loader.getController();
-            mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
+            if(mainPageController!=null){
+                mainPageController.setph(this.ems.getPh());
+                mainPageController.setPrimaryStage(primaryStage);  // Ensure the primaryStage is passed back
 
-            // Set the scene and show the primaryStage
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            }
+            contentPane.getChildren().setAll(menu);
+            contentPane.requestLayout();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

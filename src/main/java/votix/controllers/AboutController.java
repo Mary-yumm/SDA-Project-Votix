@@ -21,7 +21,7 @@ public class AboutController {
     public void HandleBackButtonAction(MouseEvent actionEvent) {
         try {
             // Load the previous screen (MainPage.fxml)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/MainPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxmlFiles/mainpage.fxml"));
             AnchorPane menu = loader.load();
 
             //Get the controller of MainPage and set up necessary bindings again

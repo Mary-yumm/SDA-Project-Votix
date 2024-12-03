@@ -85,9 +85,6 @@ public class MainPageController {
             System.out.println("Failed to find login.fxml at /fxmlFiles/login.fxml");
         }
         AnchorPane loginScreen = loader.load();
-
-
-
         LoginController loginController = loader.getController();
         if (loginController != null) {
             System.out.println("Setting PersistenceHandler in login controller");
@@ -106,5 +103,8 @@ public class MainPageController {
 
     public void setph(PersistenceHandler p) {
         this.ph = p;
+        if(this.ph==null){
+            System.out.println("Its null in mainpage");
+        }
     }
 }

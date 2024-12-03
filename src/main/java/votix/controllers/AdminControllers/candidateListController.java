@@ -53,7 +53,6 @@ public class candidateListController {
         if (ems != null) {
             System.out.println("EMS is not null, loading candidates...");
             List<Candidate> candidates = ems.getAllCand();
-            List<Object[]> voteCountperCand = ems.getCandidateVotes();
             if (candidates == null || candidates.isEmpty()) {
                 System.out.println("No candidates found!");
             } else {
@@ -61,14 +60,7 @@ public class candidateListController {
 
                 for (Candidate candidate : candidates) {
                     int candidateId = candidate.getCid();
-                    int voteCount = 0;
-                    for (Object[] entry : voteCountperCand) {
-                        if ((int) entry[0] == candidateId) {
-                            voteCount = (int) entry[1];
-                            break;
-                        }
-                    }
-                    addCandidateRow(candidate, voteCount);
+                    addCandidateRow(candidate);
                 }
             }
         } else {
@@ -77,7 +69,7 @@ public class candidateListController {
     }
 
     // Method to add a row to the candidate table for each candidate
-    private void addCandidateRow(Candidate candidate, int voteCount) {
+    private void addCandidateRow(Candidate candidate) {
         HBox row = new HBox(200); // Create a row with spacing
         row.setPrefWidth(1300);
         row.setPrefHeight(44);
@@ -103,11 +95,6 @@ public class candidateListController {
         HBox.setMargin(partySymbolView, new Insets(0, 0, 0, 50)); // Adjust the left margin (50 is an example)
 
         row.getChildren().add(partySymbolView);
-
-        Label voteCountLabel = new Label(String.valueOf(voteCount));
-        voteCountLabel.getStyleClass().add("table-cell");
-        row.getChildren().add(voteCountLabel);
-        voteCountLabel.setMinWidth(330);
 
         candidateTable.getChildren().add(row); // Add row to the table
     }

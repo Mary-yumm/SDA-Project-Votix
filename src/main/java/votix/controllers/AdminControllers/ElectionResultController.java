@@ -142,11 +142,34 @@ public class ElectionResultController {
         napa.setValue("NA");
 
         backArrow.setCursor(Cursor.HAND);
+
         // Initialize the table columns
         areacol.setCellValueFactory(new PropertyValueFactory<>("areaName"));
         candcol.setCellValueFactory(new PropertyValueFactory<>("candidateName"));
         partycol.setCellValueFactory(new PropertyValueFactory<>("partyName"));
         countcol.setCellValueFactory(new PropertyValueFactory<>("voteCount"));
+
+        // Add focus listeners to clear other text fields
+        AreaName.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) { // If AreaName gains focus
+                CandName.clear();
+                PartyName.clear();
+            }
+        });
+
+        CandName.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) { // If CandName gains focus
+                AreaName.clear();
+                PartyName.clear();
+            }
+        });
+
+        PartyName.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) { // If PartyName gains focus
+                AreaName.clear();
+                CandName.clear();
+            }
+        });
 
         // Add text change listeners for real-time search
         AreaName.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -166,10 +189,8 @@ public class ElectionResultController {
                 loadTableData();
             }
         });
-
-
-
     }
+
     // Add a method to handle combined search
     /*private void handleCombinedSearch() {
         String area = AreaName.getText().trim();
